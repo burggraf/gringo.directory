@@ -1,0 +1,23 @@
+.inputBox {
+    /* border: 1px solid hsl(0, 0%, 83%); */
+    border-bottom: 1px solid hsl(0, 0%, 83%);
+    /* border-radius: 5px; */
+}
+.toast {
+    font-weight: bold;
+}
+.flex-container {
+    display: flex;
+    display: -webkit-flex;
+    display: -moz-flex;
+    flex-flow: row wrap;
+    -webkit-flex-flow: row wrap;
+    -moz-flex-flow: row wrap;
+    justify-content: center;
+
+    /* flex-wrap: wrap; */
+    /* border: 1px solid; */
+
+    /* margin-right: 10px;
+    margin-left: 10px; */
+}
