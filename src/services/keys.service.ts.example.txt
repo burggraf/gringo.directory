@@ -1,4 +1,7 @@
 /************************************************************
+  COPY THIS FILE TO keys.service.ts
+*************************************************************/
+/************************************************************
   Enter your Supabase Key and Supabase URL below
   1. go to https://supabase.io, 
   2. log into your project
