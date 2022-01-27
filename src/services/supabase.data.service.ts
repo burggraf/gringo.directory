@@ -1,9 +1,17 @@
 import { createClient, Provider, SupabaseClient, User } from '@supabase/supabase-js';
 
 // import { keys } from 'rxjs';
-import { keys } from './keys.service';
+//import { keys } from './keys.service';
 
-const supabase: SupabaseClient = createClient(keys.SUPABASE_URL, keys.SUPABASE_KEY);
+const supabaseUrl = process.env.GRINGO_DIRECTORY_SUPABASE_URL || '';
+const supabaseAnonKey = process.env.GRINGO_DIRECTORY_SUPABASE_KEY || '';
+
+//const supabase: SupabaseClient = createClient(keys.SUPABASE_URL, keys.SUPABASE_KEY);
+const supabase: SupabaseClient = createClient(
+  supabaseUrl,
+  supabaseAnonKey
+);
+
 
 export default class SupabaseDataService {
 	static myInstance:any = null;
