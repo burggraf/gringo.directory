@@ -40,6 +40,7 @@ const startupService = StartupService.getInstance();
 const startupRoute = startupService.getStartupRoute();
 
 const App: React.FC = () => {
+  console.log('process.env.GRINGO_DIRECTORY_SUPABASE_URL',process.env.GRINGO_DIRECTORY_SUPABASE_URL);
   return (
     <IonApp>
       <IonReactRouter>
