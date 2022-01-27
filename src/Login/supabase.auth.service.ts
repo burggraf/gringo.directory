@@ -1,11 +1,20 @@
 import { createClient, Provider, SupabaseClient, User } from '@supabase/supabase-js';
 import { BehaviorSubject } from 'rxjs';
 
-import { keys } from '../services/keys.service';
+//import { keys } from '../services/keys.service';
 import SupabaseDataService from '../services/supabase.data.service';
 //import SupabaseDataService from '../services/supabase.data.service'
 
-const supabase: SupabaseClient = createClient(keys.SUPABASE_URL, keys.SUPABASE_KEY);
+const supabaseUrl = process.env.GRINGO_DIRECTORY_SUPABASE_URL || '';
+const supabaseAnonKey = process.env.GRINGO_DIRECTORY_SUPABASE_KEY || '';
+
+//const supabase: SupabaseClient = createClient(keys.SUPABASE_URL, keys.SUPABASE_KEY);
+const supabase: SupabaseClient = createClient(
+  supabaseUrl,
+  supabaseAnonKey
+);
+
+//const supabase: SupabaseClient = createClient(keys.SUPABASE_URL, keys.SUPABASE_KEY);
 //const supabaseDataService = SupabaseDataService.getInstance();
 
 export default class SupabaseAuthService {
