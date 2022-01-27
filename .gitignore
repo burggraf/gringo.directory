@@ -30,3 +30,5 @@ yarn-error.log*
 # KEYS
 src/services/keys.service.ts
 
+
+.vercel
