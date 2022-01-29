@@ -64,6 +64,12 @@ const Menu: React.FC = () => {
 			mdIcon: homeSharp,
 		},
 		{
+			title: t('Person'),
+			url: '/person/:id',
+			iosIcon: personOutline,
+			mdIcon: personSharp,
+		},
+		{
 			title: t('About Us'),
 			url: '/about',
 			iosIcon: informationCircleOutline,
@@ -106,26 +112,40 @@ const Menu: React.FC = () => {
 		<IonMenu contentId='main' type='overlay'>
 			<IonContent>
 				<IonList id='inbox-list'>
+					<IonGrid style={{backgroundColor: 'transparent', marginBottom: '-10px'}}>
+						<IonRow style={{width: '100%'}}>
+							<IonCol size="2"><IonIcon src='/assets/logo.svg' size='large'></IonIcon></IonCol>
+							<IonCol size="8" class="ion-text-center">
+								<IonLabel style={{color:'#D35C23', fontSize: '16pt', fontWeight: 'bold'}}>Gringo Directory</IonLabel>
+							</IonCol>
+							<IonCol size="2" class="ion-text-right"><IonIcon src='/assets/locales/us.svg' size='large'></IonIcon></IonCol>
+						</IonRow>
+					</IonGrid>
 					{/* <IonListHeader style={{backgroundColor: 'pink'}}> */}
-					<div style={{paddingLeft: '10px', verticalAlign: 'top'}}>
-						<IonIcon style={{verticalAlign: 'top', marginTop: '10px'}} src='/assets/logo.svg' size='large'></IonIcon>
-						<IonLabel style={{verticalAlign: 'bottom', color:'#D35C23', fontSize: '20pt', fontWeight: 'bold'}}>&nbsp;&nbsp;Gringo Directory</IonLabel>
-					</div>
+
+					{/* <div style={{paddingLeft: '10px', paddingRight: '10px', verticalAlign: 'top', width: '100%'}}>
+						<IonIcon style={{float: 'left', verticalAlign: 'top', marginTop: '10px'}} src='/assets/logo.svg' size='large'></IonIcon>
+						<div style={{backgroundColor: 'pink', width: '100%', verticalAlign: 'bottom', color:'#D35C23', fontSize: '14pt', fontWeight: 'bold', textAlign: 'center'}}>
+							Gringo Directory
+						</div>
+						<IonIcon style={{float: 'right', verticalAlign: 'top', marginTop: '10px'}} src='/assets/locales/us.svg' size='large'></IonIcon>
+					</div> */}
 					{/* </IonListHeader> */}
-					<div style={{ marginLeft: '55px', color:'#D35C23' }}>
+
+					<div className='ion-text-center' style={{ color:'#D35C23' }}>
 						<b>{t('slogan')}</b>
 					</div>
-					<div className='ion-text-center'>
-						<h3>
-							<b>{t('manta')}</b>
-						</h3>
-					</div>
+					
 				</IonList>
 
 				<IonSearchbar
 					value={searchText}
 					debounce={750}
 					onIonChange={(e) => setSearchText(e.detail.value!)}></IonSearchbar>
+				
+				<div className='ion-text-left' style={{color:'#D35C23', fontSize: '16pt', paddingTop: '10px', paddingLeft: '10px'}}>
+						<b>{t('manta')}</b>
+				</div>
 
 				<IonList id='inbox-list'>
 					{appPages.map((appPage, index) => {
