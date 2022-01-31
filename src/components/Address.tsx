@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Modal from '../components/Modal'
+import UtilityFunctionsService from '../services/utility.functions.service';
 
 import '../translations/i18n'
 import './Address.css'
@@ -10,11 +11,11 @@ import { addOutline, addSharp, createOutline, createSharp, person } from 'ionico
 
 interface ContainerProps {
 	data: any;
-	type: string;
     saveFunction: Function;
 }
+const utils = UtilityFunctionsService.getInstance()
 
-const Address: React.FC<ContainerProps> = ({ data, type, saveFunction }) => {
+const Address: React.FC<ContainerProps> = ({ data, saveFunction }) => {
 	// setShowModal({...showModal, currentModal: 'address'});
 
 	const { t } = useTranslation()
@@ -22,6 +23,8 @@ const Address: React.FC<ContainerProps> = ({ data, type, saveFunction }) => {
 	const [localData, setLocalData] = useState<any>({})
 	const newAddress = (): AddressObject => {
 		return {
+            id: utils.uuidv4(),
+            ownerid: data.ownerid,
 			type: '',
 			name: '', // location name
 			address: '',
@@ -54,7 +57,7 @@ const Address: React.FC<ContainerProps> = ({ data, type, saveFunction }) => {
 			<IonButton
 				color='light'
 				onClick={() => {
-                    if (type === 'new') {
+                    if (!data.id) {
                         setLocalData(newAddress());
                     } else {
                         setLocalData(data);
@@ -63,8 +66,8 @@ const Address: React.FC<ContainerProps> = ({ data, type, saveFunction }) => {
 				}}>
 				<IonIcon
 					slot='icon-only'
-					ios={type === 'new' ? addOutline : createOutline}
-					md={type === 'new' ? addSharp : createSharp}
+					ios={!data.id ? addOutline : createOutline}
+					md={!data.id ? addSharp : createSharp}
 				/>
 			</IonButton>
 			<Modal

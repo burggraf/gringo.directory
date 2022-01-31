@@ -7,6 +7,7 @@ import { useParams } from 'react-router';
 import { PersonObject } from '../../models/Person';
 import SupabaseAuthService from '../Login/supabase.auth.service'
 import SupabaseDataService from '../services/supabase.data.service'
+import UtilityFunctionsService from '../services/utility.functions.service';
 import Modal from '../components/Modal';
 import Address from '../components/Address';
 import { Address as AddressObject } from '../../models/Models';
@@ -17,12 +18,16 @@ import { string } from 'yargs';
 
 const supabaseDataService = SupabaseDataService.getInstance()
 const supabaseAuthService = SupabaseAuthService.getInstance()
+const utils = UtilityFunctionsService.getInstance()
 let _user: User | null = null
 
 
 const Person: React.FC = () => {
     const { t } = useTranslation();
-    const { id } = useParams<{ id: string; }>();
+    let { id } = useParams<{ id: string; }>();
+    if (id === 'new') {
+        id = utils.uuidv4();
+    }
 
     const initPerson: PersonObject = {
         id: id,
@@ -66,17 +71,30 @@ const Person: React.FC = () => {
         const fld = e.srcElement.itemID;
         setPerson({ ...person, [fld]: e.detail.value! });
     }
-    const saveNewAddress = (address: AddressObject) => {
-        console.log('saveNewAddress', address);
+    const saveAddress = (address: AddressObject) => {
+        console.log('saveAddress', address);
         console.log('person', person);
         // clone person
         const newPerson = {...person};
-        newPerson.address?.push(address);
+        // find address.id in person.address array
+        const addressIndex = newPerson?.address?.findIndex((a: AddressObject) => a.id === address.id);
+        console.log('addressIndex', addressIndex);
+        if (typeof addressIndex !== 'undefined' && addressIndex >= 0 && newPerson.address) {
+            // update address
+            console.log('update address');
+            newPerson.address[addressIndex] = address;
+        } else {
+            // insert address
+            console.log('insert address');
+            if (newPerson.address) {
+                newPerson.address.push(address);
+            } else {
+                newPerson.address = [];
+                newPerson.address.push(address);
+            }
+        }
         setPerson(newPerson);
         console.log('person', person);
-    }
-    const saveAddress = (address: AddressObject) => {
-        console.log('saveAddress', address);
     }
     return (
     <IonPage>
@@ -182,16 +200,18 @@ const Person: React.FC = () => {
 
                 <IonItem lines="none">
                     <IonLabel style={{ maxWidth: '100px'}} slot='start' class="itemLabel">
-                        {t('Address')}<br/><Address data={null} type="new" saveFunction={saveNewAddress}/>
+                        {t('Address')}<br/><Address data={{ownerid: id}} saveFunction={saveAddress}/>
                     </IonLabel>
-                    <IonList>
+                    <IonList style={{width: '100%'}}>
                         {person?.address?.map((address: AddressObject, index: number) => {
                             return (
                                 <>
                                 <IonItem key={`address_${index}`}>
                                     <IonLabel>
-                                       address item: {address.name}
-                                       <Address data={address} type="edit" saveFunction={saveAddress}/>
+                                       address item: {address.name}                                       
+                                    </IonLabel>
+                                    <IonLabel slot="end">
+                                        <Address data={address} saveFunction={saveAddress}/>
                                     </IonLabel>
                                 </IonItem><br/>
                                 </>

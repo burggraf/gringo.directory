@@ -65,7 +65,7 @@ const Menu: React.FC = () => {
 		},
 		{
 			title: t('Person'),
-			url: '/person/:id',
+			url: '/person/new',
 			iosIcon: personOutline,
 			mdIcon: personSharp,
 		},

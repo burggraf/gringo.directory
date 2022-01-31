@@ -23,6 +23,8 @@ export interface Url {
   xtra?: object;
 }
 export interface Address {
+  id?: string;
+  ownerid?: string;
   type: string;
   name?: string; // location name
   address: string;
