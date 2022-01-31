@@ -72,22 +72,14 @@ const Person: React.FC = () => {
         setPerson({ ...person, [fld]: e.detail.value! });
     }
     const saveAddress = (address: AddressObject, index: number, deleteFlag: boolean = false) => {
-        console.log('saveAddress', address);
-        console.log('person', person);
-        // clone person
         const newPerson = {...person};
         if (!newPerson.address) { newPerson.address = []; }
         if (index === -1) { index = (newPerson.address.length); }
-        console.log('new index is', index);
         newPerson.address[index] = address;
         setPerson(newPerson);
-        console.log('person', person);
     }
     const deleteAddress = (address: AddressObject, index: number) => {
-        console.log('deleteAddress', address, 'index', index);
-        // clone person
         const newPerson = {...person};
-        // remove address
         if (newPerson.address && newPerson.address.length >= (index -1)) {
             newPerson.address.splice(index, 1);
         }
@@ -203,11 +195,37 @@ const Person: React.FC = () => {
                     <IonList style={{width: '100%'}}>
                         {person?.address?.map((address: AddressObject, index: number) => {
                             return (
-                                <>
                                 <IonItem key={`address_${index}`}>
                                     <IonLabel>
-                                       address item: {address.name}                                       
+                                    { address.type && <div>{address.type}</div>}
+                                    { address.name && <div>{address.name}</div>}
+                                    { address.address && <div>{address.address}</div>}
+                                    { address.address2 && <div>{address.address2}</div>}
+                                    { address.city && <div>{address.city}</div>}
+                                    { address.province && <div>{address.province}</div>}
+                                    { address.postalcode && <div>{address.postalcode}</div>}
+                                    { address.country && <div>{address.country}</div>}
+                                    { address.pluscode && <div>{address.pluscode}</div>}
+                                    { address.latitude && <div>{address.latitude},{address.longitude}</div>}
                                     </IonLabel>
+                                   
+
+  {/* type: string;
+  name?: string; // location name
+  address?: string;
+  address2?: string;
+  city?: string;
+  province?: string;
+  postalcode?: string;
+  country?: string;
+  pluscode?: string;
+  latitude?: number | null;
+  longitude?: number | null;
+  created_at?: string;
+  updated_at?: string;
+  created_by?: string;
+  xtra?: object; */}
+
                                     <IonLabel slot="end">
                                         <Address 
                                             data={address} 
@@ -216,8 +234,7 @@ const Person: React.FC = () => {
                                             deleteFunction={deleteAddress}
                                         />
                                     </IonLabel>
-                                </IonItem><br/>
-                                </>
+                                </IonItem>
                             )
                         })}
                         {/* <IonItem>
@@ -240,35 +257,6 @@ const Person: React.FC = () => {
                     </IonTextarea>
                 </IonItem>
             </IonList>
-
-            <IonButton expand="block" color="primary" className="ion-margin-top">
-                <IonIcon size="large" ios={save} md={save}></IonIcon>
-                &nbsp;&nbsp;{t('Save')}
-            </IonButton>
-            <pre>
-                { JSON.stringify(person, null, 2) }
-            </pre>
-            <pre>
-                create table if not exists public.persons (
-                id            UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-                uid           UUID REFERENCES auth.users NULL,
-                firstname     TEXT,
-                middlename    TEXT,
-                lastname      TEXT,
-                nickname      TEXT,
-                company       TEXT,
-                photourl      TEXT NULL,
-                dob           DATE NULL,
-                anniversary   DATE NULL,  
-                notes         TEXT NULL,
-                created_at    TIMESTAMP DEFAULT NOW(),
-                updated_at    TIMESTAMP DEFAULT NOW(),
-                created_by    UUID REFERENCES auth.users,
-                metadata      JSONB NULL,
-                xtra          JSONB NULL
-                );
-            </pre>
-
       </IonContent>
     </IonPage>
   );
