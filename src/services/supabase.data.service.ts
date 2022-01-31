@@ -39,7 +39,22 @@ export default class SupabaseDataService {
     .upsert(profile);
     return { data, error };
   }
+  public async getPerson(id: string) {
+    const { data, error } = 
+    await supabase.from('persons')
+    .select('*')
+    .eq('id', id)
+    .limit(1)
+    .single();
+    return { data, error };
+  }
 
+  public async savePerson(person: any) {
+    const { data, error } = 
+    await supabase.from('persons')
+    .upsert(person);
+    return { data, error };
+  }
 
 
   // generic sample functions

@@ -25,9 +25,6 @@ let _user: User | null = null
 const Person: React.FC = () => {
     const { t } = useTranslation();
     let { id } = useParams<{ id: string; }>();
-    if (id === 'new') {
-        id = utils.uuidv4();
-    }
 
     const initPerson: PersonObject = {
         id: id,
@@ -56,6 +53,19 @@ const Person: React.FC = () => {
         // instantMessage?: InstantMessage[];    
     }
 
+    const loadPerson = async (id: string) => {
+        console.log('loadPerson...');
+        const { data, error } = await supabaseDataService.getPerson(id);
+        console.log('loadPerson...', data, 'error', error);
+        if (error) {
+            console.error('loadPerson error', error);
+        } else {
+            console.log('loadPerson data', data);
+            setPerson(data);
+        }
+    }
+
+
 	const [ person, setPerson ] = useState<PersonObject>(initPerson);
     const [showModal, setShowModal] = useState<any>({currentModal: null});
 
@@ -64,7 +74,12 @@ const Person: React.FC = () => {
         supabaseAuthService.user.subscribe((user: User | null) => {
             _user = user
             console.log('Enjoy: subscribed: _user', _user)
-        })
+        });
+        if (id === 'new') {
+            id = utils.uuidv4();
+        } else {
+            loadPerson(id);
+        }    
     }, []) // <-- empty dependency array
     
     const changeHandler = (e: any) => {
@@ -85,6 +100,10 @@ const Person: React.FC = () => {
         }
         setPerson(newPerson);
     }
+    const savePerson = async () => {
+        const { data, error } = await supabaseDataService.savePerson(person);
+        console.log('savePerson: data', data, 'error', error);
+    }
 
     return (
     <IonPage>
@@ -97,6 +116,11 @@ const Person: React.FC = () => {
                 <IonIcon size="large" ios={personOutline} md={personSharp}></IonIcon>
               &nbsp;&nbsp;{t('Edit Person Details')}
             </IonTitle>
+            <IonButtons slot='end'>
+                <IonButton color='primary' onClick={savePerson}>
+                    <IonIcon size='large' icon={checkmarkOutline}></IonIcon>
+                </IonButton>
+            </IonButtons>
         </IonToolbar>
       </IonHeader>
 
