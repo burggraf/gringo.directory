@@ -39,11 +39,11 @@ const Address: React.FC<ContainerProps> = ({ data, type, saveFunction }) => {
 		const fld = e.srcElement.itemID
 		setLocalData({ ...localData, [fld]: e.detail.value! })
 	}
-	useEffect(() => {
-		if (type === 'new') {
-			setLocalData(newAddress())
-		}
-	}, [])
+	// useEffect(() => {
+	// 	if (type === 'new') {
+	// 		setLocalData(newAddress())
+	// 	}
+	// }, [])
     const saveHandler = () => {
         console.log('save handler', localData)
         saveFunction(localData);
@@ -54,6 +54,11 @@ const Address: React.FC<ContainerProps> = ({ data, type, saveFunction }) => {
 			<IonButton
 				color='light'
 				onClick={() => {
+                    if (type === 'new') {
+                        setLocalData(newAddress());
+                    } else {
+                        setLocalData(data);
+                    }            
 					setShowModal({ ...showModal, currentModal: 'address' })
 				}}>
 				<IonIcon

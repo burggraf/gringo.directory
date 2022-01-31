@@ -69,9 +69,14 @@ const Person: React.FC = () => {
     const saveNewAddress = (address: AddressObject) => {
         console.log('saveNewAddress', address);
         console.log('person', person);
-        person.address?.push(address);
-        setPerson(person);
+        // clone person
+        const newPerson = {...person};
+        newPerson.address?.push(address);
+        setPerson(newPerson);
         console.log('person', person);
+    }
+    const saveAddress = (address: AddressObject) => {
+        console.log('saveAddress', address);
     }
     return (
     <IonPage>
@@ -176,13 +181,26 @@ const Person: React.FC = () => {
 
 
                 <IonItem lines="none">
-                    <IonLabel style={{ maxWidth: '100px'}} slot='start' class="itemLabel">{t('Address')}</IonLabel>
-                    {person?.address?.map((address: AddressObject, index: number) => {
-                        return (
-                            <IonLabel>address item: {address.name}</IonLabel>
-                        )
-                    })}
-                    <Address data={null} type="new" saveFunction={saveNewAddress}/>
+                    <IonLabel style={{ maxWidth: '100px'}} slot='start' class="itemLabel">
+                        {t('Address')}<br/><Address data={null} type="new" saveFunction={saveNewAddress}/>
+                    </IonLabel>
+                    <IonList>
+                        {person?.address?.map((address: AddressObject, index: number) => {
+                            return (
+                                <>
+                                <IonItem key={`address_${index}`}>
+                                    <IonLabel>
+                                       address item: {address.name}
+                                       <Address data={address} type="edit" saveFunction={saveAddress}/>
+                                    </IonLabel>
+                                </IonItem><br/>
+                                </>
+                            )
+                        })}
+                        {/* <IonItem>
+                            <Address data={null} type="new" saveFunction={saveNewAddress}/>
+                        </IonItem> */}
+                    </IonList>
                 </IonItem>
 
                 <IonItem lines="none">
