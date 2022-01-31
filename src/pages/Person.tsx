@@ -14,7 +14,7 @@ import { Address as AddressObject } from '../../models/Models';
 import "../translations/i18n";
 import './Person.css';
 import { element } from 'prop-types';
-import { string } from 'yargs';
+import { boolean, string } from 'yargs';
 
 const supabaseDataService = SupabaseDataService.getInstance()
 const supabaseAuthService = SupabaseAuthService.getInstance()
@@ -71,31 +71,29 @@ const Person: React.FC = () => {
         const fld = e.srcElement.itemID;
         setPerson({ ...person, [fld]: e.detail.value! });
     }
-    const saveAddress = (address: AddressObject) => {
+    const saveAddress = (address: AddressObject, index: number, deleteFlag: boolean = false) => {
         console.log('saveAddress', address);
         console.log('person', person);
         // clone person
         const newPerson = {...person};
-        // find address.id in person.address array
-        const addressIndex = newPerson?.address?.findIndex((a: AddressObject) => a.id === address.id);
-        console.log('addressIndex', addressIndex);
-        if (typeof addressIndex !== 'undefined' && addressIndex >= 0 && newPerson.address) {
-            // update address
-            console.log('update address');
-            newPerson.address[addressIndex] = address;
-        } else {
-            // insert address
-            console.log('insert address');
-            if (newPerson.address) {
-                newPerson.address.push(address);
-            } else {
-                newPerson.address = [];
-                newPerson.address.push(address);
-            }
-        }
+        if (!newPerson.address) { newPerson.address = []; }
+        if (index === -1) { index = (newPerson.address.length); }
+        console.log('new index is', index);
+        newPerson.address[index] = address;
         setPerson(newPerson);
         console.log('person', person);
     }
+    const deleteAddress = (address: AddressObject, index: number) => {
+        console.log('deleteAddress', address, 'index', index);
+        // clone person
+        const newPerson = {...person};
+        // remove address
+        if (newPerson.address && newPerson.address.length >= (index -1)) {
+            newPerson.address.splice(index, 1);
+        }
+        setPerson(newPerson);
+    }
+
     return (
     <IonPage>
       <IonHeader>
@@ -200,7 +198,7 @@ const Person: React.FC = () => {
 
                 <IonItem lines="none">
                     <IonLabel style={{ maxWidth: '100px'}} slot='start' class="itemLabel">
-                        {t('Address')}<br/><Address data={{ownerid: id}} saveFunction={saveAddress}/>
+                        {t('Address')}<br/><Address data={{ownerid: id}} index={-1} saveFunction={saveAddress}/>
                     </IonLabel>
                     <IonList style={{width: '100%'}}>
                         {person?.address?.map((address: AddressObject, index: number) => {
@@ -211,7 +209,12 @@ const Person: React.FC = () => {
                                        address item: {address.name}                                       
                                     </IonLabel>
                                     <IonLabel slot="end">
-                                        <Address data={address} saveFunction={saveAddress}/>
+                                        <Address 
+                                            data={address} 
+                                            index={index} 
+                                            saveFunction={saveAddress}
+                                            deleteFunction={deleteAddress}
+                                        />
                                     </IonLabel>
                                 </IonItem><br/>
                                 </>

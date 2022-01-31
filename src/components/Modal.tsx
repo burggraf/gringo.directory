@@ -13,7 +13,9 @@ interface ContainerProps {
   setShowModal: any;
   saveFunction?: Function;
   cancelFunction?: Function;
+  deleteFunction?: Function;
   data?: any;
+  index?: number;
   setData?: any;
   children?: React.ReactNode;
 }
@@ -25,7 +27,9 @@ const Modal: React.FC<ContainerProps> = ({
     setShowModal, 
     saveFunction, 
     cancelFunction, 
+    deleteFunction,
     data,
+    index,
     setData,
     children 
 }) => {
@@ -72,11 +76,22 @@ const Modal: React.FC<ContainerProps> = ({
     </IonHeader>
     <IonContent className="ion-padding">
         {children}
+        { deleteFunction &&
+            <div className="ion-padding">
+                <IonButton fill="clear" expand="block" strong color="danger"
+                    onClick={()=>{
+                        setTimeout(()=>{
+                            deleteFunction(data, index);
+                        }, 500);
+                        setShowModal({ ...showModal, currentModal: null });
+                    }}>
+                    {t('delete')}
+                </IonButton>
+            </div>
+        }
     </IonContent>
-
-    {/* <IonButton onClick={() => setShowModal({ ...showModal, currentModal: null })}>Close Modal</IonButton> */}
-</IonModal>
-);
+    </IonModal>
+  );
 };
 
 export default Modal;

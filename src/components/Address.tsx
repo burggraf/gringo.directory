@@ -11,20 +11,21 @@ import { addOutline, addSharp, createOutline, createSharp, person } from 'ionico
 
 interface ContainerProps {
 	data: any;
+    index: number;
     saveFunction: Function;
+    deleteFunction?: Function;
 }
 const utils = UtilityFunctionsService.getInstance()
 
-const Address: React.FC<ContainerProps> = ({ data, saveFunction }) => {
+const Address: React.FC<ContainerProps> = ({ data, index, saveFunction, deleteFunction }) => {
 	// setShowModal({...showModal, currentModal: 'address'});
-
 	const { t } = useTranslation()
 	const [showModal, setShowModal] = useState<any>({ currentModal: null })
 	const [localData, setLocalData] = useState<any>({})
 	const newAddress = (): AddressObject => {
 		return {
-            id: utils.uuidv4(),
-            ownerid: data.ownerid,
+            // id: utils.uuidv4(),
+            // ownerid: data.ownerid,
 			type: '',
 			name: '', // location name
 			address: '',
@@ -48,8 +49,8 @@ const Address: React.FC<ContainerProps> = ({ data, saveFunction }) => {
 	// 	}
 	// }, [])
     const saveHandler = () => {
-        console.log('save handler', localData)
-        saveFunction(localData);
+        console.log('save handler', localData, 'index', index);
+        saveFunction(localData, index);
     }
 
 	return (
@@ -57,7 +58,7 @@ const Address: React.FC<ContainerProps> = ({ data, saveFunction }) => {
 			<IonButton
 				color='light'
 				onClick={() => {
-                    if (!data.id) {
+                    if (index === -1) {
                         setLocalData(newAddress());
                     } else {
                         setLocalData(data);
@@ -66,8 +67,8 @@ const Address: React.FC<ContainerProps> = ({ data, saveFunction }) => {
 				}}>
 				<IonIcon
 					slot='icon-only'
-					ios={!data.id ? addOutline : createOutline}
-					md={!data.id ? addSharp : createSharp}
+					ios={index === -1 ? addOutline : createOutline}
+					md={index === -1 ? addSharp : createSharp}
 				/>
 			</IonButton>
 			<Modal
@@ -75,7 +76,9 @@ const Address: React.FC<ContainerProps> = ({ data, saveFunction }) => {
 				title='Address'
 				showModal={showModal}
 				data={{ data }}
+                index={index}
 				saveFunction={saveHandler}
+                deleteFunction={deleteFunction}
 				setShowModal={setShowModal}>
 				<IonList>
 					<IonItem lines='none'>
@@ -211,10 +214,10 @@ const Address: React.FC<ContainerProps> = ({ data, saveFunction }) => {
 							class='inputBox'></IonInput>
 					</IonItem>
 				</IonList>
-				<pre>
+				{/* <pre>
 					LocalData:
 					{JSON.stringify(localData, null, 2)}
-				</pre>
+				</pre> */}
 			</Modal>
 		</>
 	)
