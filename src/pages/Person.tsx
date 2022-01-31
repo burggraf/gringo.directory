@@ -197,35 +197,17 @@ const Person: React.FC = () => {
                             return (
                                 <IonItem key={`address_${index}`}>
                                     <IonLabel>
-                                    { address.type && <div>{address.type}</div>}
-                                    { address.name && <div>{address.name}</div>}
+                                    { address.type && <div>Type: {address.type}</div>}
+                                    { address.name && <div>Location: {address.name}</div>}
                                     { address.address && <div>{address.address}</div>}
                                     { address.address2 && <div>{address.address2}</div>}
-                                    { address.city && <div>{address.city}</div>}
-                                    { address.province && <div>{address.province}</div>}
-                                    { address.postalcode && <div>{address.postalcode}</div>}
-                                    { address.country && <div>{address.country}</div>}
-                                    { address.pluscode && <div>{address.pluscode}</div>}
-                                    { address.latitude && <div>{address.latitude},{address.longitude}</div>}
+                                    { address.city && <div>City: {address.city}</div>}
+                                    { address.province && <div>Province: {address.province}</div>}
+                                    { address.postalcode && <div>Postal: {address.postalcode}</div>}
+                                    { address.country && <div>Country: {address.country}</div>}
+                                    { address.pluscode && <div>PlusCode: {address.pluscode}</div>}
+                                    { address.latitude && <div>Lat/Lng: {address.latitude},{address.longitude}</div>}
                                     </IonLabel>
-                                   
-
-  {/* type: string;
-  name?: string; // location name
-  address?: string;
-  address2?: string;
-  city?: string;
-  province?: string;
-  postalcode?: string;
-  country?: string;
-  pluscode?: string;
-  latitude?: number | null;
-  longitude?: number | null;
-  created_at?: string;
-  updated_at?: string;
-  created_by?: string;
-  xtra?: object; */}
-
                                     <IonLabel slot="end">
                                         <Address 
                                             data={address} 
