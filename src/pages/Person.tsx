@@ -17,6 +17,34 @@ import UtilityFunctionsService from '../services/utility.functions.service';
 import "../translations/i18n";
 import './Person.css';
 
+const instantMessageTypes: any = [
+    { value: 'WhatsApp' },
+    { value: 'Business Suite' },
+    { value: 'Zoom' },
+    { value: 'Amazon Alexa' },
+    { value: 'Messenger' },
+    { value: 'Skype' },
+    { value: 'Slack' },
+    { value: 'Discord' },
+    { value: 'GitHub' },
+    { value: 'Instagram' },
+    { value: 'Twitter' },
+    { value: 'Facebook' },
+    { value: 'AnyDesk' },
+    { value: 'Voice' },
+    { value: 'Gmail' },
+    { value: 'Spark' },
+    { value: 'MSN' },
+    { value: 'Google Talk' },
+    { value: 'Facebook' },
+    { value: 'AIM' },
+    { value: 'Yahoo' },
+    { value: 'ICQ' },
+    { value: 'Jabber' },
+    { value: 'QQ' },
+    { value: 'Gadu-Gadu' },
+    { value: 'Other' }
+]
 const socialProfileTypes: any = [
     { value: 'WhatsApp' },
     { value: 'Business Suite' },
@@ -385,6 +413,40 @@ const Person: React.FC = () => {
                     </IonList>
                 </IonItem>
 
+                <IonItem lines="none">
+                    <IonLabel style={{ maxWidth: '100px'}} slot='start' class="itemLabel">
+                        {t('Instant Message')}<br/>
+                        <GenericItemArrayEntry 
+                            title={t('Instant Message')}
+                            id={'instantmessage'}                            
+                            attributes={[{'name': 'handle','placeholder': 'Instant Message Handle'}]}
+                            types={instantMessageTypes}
+                            data={null} index={-1} saveFunction={saveItem}/>
+                    </IonLabel>
+                    <IonList style={{width: '100%'}}>
+                        {person?.instantmessage?.map((item: any, index: number) => {
+                            return (
+                                <IonItem key={`instantmessage${index}`}>
+                                    <IonLabel>
+                                        Type: {item.type}<br/>
+                                        Handle: {item.handle}
+                                    </IonLabel>
+                                    <IonLabel slot="end">
+                                    <GenericItemArrayEntry 
+                                        title={t('Instant Message')}
+                                        id={'instantmessage'}                            
+                                        attributes={[{'name': 'handle','placeholder': 'Instant Message Handle'}]}
+                                        types={instantMessageTypes}
+                                        data={item} 
+                                        index={index} 
+                                        deleteFunction={deleteItem}
+                                        saveFunction={saveItem}/>
+                                    </IonLabel>
+                                </IonItem>
+                            )
+                        })}
+                    </IonList>
+                </IonItem>
 
 
                 <IonItem lines="none">
