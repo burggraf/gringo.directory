@@ -63,6 +63,13 @@ export default class SupabaseDataService {
     .upsert(person);
     return { data, error };
   }
+  public async deletePerson(id: string) {
+    const { data, error } = 
+    await supabase.from('persons')
+    .delete({ returning: 'minimal'})
+    .eq('id', id);
+    return { data, error };
+  }
 
 
   // generic sample functions

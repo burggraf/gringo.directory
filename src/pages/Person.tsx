@@ -3,7 +3,7 @@ import { User } from '@supabase/supabase-js'
 import { addSharp, airplaneOutline, airplaneSharp, calendar, checkmarkOutline, closeOutline, fastFoodOutline, fastFoodSharp, personOutline, personSharp, save } from 'ionicons/icons';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router';
+import { useHistory, useParams } from 'react-router';
 import { Person as PersonObject } from '../../models/Person';
 import SupabaseAuthService from '../Login/supabase.auth.service'
 import SupabaseDataService from '../services/supabase.data.service'
@@ -24,7 +24,10 @@ let _user: User | null = null
 
 const Person: React.FC = () => {
     const { t } = useTranslation();
+    const history = useHistory();
+
     let { id } = useParams<{ id: string; }>();
+    const isNew = (id === 'new');
 
     const initPerson: PersonObject = {
         id: id,
@@ -267,6 +270,23 @@ const Person: React.FC = () => {
                     </IonTextarea>
                 </IonItem>
             </IonList>
+            { !isNew &&
+                <div className="ion-padding">
+                    <IonButton fill="clear" expand="block" strong color="danger"
+                        onClick={async ()=>{
+                            const { data, error } = await supabaseDataService.deletePerson(id);
+                            if (error) {
+                                console.error('deletePerson error', error);
+                                return;
+                            } else {
+                                history.replace('/people');
+                            }
+                        }}>
+                        {t('delete')}
+                    </IonButton>
+                </div>
+            }
+
       </IonContent>
     </IonPage>
   );
