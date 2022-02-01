@@ -1,13 +1,15 @@
+import { IonButton, IonIcon, IonInput, IonItem, IonLabel, IonList, IonSelect, IonSelectOption } from '@ionic/react'
+import { addOutline, addSharp, createOutline, createSharp, person } from 'ionicons/icons'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+
+import { Address as AddressObject } from '../../models/Models'
 import Modal from '../components/Modal'
+import Select from '../components/Select'
 import UtilityFunctionsService from '../services/utility.functions.service';
 
 import '../translations/i18n'
 import './Address.css'
-import { Address as AddressObject } from '../../models/Models'
-import { IonButton, IonIcon, IonInput, IonItem, IonLabel, IonList } from '@ionic/react'
-import { addOutline, addSharp, createOutline, createSharp, person } from 'ionicons/icons'
 
 interface ContainerProps {
 	data: any;
@@ -85,13 +87,19 @@ const Address: React.FC<ContainerProps> = ({ data, index, saveFunction, deleteFu
 						<IonLabel slot='start' class='itemLabel'>
 							{t('Type')}
 						</IonLabel>
-						<IonInput
-							type='text'
-							placeholder={'type'}
+						<Select 
+							title={t('Address Type')}
 							itemID='type'
-							onIonChange={changeHandler}
+							options={[
+								{ value: 'home', text: t('Home') },
+								{ value: 'work', text: t('Work') },
+								{ value: 'school', text: t('School') },
+								{ value: 'mailing', text: t('Mailing') },
+								{ value: 'other', text: t('Other') },
+							]}
 							value={localData.type!}
-							class='inputBox'></IonInput>
+							handler={changeHandler}
+						/>
 					</IonItem>
 					<IonItem lines='none'>
 						<IonLabel slot='start' class='itemLabel'>
@@ -224,17 +232,3 @@ const Address: React.FC<ContainerProps> = ({ data, index, saveFunction, deleteFu
 }
 
 export default Address
-/*
-  type: string;
-  name?: string; // location name
-  address: string;
-  address2?: string;
-  city: string;
-  province?: string;
-  postalcode?: string;
-  country?: string;
-  pluscode?: string;
-  latitude?: number | null;
-  longitude?: number | null;
-
-*/
