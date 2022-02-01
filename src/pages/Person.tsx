@@ -1,4 +1,4 @@
-import { IonBackButton, IonButton, IonButtons, IonContent, IonDatetime, IonHeader, IonIcon, IonInput, IonItem, IonLabel, IonList, IonListHeader, IonMenuButton, IonModal, IonPage, IonPopover, IonTextarea, IonTitle, IonToolbar } from '@ionic/react';
+import { IonBackButton, IonButton, IonButtons, IonContent, IonDatetime, IonHeader, IonIcon, IonInput, IonItem, IonLabel, IonList, IonListHeader, IonLoading, IonMenuButton, IonModal, IonPage, IonPopover, IonTextarea, IonTitle, IonToolbar } from '@ionic/react';
 import { User } from '@supabase/supabase-js'
 import { addSharp, airplaneOutline, airplaneSharp, calendar, checkmarkOutline, closeOutline, fastFoodOutline, fastFoodSharp, personOutline, personSharp, save } from 'ionicons/icons';
 import { useEffect, useState } from 'react';
@@ -25,6 +25,7 @@ let _user: User | null = null
 const Person: React.FC = () => {
     const { t } = useTranslation();
     const history = useHistory();
+    const [showLoading, setShowLoading] = useState(true);
 
     let { id } = useParams<{ id: string; }>();
     const isNew = (id === 'new');
@@ -66,6 +67,7 @@ const Person: React.FC = () => {
             console.log('loadPerson data', data);
             setPerson(data);
         }
+        setShowLoading(false);
     }
 
 
@@ -132,6 +134,9 @@ const Person: React.FC = () => {
       </IonHeader>
 
       <IonContent className='ion-padding'>
+
+          <IonLoading isOpen={showLoading} message={'Loading, please wait...'} />
+
             <div className="ion-padding">View / Edit Person</div>
             <div className="ion-padding">id: {id}</div>
 
@@ -250,9 +255,6 @@ const Person: React.FC = () => {
                                 </IonItem>
                             )
                         })}
-                        {/* <IonItem>
-                            <Address data={null} type="new" saveFunction={saveNewAddress}/>
-                        </IonItem> */}
                     </IonList>
                 </IonItem>
 

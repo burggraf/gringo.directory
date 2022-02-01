@@ -1,4 +1,4 @@
-import { IonButton, IonButtons, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonInput, IonItem, IonLabel, IonList, IonListHeader, IonMenuButton, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
+import { IonButton, IonButtons, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonInput, IonItem, IonLabel, IonList, IonListHeader, IonLoading, IonMenuButton, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
 import { User } from '@supabase/supabase-js'
 import { addOutline, addSharp, airplaneOutline, airplaneSharp, checkmarkOutline, informationCircleOutline, informationCircleSharp, informationOutline, informationSharp, peopleOutline, peopleSharp, personOutline, personSharp, save } from 'ionicons/icons';
 import { useEffect, useState } from 'react';
@@ -21,6 +21,7 @@ let _user: User | null = null
 const People: React.FC = () => {
     const { t } = useTranslation();
     const history = useHistory();
+    const [showLoading, setShowLoading] = useState(true);
     const [ people, setPeople ] = useState<PersonObject[]>([]);
 
     const loadPeople = async () => {
@@ -30,6 +31,7 @@ const People: React.FC = () => {
         } else {
             setPeople(data);
         }
+        setShowLoading(false);
 
     }
     useEffect(() => {
@@ -62,6 +64,7 @@ const People: React.FC = () => {
 
       <IonContent class="ion-padding">
 
+      <IonLoading isOpen={showLoading} message={'Loading, please wait...'} />
 
         <IonGrid key={'peopleList'}>
             {people.map((person: PersonObject) => {
