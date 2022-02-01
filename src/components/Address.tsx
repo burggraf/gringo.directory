@@ -44,7 +44,12 @@ const Address: React.FC<ContainerProps> = ({ data, index, saveFunction, deleteFu
 		setLocalData({ ...localData, [fld]: e.detail.value! })
 	}
     const saveHandler = () => {
-        saveFunction(localData, index);
+        saveFunction('address', localData, index);
+    }
+    const deleteHandler = () => {
+		if (deleteFunction) {
+			deleteFunction('address', localData, index);
+		}
     }
 	return (
 		<>
@@ -71,7 +76,7 @@ const Address: React.FC<ContainerProps> = ({ data, index, saveFunction, deleteFu
 				data={{ data }}
                 index={index}
 				saveFunction={saveHandler}
-                deleteFunction={deleteFunction}
+                deleteFunction={deleteFunction ? deleteHandler : undefined}
 				setShowModal={setShowModal}>
 				<IonList>
 					<IonItem lines='none'>

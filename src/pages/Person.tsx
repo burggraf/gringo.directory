@@ -109,20 +109,20 @@ const Person: React.FC = () => {
         setPerson(newPerson);
     }
 
-    const saveAddress = (address: AddressObject, index: number, deleteFlag: boolean = false) => {
-        const newPerson = {...person};
-        if (!newPerson.address) { newPerson.address = []; }
-        if (index === -1) { index = (newPerson.address.length); }
-        newPerson.address[index] = address;
-        setPerson(newPerson);
-    }
-    const deleteAddress = (address: AddressObject, index: number) => {
-        const newPerson = {...person};
-        if (newPerson.address && newPerson.address.length >= (index -1)) {
-            newPerson.address.splice(index, 1);
-        }
-        setPerson(newPerson);
-    }
+    // const saveAddress = (address: AddressObject, index: number, deleteFlag: boolean = false) => {
+    //     const newPerson = {...person};
+    //     if (!newPerson.address) { newPerson.address = []; }
+    //     if (index === -1) { index = (newPerson.address.length); }
+    //     newPerson.address[index] = address;
+    //     setPerson(newPerson);
+    // }
+    // const deleteAddress = (address: AddressObject, index: number) => {
+    //     const newPerson = {...person};
+    //     if (newPerson.address && newPerson.address.length >= (index -1)) {
+    //         newPerson.address.splice(index, 1);
+    //     }
+    //     setPerson(newPerson);
+    // }
     const savePerson = async () => {
         const { data, error } = await supabaseDataService.savePerson(person);
         console.log('savePerson: data', data, 'error', error);
@@ -240,7 +240,7 @@ const Person: React.FC = () => {
 
                 <IonItem lines="none">
                     <IonLabel style={{ maxWidth: '100px'}} slot='start' class="itemLabel">
-                        {t('Address')}<br/><Address data={{ownerid: id}} index={-1} saveFunction={saveAddress}/>
+                        {t('Address')}<br/><Address data={{ownerid: id}} index={-1} saveFunction={saveItem}/>
                     </IonLabel>
                     <IonList style={{width: '100%'}}>
                         {person?.address?.map((address: AddressObject, index: number) => {
@@ -262,8 +262,8 @@ const Person: React.FC = () => {
                                         <Address 
                                             data={address} 
                                             index={index} 
-                                            saveFunction={saveAddress}
-                                            deleteFunction={deleteAddress}
+                                            saveFunction={saveItem}
+                                            deleteFunction={deleteItem}
                                         />
                                     </IonLabel>
                                 </IonItem>
