@@ -1,6 +1,6 @@
-import { IonBackButton, IonButton, IonButtons, IonContent, IonDatetime, IonHeader, IonIcon, IonInput, IonItem, IonLabel, IonList, IonListHeader, IonLoading, IonMenuButton, IonModal, IonPage, IonPopover, IonTextarea, IonTitle, IonToolbar } from '@ionic/react';
+import { IonBackButton, IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonInput, IonItem, IonLabel, IonList, IonListHeader, IonLoading, IonPage, IonTextarea, IonTitle, IonToolbar } from '@ionic/react';
 import { User } from '@supabase/supabase-js'
-import { addSharp, airplaneOutline, airplaneSharp, calendar, checkmarkOutline, closeOutline, fastFoodOutline, fastFoodSharp, personOutline, personSharp, save } from 'ionicons/icons';
+import { checkmarkOutline, personOutline, personSharp } from 'ionicons/icons';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router';
@@ -8,19 +8,15 @@ import { Person as PersonObject } from '../../models/Person';
 import SupabaseAuthService from '../Login/supabase.auth.service'
 import SupabaseDataService from '../services/supabase.data.service'
 import UtilityFunctionsService from '../services/utility.functions.service';
-import Modal from '../components/Modal';
 import Address from '../components/Address';
 import { Address as AddressObject } from '../../models/Models';
 import "../translations/i18n";
 import './Person.css';
-import { element } from 'prop-types';
-import { boolean, string } from 'yargs';
 
 const supabaseDataService = SupabaseDataService.getInstance()
 const supabaseAuthService = SupabaseAuthService.getInstance()
 const utils = UtilityFunctionsService.getInstance()
 let _user: User | null = null
-
 
 const Person: React.FC = () => {
     const { t } = useTranslation();
@@ -72,7 +68,6 @@ const Person: React.FC = () => {
 
 
 	const [ person, setPerson ] = useState<PersonObject>(initPerson);
-    const [showModal, setShowModal] = useState<any>({currentModal: null});
 
     useEffect(() => {
         // Only run this one time!  No multiple subscriptions!
@@ -118,7 +113,6 @@ const Person: React.FC = () => {
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="start">
-            {/* <IonMenuButton /> */}
             <IonBackButton defaultHref="/people" />
           </IonButtons>
             <IonTitle>
