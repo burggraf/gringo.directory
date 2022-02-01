@@ -1,6 +1,7 @@
 import { IonBackButton, IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonInput, IonItem, IonLabel, IonList, IonListHeader, IonLoading, IonPage, IonTextarea, IonTitle, IonToolbar } from '@ionic/react';
 import { User } from '@supabase/supabase-js'
-import { checkmarkOutline, personOutline, personSharp } from 'ionicons/icons';
+import { analytics, checkmarkOutline, personOutline, personSharp } from 'ionicons/icons';
+import { stringify } from 'querystring';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router';
@@ -8,6 +9,7 @@ import { useHistory, useParams } from 'react-router';
 import { Address as AddressObject } from '../../models/Models';
 import { Person as PersonObject } from '../../models/Person';
 import Address from '../components/Address';
+import GenericItemArrayEntry from '../components/GenericItemArrayEntry';
 import SupabaseAuthService from '../Login/supabase.auth.service'
 import SupabaseDataService from '../services/supabase.data.service'
 import UtilityFunctionsService from '../services/utility.functions.service';
@@ -91,6 +93,21 @@ const Person: React.FC = () => {
         const fld = e.srcElement.itemID;
         setPerson({ ...person, [fld]: e.detail.value! });
     }
+    const saveItem = (id: string, data: any, index: number) => {
+        const newPerson: any = {...person};
+        if (!newPerson[id]) { newPerson[id] = []; }
+        if (index === -1) { index = (newPerson[id].length); }
+        newPerson[id][index] = data;
+        setPerson(newPerson);
+    }
+    const deleteItem = (id: string, data: any, index: number) => {
+        const newPerson: any = {...person};
+        if (newPerson[id] && newPerson[id].length >= (index -1)) {
+            newPerson[id].splice(index, 1);
+        }
+        setPerson(newPerson);
+    }
+
     const saveAddress = (address: AddressObject, index: number, deleteFlag: boolean = false) => {
         const newPerson = {...person};
         if (!newPerson.address) { newPerson.address = []; }
@@ -253,6 +270,41 @@ const Person: React.FC = () => {
                         })}
                     </IonList>
                 </IonItem>
+
+                <IonItem lines="none">
+                    <IonLabel style={{ maxWidth: '100px'}} slot='start' class="itemLabel">
+                        {t('Email')}<br/>
+                        <GenericItemArrayEntry 
+                            title={t('Email')}
+                            id={'email'}                            
+                            attributes={[{'name': 'email','placeholder': 'Email Address'}]}
+                            types={[{value: 'home'},{value: 'work'},{value: 'school'},{value: 'iCloud'},{value: 'other'}]}
+                            data={null} index={-1} saveFunction={saveItem}/>
+                    </IonLabel>
+                    <IonList style={{width: '100%'}}>
+                        {person?.email?.map((email: any, index: number) => {
+                            return (
+                                <IonItem key={`address_${index}`}>
+                                    <IonLabel>
+                                        Type: {email.type}<br/>
+                                        Email: {email.email}
+                                    </IonLabel>
+                                    <IonLabel slot="end">
+                                    <GenericItemArrayEntry 
+                                        title={t('Email')}
+                                        id={'email'}                            
+                                        attributes={[{'name': 'email','placeholder': 'Email Address'}]}
+                                        types={[{value: 'home'},{value: 'work'},{value: 'school'},{value: 'iCloud'},{value: 'other'}]}
+                                        data={email.email} index={index} 
+                                        deleteFunction={deleteItem}
+                                        saveFunction={saveItem}/>
+                                    </IonLabel>
+                                </IonItem>
+                            )
+                        })}
+                    </IonList>
+                </IonItem>
+
 
                 <IonItem lines="none">
                     <IonLabel slot='start' class="itemLabel">{t('Notes')}</IonLabel>
