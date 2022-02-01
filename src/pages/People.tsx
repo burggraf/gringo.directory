@@ -4,9 +4,11 @@ import { addOutline, addSharp, airplaneOutline, airplaneSharp, checkmarkOutline,
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router';
+
 import { Person as PersonObject } from '../../models/Person'
 import SupabaseAuthService from '../Login/supabase.auth.service'
 import SupabaseDataService from '../services/supabase.data.service'
+
 // import description from '../../package.json';
 // import version from '../../package.json';
 
@@ -64,7 +66,7 @@ const People: React.FC = () => {
 
       <IonContent class="ion-padding">
 
-      <IonLoading isOpen={showLoading} message={'Loading, please wait...'} />
+      <IonLoading isOpen={showLoading} message={t('Loading')} />
 
         <IonGrid key={'peopleList'}>
             {people.map((person: PersonObject) => {

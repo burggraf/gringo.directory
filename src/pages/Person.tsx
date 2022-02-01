@@ -4,12 +4,14 @@ import { checkmarkOutline, personOutline, personSharp } from 'ionicons/icons';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router';
+
+import { Address as AddressObject } from '../../models/Models';
 import { Person as PersonObject } from '../../models/Person';
+import Address from '../components/Address';
 import SupabaseAuthService from '../Login/supabase.auth.service'
 import SupabaseDataService from '../services/supabase.data.service'
 import UtilityFunctionsService from '../services/utility.functions.service';
-import Address from '../components/Address';
-import { Address as AddressObject } from '../../models/Models';
+
 import "../translations/i18n";
 import './Person.css';
 
@@ -129,7 +131,7 @@ const Person: React.FC = () => {
 
       <IonContent className='ion-padding'>
 
-          <IonLoading isOpen={showLoading} message={'Loading, please wait...'} />
+          <IonLoading isOpen={showLoading} message={t('Loading')} />
 
             <div className="ion-padding">View / Edit Person</div>
             <div className="ion-padding">id: {id}</div>
