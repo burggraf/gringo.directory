@@ -31,6 +31,6 @@ export interface Person {
     url?: Url[];
     address?: Address[];
     relation?: Relation[];
-    socialProfile?: SocialProfile[];
-    instantMessage?: InstantMessage[];
+    socialprofile?: SocialProfile[];
+    instantmessage?: InstantMessage[];
   }
