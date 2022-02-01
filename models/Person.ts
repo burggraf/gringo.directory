@@ -9,7 +9,7 @@ import {
     Metadata,
     Permissions } from './Models';      
       
-export interface PersonObject {
+export interface Person {
     id: string;
     uid?: string;
     firstname?: string;

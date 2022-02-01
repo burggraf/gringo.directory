@@ -4,7 +4,7 @@ import { addSharp, airplaneOutline, airplaneSharp, calendar, checkmarkOutline, c
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
-import { PersonObject } from '../../models/Person';
+import { Person as PersonObject } from '../../models/Person';
 import SupabaseAuthService from '../Login/supabase.auth.service'
 import SupabaseDataService from '../services/supabase.data.service'
 import UtilityFunctionsService from '../services/utility.functions.service';
@@ -75,11 +75,14 @@ const Person: React.FC = () => {
             _user = user
             console.log('Enjoy: subscribed: _user', _user)
         });
+        console.log('useEffect: id', id);
         if (id === 'new') {
             id = utils.uuidv4();
+            setPerson({...initPerson, id: id});
         } else {
             loadPerson(id);
         }    
+        console.log('useEffect: id', id);
     }, []) // <-- empty dependency array
     
     const changeHandler = (e: any) => {

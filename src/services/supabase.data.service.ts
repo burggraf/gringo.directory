@@ -39,6 +39,14 @@ export default class SupabaseDataService {
     .upsert(profile);
     return { data, error };
   }
+
+  public async getPeople() {
+    const { data, error } = 
+    await supabase.from('persons')
+    .select('*');
+    return { data, error };
+  }
+
   public async getPerson(id: string) {
     const { data, error } = 
     await supabase.from('persons')

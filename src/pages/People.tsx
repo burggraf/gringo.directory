@@ -4,7 +4,7 @@ import { addOutline, addSharp, airplaneOutline, airplaneSharp, checkmarkOutline,
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router';
-
+import { Person as PersonObject } from '../../models/Person'
 import SupabaseAuthService from '../Login/supabase.auth.service'
 import SupabaseDataService from '../services/supabase.data.service'
 // import description from '../../package.json';
@@ -21,13 +21,24 @@ let _user: User | null = null
 const People: React.FC = () => {
     const { t } = useTranslation();
     const history = useHistory();
+    const [ people, setPeople ] = useState<PersonObject[]>([]);
 
+    const loadPeople = async () => {
+        const { data, error } = await supabaseDataService.getPeople();
+        if (error) { 
+            console.error('loadPeople: error', error)
+        } else {
+            setPeople(data);
+        }
+
+    }
     useEffect(() => {
         // Only run this one time!  No multiple subscriptions!
         supabaseAuthService.user.subscribe((user: User | null) => {
             _user = user
             console.log('Come: subscribed: _user', _user)
-        })
+        });
+        loadPeople();
     }, []) // <-- empty dependency array
     
     return (
@@ -52,8 +63,19 @@ const People: React.FC = () => {
       <IonContent class="ion-padding">
 
 
-        People List
-
+        <IonGrid key={'peopleList'}>
+            {people.map((person: PersonObject) => {
+                return (
+                    <IonRow key={person.id} onClick={()=>{history.push(`/person/${person.id}`)}}>
+                        <IonCol>
+                            <IonLabel>
+                                {`${person.firstname || ''} ${person.middlename || ''} ${person.lastname || ''}`}
+                            </IonLabel>
+                        </IonCol>
+                    </IonRow>
+                )
+            })}
+        </IonGrid>
       </IonContent>
     </IonPage>
   );
