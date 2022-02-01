@@ -1,6 +1,6 @@
-import { IonButton, IonIcon, IonInput, IonItem, IonLabel, IonList, IonSelect, IonSelectOption } from '@ionic/react'
-import { addOutline, addSharp, createOutline, createSharp, person } from 'ionicons/icons'
-import { useEffect, useState } from 'react'
+import { IonButton, IonIcon, IonInput, IonItem, IonLabel, IonList } from '@ionic/react'
+import { addOutline, addSharp, createOutline, createSharp } from 'ionicons/icons'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { Address as AddressObject } from '../../models/Models'
@@ -26,8 +26,6 @@ const Address: React.FC<ContainerProps> = ({ data, index, saveFunction, deleteFu
 	const [localData, setLocalData] = useState<any>({})
 	const newAddress = (): AddressObject => {
 		return {
-            // id: utils.uuidv4(),
-            // ownerid: data.ownerid,
 			type: '',
 			name: '', // location name
 			address: '',
@@ -45,16 +43,9 @@ const Address: React.FC<ContainerProps> = ({ data, index, saveFunction, deleteFu
 		const fld = e.srcElement.itemID
 		setLocalData({ ...localData, [fld]: e.detail.value! })
 	}
-	// useEffect(() => {
-	// 	if (type === 'new') {
-	// 		setLocalData(newAddress())
-	// 	}
-	// }, [])
     const saveHandler = () => {
-        console.log('save handler', localData, 'index', index);
         saveFunction(localData, index);
     }
-
 	return (
 		<>
 			<IonButton
