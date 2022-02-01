@@ -101,6 +101,7 @@ const Person: React.FC = () => {
         setPerson(newPerson);
     }
     const deleteItem = (id: string, data: any, index: number) => {
+        console.log('deleteItem', id, data, index);
         const newPerson: any = {...person};
         if (newPerson[id] && newPerson[id].length >= (index -1)) {
             newPerson[id].splice(index, 1);

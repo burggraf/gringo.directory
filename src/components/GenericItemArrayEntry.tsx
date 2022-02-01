@@ -51,6 +51,11 @@ const GenericItemArrayEntry: React.FC<ContainerProps> = ({ data, attributes, ind
     const saveHandler = () => {
         saveFunction(id, localData, index);
     }
+    const deleteHandler = () => {
+		if (deleteFunction) {
+        	deleteFunction(id, localData, index);
+		}
+    }
 	return (
 		<>
 			<IonButton
@@ -76,7 +81,7 @@ const GenericItemArrayEntry: React.FC<ContainerProps> = ({ data, attributes, ind
 				data={{ data }}
                 index={index}
 				saveFunction={saveHandler}
-                deleteFunction={deleteFunction}
+                deleteFunction={(index > -1 ? deleteHandler: undefined)}
 				setShowModal={setShowModal}>
 				<IonList>
 					<IonItem lines='none'>
