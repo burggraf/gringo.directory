@@ -1,4 +1,4 @@
-import { IonBackButton, IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonInput, IonItem, IonLabel, IonList, IonListHeader, IonLoading, IonPage, IonTextarea, IonTitle, IonToolbar } from '@ionic/react';
+import { IonBackButton, IonButton, IonButtons, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonInput, IonItem, IonLabel, IonList, IonListHeader, IonLoading, IonPage, IonRow, IonTextarea, IonTitle, IonToolbar } from '@ionic/react';
 import { User } from '@supabase/supabase-js'
 import { analytics, checkmarkOutline, personOutline, personSharp } from 'ionicons/icons';
 import { stringify } from 'querystring';
@@ -190,18 +190,18 @@ const Person: React.FC = () => {
 
           <IonLoading isOpen={showLoading} message={t('Loading')} />
 
-            <div className="ion-padding">View / Edit Person</div>
-            <div className="ion-padding">id: {id}</div>
-
-            <IonList>
-                <IonListHeader>
+            <IonGrid>
+                {/* <IonListHeader>
                     <IonLabel>
                         <IonIcon size="large" ios={personOutline} md={personSharp}></IonIcon>
                         &nbsp;&nbsp;{t('Person Details')}
                     </IonLabel>
-                </IonListHeader>
-                <IonItem lines="none">
-                    <IonLabel slot='start' class="itemLabel">{t('First Name')}</IonLabel>
+                </IonListHeader> */}
+                <IonRow>
+                    <IonCol class="labelColumn">
+                    <IonLabel class="itemLabel">{t('First Name')}</IonLabel>
+                    </IonCol>
+                    <IonCol>
                     <IonInput
 							type='text'
 							placeholder={'First Name'}
@@ -210,9 +210,13 @@ const Person: React.FC = () => {
 							value={person?.firstname!}
 							class='inputBox'>
                     </IonInput>
-                </IonItem>
-                <IonItem lines="none">
-                    <IonLabel slot='start' class="itemLabel">{t('Middle Name')}</IonLabel>
+                    </IonCol>
+                </IonRow>
+                <IonRow>
+                    <IonCol class="labelColumn">
+                    <IonLabel class="itemLabel">{t('Middle Name')}</IonLabel>
+                    </IonCol>
+                    <IonCol>
                     <IonInput
 							type='text'
 							placeholder={'Middle Name'}
@@ -221,9 +225,13 @@ const Person: React.FC = () => {
 							value={person?.middlename!}
 							class='inputBox'>
                     </IonInput>
-                </IonItem>
-                <IonItem lines="none">
-                    <IonLabel slot='start' class="itemLabel">{t('Last Name')}</IonLabel>
+                    </IonCol>
+                </IonRow>
+                <IonRow>
+                    <IonCol class="labelColumn">
+                    <IonLabel class="itemLabel">{t('Last Name')}</IonLabel>
+                    </IonCol>
+                    <IonCol>
                     <IonInput
 							type='text'
 							placeholder={'Last Name'}
@@ -232,9 +240,13 @@ const Person: React.FC = () => {
 							value={person?.lastname!}
 							class='inputBox'>
                     </IonInput>
-                </IonItem>
-                <IonItem lines="none">
-                    <IonLabel slot='start' class="itemLabel">{t('Nickname')}</IonLabel>
+                    </IonCol>
+                </IonRow>
+                <IonRow>
+                    <IonCol class="labelColumn">
+                    <IonLabel class="itemLabel">{t('Nickname')}</IonLabel>
+                    </IonCol>
+                    <IonCol>
                     <IonInput
 							type='text'
 							placeholder={'Nickname'}
@@ -243,9 +255,13 @@ const Person: React.FC = () => {
 							value={person?.nickname!}
 							class='inputBox'>
                     </IonInput>
-                </IonItem>
-                <IonItem lines="none">
-                    <IonLabel slot='start' class="itemLabel">{t('Company')}</IonLabel>
+                    </IonCol>
+                </IonRow>
+                <IonRow>
+                    <IonCol class="labelColumn">
+                    <IonLabel class="itemLabel">{t('Company')}</IonLabel>
+                    </IonCol>
+                    <IonCol>
                     <IonInput
 							type='text'
 							placeholder={'Company'}
@@ -254,37 +270,49 @@ const Person: React.FC = () => {
 							value={person?.company!}
 							class='inputBox'>
                     </IonInput>
-                </IonItem>
+                    </IonCol>
+                </IonRow>
 
-                <IonItem lines="none">
-                    <IonLabel slot='start' class="itemLabel">{t('Birthdate')}</IonLabel>
+                <IonRow>
+                    <IonCol class="labelColumn">
+                    <IonLabel class="itemLabel">{t('Birthdate')}</IonLabel>
+                    </IonCol>
+                    <IonCol>
                     <IonInput 
                             type='date' 
                             itemID='dob'
                             onIonChange={changeHandler}
                             value={person?.dob!} 
                             class='inputBox' />
-                </IonItem>
+                    </IonCol>
+                </IonRow>
 
-                <IonItem lines="none">
-                    <IonLabel slot='start' class="itemLabel">{t('Anniversary')}</IonLabel>
+                <IonRow>
+                    <IonCol class="labelColumn">
+                    <IonLabel class="itemLabel">{t('Anniversary')}</IonLabel>
+                    </IonCol>
+                    <IonCol>
                     <IonInput 
                             type='date' 
                             itemID='anniversary'
                             onIonChange={changeHandler}
                             value={person?.anniversary!} 
                             class='inputBox' />
-                </IonItem>
+                    </IonCol>
+                </IonRow>
 
 
-                <IonItem lines="none">
-                    <IonLabel style={{ maxWidth: '100px'}} slot='start' class="itemLabel">
+                <IonRow>
+                    <IonCol class="labelColumn">
+                    <IonLabel class="itemLabel">
                         {t('Address')}<br/><Address data={{ownerid: id}} index={-1} saveFunction={saveItem}/>
                     </IonLabel>
-                    <IonList style={{width: '100%'}}>
+                    </IonCol>
+                    <IonCol>
+                    <IonGrid class="multiBox">
                         {person?.address?.map((address: AddressObject, index: number) => {
                             return (
-                                <IonItem key={`address_${index}`}>
+                                <IonRow class="multiBoxEntry" key={`address_${index}`}>
                                     <IonLabel>
                                     { address.type && <div>Type: {address.type}</div>}
                                     { address.name && <div>Location: {address.name}</div>}
@@ -305,14 +333,16 @@ const Person: React.FC = () => {
                                             deleteFunction={deleteItem}
                                         />
                                     </IonLabel>
-                                </IonItem>
+                                </IonRow>
                             )
                         })}
-                    </IonList>
-                </IonItem>
+                    </IonGrid>
+                    </IonCol>
+                </IonRow>
 
-                <IonItem lines="none">
-                    <IonLabel style={{ maxWidth: '100px'}} slot='start' class="itemLabel">
+                <IonRow>
+                    <IonCol class="labelColumn">
+                    <IonLabel class="itemLabel">
                         {t('Email')}<br/>
                         <GenericItemArrayEntry 
                             title={t('Email')}
@@ -321,10 +351,12 @@ const Person: React.FC = () => {
                             types={[{value: 'home'},{value: 'work'},{value: 'school'},{value: 'iCloud'},{value: 'other'}]}
                             data={null} index={-1} saveFunction={saveItem}/>
                     </IonLabel>
-                    <IonList style={{width: '100%'}}>
+                    </IonCol>
+                    <IonCol>
+                    <IonGrid class="multiBox">
                         {person?.email?.map((email: any, index: number) => {
                             return (
-                                <IonItem key={`email_${index}`}>
+                                <IonRow class="multiBoxEntry" key={`email_${index}`}>
                                     <IonLabel>
                                         Type: {email.type}<br/>
                                         Email: {email.email}
@@ -339,14 +371,16 @@ const Person: React.FC = () => {
                                         deleteFunction={deleteItem}
                                         saveFunction={saveItem}/>
                                     </IonLabel>
-                                </IonItem>
+                                </IonRow>
                             )
                         })}
-                    </IonList>
-                </IonItem>
+                    </IonGrid>
+                    </IonCol>
+                </IonRow>
 
-                <IonItem lines="none">
-                    <IonLabel style={{ maxWidth: '100px'}} slot='start' class="itemLabel">
+                <IonRow>
+                    <IonCol class="labelColumn">
+                    <IonLabel class="itemLabel">
                         {t('URL')}<br/>
                         <GenericItemArrayEntry 
                             title={t('URL')}
@@ -355,10 +389,12 @@ const Person: React.FC = () => {
                             types={[{value: 'homepage'},{value: 'home'},{value: 'work'},{value: 'school'},{value: 'other'}]}
                             data={null} index={-1} saveFunction={saveItem}/>
                     </IonLabel>
-                    <IonList style={{width: '100%'}}>
+                    </IonCol>
+                    <IonCol>
+                    <IonGrid class="multiBox">
                         {person?.url?.map((item: any, index: number) => {
                             return (
-                                <IonItem key={`url${index}`}>
+                                <IonRow class="multiBoxEntry" key={`url${index}`}>
                                     <IonLabel>
                                         Type: {item.type}<br/>
                                         Email: {item.email}
@@ -373,14 +409,16 @@ const Person: React.FC = () => {
                                         deleteFunction={deleteItem}
                                         saveFunction={saveItem}/>
                                     </IonLabel>
-                                </IonItem>
+                                </IonRow>
                             )
                         })}
-                    </IonList>
-                </IonItem>
+                    </IonGrid>
+                    </IonCol>
+                </IonRow>
 
-                <IonItem lines="none">
-                    <IonLabel style={{ maxWidth: '100px'}} slot='start' class="itemLabel">
+                <IonRow>
+                    <IonCol class="labelColumn">
+                    <IonLabel class="itemLabel">
                         {t('Social Profile')}<br/>
                         <GenericItemArrayEntry 
                             title={t('Social Profile')}
@@ -389,10 +427,12 @@ const Person: React.FC = () => {
                             types={socialProfileTypes}
                             data={null} index={-1} saveFunction={saveItem}/>
                     </IonLabel>
-                    <IonList style={{width: '100%'}}>
+                    </IonCol>
+                    <IonCol>
+                    <IonGrid class="multiBox">
                         {person?.socialprofile?.map((item: any, index: number) => {
                             return (
-                                <IonItem key={`socialprofile_${index}`}>
+                                <IonRow class="multiBoxEntry" key={`socialprofile_${index}`}>
                                     <IonLabel>
                                         Type: {item.type}<br/>
                                         URL: {item.url}
@@ -408,14 +448,16 @@ const Person: React.FC = () => {
                                         deleteFunction={deleteItem}
                                         saveFunction={saveItem}/>
                                     </IonLabel>
-                                </IonItem>
+                                </IonRow>
                             )
                         })}
-                    </IonList>
-                </IonItem>
+                    </IonGrid>
+                    </IonCol>
+                </IonRow>
 
-                <IonItem lines="none">
-                    <IonLabel style={{ maxWidth: '100px'}} slot='start' class="itemLabel">
+                <IonRow>
+                    <IonCol class="labelColumn">
+                    <IonLabel class="itemLabel">
                         {t('Instant Message')}<br/>
                         <GenericItemArrayEntry 
                             title={t('Instant Message')}
@@ -424,10 +466,12 @@ const Person: React.FC = () => {
                             types={instantMessageTypes}
                             data={null} index={-1} saveFunction={saveItem}/>
                     </IonLabel>
-                    <IonList style={{width: '100%'}}>
+                    </IonCol>
+                    <IonCol>
+                    <IonGrid class="multiBox">
                         {person?.instantmessage?.map((item: any, index: number) => {
                             return (
-                                <IonItem key={`instantmessage${index}`}>
+                                <IonRow class="multiBoxEntry" key={`instantmessage${index}`}>
                                     <IonLabel>
                                         Type: {item.type}<br/>
                                         Handle: {item.handle}
@@ -443,15 +487,19 @@ const Person: React.FC = () => {
                                         deleteFunction={deleteItem}
                                         saveFunction={saveItem}/>
                                     </IonLabel>
-                                </IonItem>
+                                </IonRow>
                             )
                         })}
-                    </IonList>
-                </IonItem>
+                    </IonGrid>
+                    </IonCol>
+                </IonRow>
 
 
-                <IonItem lines="none">
-                    <IonLabel slot='start' class="itemLabel">{t('Notes')}</IonLabel>
+                <IonRow>
+                    <IonCol class="labelColumn">
+                    <IonLabel class="itemLabel">{t('Notes')}</IonLabel>
+                    </IonCol>
+                    <IonCol>
                     <IonTextarea
 							placeholder={'Notes'}
                             itemID='notes'
@@ -462,8 +510,9 @@ const Person: React.FC = () => {
                             rows={3}
 							class='inputBox'>
                     </IonTextarea>
-                </IonItem>
-            </IonList>
+                    </IonCol>
+                </IonRow>
+            </IonGrid>
             { !isNew &&
                 <div className="ion-padding">
                     <IonButton fill="clear" expand="block" strong color="danger"

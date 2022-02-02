@@ -1,3 +1,21 @@
 .itemLabel {
-    width: 100px;
+    width: 130px;
+    min-width: 130px;
+}
+.labelColumn {
+    width: 130px;
+    min-width: 130px;
+    max-width: 130px;
+    margin-top: 10px;
+    vertical-align: top;
+}
+.multiBox {
+    width: 100%;
+    border-width: 1px;
+    border-style: solid;
+    border-color: var(--ion-color-medium);
+    min-height: 100px;
+}
+.multiBoxEntry {
+    padding-bottom: 10px;
 }
