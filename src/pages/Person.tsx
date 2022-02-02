@@ -136,6 +136,7 @@ const Person: React.FC = () => {
         if (id === 'new') {
             id = utils.uuidv4();
             setPerson({...initPerson, id: id});
+            setShowLoading(false);
         } else {
             loadPerson(id);
         }    
