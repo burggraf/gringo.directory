@@ -346,9 +346,9 @@ const Person: React.FC = () => {
                 <tr>
                     <td className="labelColumn">
                     <IonLabel class="itemLabel">
-                        {t('Email')}<br/>
+                        {t('Email Address')}<br/>
                         <GenericItemArrayEntry 
-                            title={t('Email')}
+                            title={t('Email Address')}
                             id={'email'}                            
                             attributes={[{'name': 'email','placeholder': 'Email Address'}]}
                             types={[{value: 'home'},{value: 'work'},{value: 'school'},{value: 'iCloud'},{value: 'other'}]}
@@ -369,7 +369,7 @@ const Person: React.FC = () => {
                                     <td className="ion-text-right">
                                     <IonLabel>
                                     <GenericItemArrayEntry 
-                                        title={t('Email')}
+                                        title={t('Email Address')}
                                         id={'email'}                            
                                         attributes={[{'name': 'email','placeholder': 'Email Address'}]}
                                         types={[{value: 'home'},{value: 'work'},{value: 'school'},{value: 'iCloud'},{value: 'other'}]}
@@ -388,9 +388,9 @@ const Person: React.FC = () => {
                 <tr>
                     <td className="labelColumn">
                     <IonLabel class="itemLabel">
-                        {t('URL')}<br/>
+                        {t('Web URL')}<br/>
                         <GenericItemArrayEntry 
-                            title={t('URL')}
+                            title={t('Web URL')}
                             id={'url'}                            
                             attributes={[{'name': 'url','placeholder': 'URL'}]}
                             types={[{value: 'homepage'},{value: 'home'},{value: 'work'},{value: 'school'},{value: 'other'}]}
@@ -411,7 +411,7 @@ const Person: React.FC = () => {
                                     <td className="ion-text-right">
                                     <IonLabel>
                                     <GenericItemArrayEntry 
-                                        title={t('URL')}
+                                        title={t('Web URL')}
                                         id={'url'}                            
                                         attributes={[{'name': 'url','placeholder': 'URL'}]}
                                         types={[{value: 'homepage'},{value: 'home'},{value: 'work'},{value: 'school'},{value: 'other'}]}

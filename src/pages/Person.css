@@ -19,6 +19,7 @@
     padding-top: 10px;
     padding-right: 10px;
     white-space: nowrap;
+    text-align: right;
 }
 .tbl {
     width: 100%;
@@ -31,12 +32,12 @@
     border-width: 1px;
     border-style: solid;
     border-color: var(--ion-color-medium);
-    min-height: 100px;
+    min-height: 80px;
 }
 .multiBoxEntry {
     padding-bottom: 10px;
-    padding-left: 10px;
     padding-top: 10px;
-    border-bottom: 1px solid var(--ion-color-light);
+    padding-left: 10px;
+    /* border-bottom: 1px solid var(--ion-color-light); */
     width: 100%;
 }
