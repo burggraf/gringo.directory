@@ -313,6 +313,7 @@ const Person: React.FC = () => {
                         {person?.address?.map((address: AddressObject, index: number) => {
                             return (
                                 <IonRow class="multiBoxEntry" key={`address_${index}`}>
+                                    <IonCol size="10">
                                     <IonLabel>
                                     { address.type && <div>Type: {address.type}</div>}
                                     { address.name && <div>Location: {address.name}</div>}
@@ -325,7 +326,9 @@ const Person: React.FC = () => {
                                     { address.pluscode && <div>PlusCode: {address.pluscode}</div>}
                                     { address.latitude && <div>Lat/Lng: {address.latitude},{address.longitude}</div>}
                                     </IonLabel>
-                                    <IonLabel slot="end">
+                                    </IonCol>
+                                    <IonCol size="2" className="ion-text-right">
+                                    <IonLabel>
                                         <Address 
                                             data={address} 
                                             index={index} 
@@ -333,6 +336,7 @@ const Person: React.FC = () => {
                                             deleteFunction={deleteItem}
                                         />
                                     </IonLabel>
+                                    </IonCol>
                                 </IonRow>
                             )
                         })}
@@ -357,11 +361,14 @@ const Person: React.FC = () => {
                         {person?.email?.map((email: any, index: number) => {
                             return (
                                 <IonRow class="multiBoxEntry" key={`email_${index}`}>
+                                    <IonCol size="10">
                                     <IonLabel>
                                         Type: {email.type}<br/>
                                         Email: {email.email}
                                     </IonLabel>
-                                    <IonLabel slot="end">
+                                    </IonCol>
+                                    <IonCol size="2" className="ion-text-right">
+                                    <IonLabel>
                                     <GenericItemArrayEntry 
                                         title={t('Email')}
                                         id={'email'}                            
@@ -371,6 +378,7 @@ const Person: React.FC = () => {
                                         deleteFunction={deleteItem}
                                         saveFunction={saveItem}/>
                                     </IonLabel>
+                                    </IonCol>
                                 </IonRow>
                             )
                         })}
@@ -395,11 +403,14 @@ const Person: React.FC = () => {
                         {person?.url?.map((item: any, index: number) => {
                             return (
                                 <IonRow class="multiBoxEntry" key={`url${index}`}>
+                                    <IonCol size="10">
                                     <IonLabel>
                                         Type: {item.type}<br/>
                                         Email: {item.email}
                                     </IonLabel>
-                                    <IonLabel slot="end">
+                                    </IonCol>
+                                    <IonCol size="2" className="ion-text-right">
+                                    <IonLabel>
                                     <GenericItemArrayEntry 
                                         title={t('URL')}
                                         id={'url'}                            
@@ -409,6 +420,7 @@ const Person: React.FC = () => {
                                         deleteFunction={deleteItem}
                                         saveFunction={saveItem}/>
                                     </IonLabel>
+                                    </IonCol>
                                 </IonRow>
                             )
                         })}
@@ -433,11 +445,14 @@ const Person: React.FC = () => {
                         {person?.socialprofile?.map((item: any, index: number) => {
                             return (
                                 <IonRow class="multiBoxEntry" key={`socialprofile_${index}`}>
+                                    <IonCol size="10">
                                     <IonLabel>
                                         Type: {item.type}<br/>
                                         URL: {item.url}
                                     </IonLabel>
-                                    <IonLabel slot="end">
+                                    </IonCol>
+                                    <IonCol size="2" className="ion-text-right">
+                                    <IonLabel>
                                     <GenericItemArrayEntry 
                                         title={t('Social Profile')}
                                         id={'socialprofile'}                            
@@ -448,6 +463,7 @@ const Person: React.FC = () => {
                                         deleteFunction={deleteItem}
                                         saveFunction={saveItem}/>
                                     </IonLabel>
+                                    </IonCol>
                                 </IonRow>
                             )
                         })}
@@ -472,11 +488,14 @@ const Person: React.FC = () => {
                         {person?.instantmessage?.map((item: any, index: number) => {
                             return (
                                 <IonRow class="multiBoxEntry" key={`instantmessage${index}`}>
+                                    <IonCol size="10">
                                     <IonLabel>
                                         Type: {item.type}<br/>
                                         Handle: {item.handle}
                                     </IonLabel>
-                                    <IonLabel slot="end">
+                                    </IonCol>
+                                    <IonCol size="2" className="ion-text-right">
+                                    <IonLabel>
                                     <GenericItemArrayEntry 
                                         title={t('Instant Message')}
                                         id={'instantmessage'}                            
@@ -487,6 +506,7 @@ const Person: React.FC = () => {
                                         deleteFunction={deleteItem}
                                         saveFunction={saveItem}/>
                                     </IonLabel>
+                                    </IonCol>
                                 </IonRow>
                             )
                         })}
