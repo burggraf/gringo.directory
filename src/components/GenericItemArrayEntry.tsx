@@ -111,6 +111,7 @@ const GenericItemArrayEntry: React.FC<ContainerProps> = ({ data, attributes, ind
 							onIonChange={changeHandler}
 							value={localData[attr.name]!}
 							class='inputBox'></IonInput>
+							
 						</IonItem>
 					))}
 				</IonList>

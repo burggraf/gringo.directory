@@ -311,8 +311,8 @@ const Person: React.FC = () => {
                     <table className="multiBox"><tbody>
                         {person?.address?.map((address: AddressObject, index: number) => {
                             return (
-                                <tr className="multiBoxEntry" key={`address_${index}`}>
-                                    <td>
+                                <tr key={`address_${index}`}>
+                                    <td className="multiBoxEntry">
                                     <IonLabel>
                                     { address.type && <div>Type: {address.type}</div>}
                                     { address.name && <div>Location: {address.name}</div>}
@@ -359,8 +359,8 @@ const Person: React.FC = () => {
                     <table className="multiBox"><tbody>
                         {person?.email?.map((email: any, index: number) => {
                             return (
-                                <tr className="multiBoxEntry" key={`email_${index}`}>
-                                    <td>
+                                <tr key={`email_${index}`}>
+                                    <td className="multiBoxEntry">
                                     <IonLabel>
                                         Type: {email.type}<br/>
                                         Email: {email.email}
@@ -401,8 +401,8 @@ const Person: React.FC = () => {
                     <table className="multiBox"><tbody>
                         {person?.url?.map((item: any, index: number) => {
                             return (
-                                <tr className="multiBoxEntry" key={`url${index}`}>
-                                    <td>
+                                <tr key={`url${index}`}>
+                                    <td className="multiBoxEntry">
                                     <IonLabel>
                                         Type: {item.type}<br/>
                                         Email: {item.email}
@@ -443,8 +443,8 @@ const Person: React.FC = () => {
                     <table className="multiBox"><tbody>
                         {person?.socialprofile?.map((item: any, index: number) => {
                             return (
-                                <tr className="multiBoxEntry" key={`socialprofile_${index}`}>
-                                    <td>
+                                <tr key={`socialprofile_${index}`}>
+                                    <td className="multiBoxEntry">
                                     <IonLabel>
                                         Type: {item.type}<br/>
                                         URL: {item.url}
@@ -486,8 +486,8 @@ const Person: React.FC = () => {
                     <table className="multiBox"><tbody>
                         {person?.instantmessage?.map((item: any, index: number) => {
                             return (
-                                <tr className="multiBoxEntry" key={`instantmessage${index}`}>
-                                    <td>
+                                <tr key={`instantmessage${index}`}>
+                                    <td className="multiBoxEntry">
                                     <IonLabel>
                                         Type: {item.type}<br/>
                                         Handle: {item.handle}
