@@ -54,7 +54,8 @@ const Address: React.FC<ContainerProps> = ({ data, index, saveFunction, deleteFu
 	return (
 		<>
 			<IonButton
-				color='light'
+				color='medium'
+				fill='clear'
 				onClick={() => {
                     if (index === -1) {
                         setLocalData(newAddress());

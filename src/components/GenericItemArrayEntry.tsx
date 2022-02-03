@@ -59,7 +59,9 @@ const GenericItemArrayEntry: React.FC<ContainerProps> = ({ data, attributes, ind
 	return (
 		<>
 			<IonButton
-				color='light'
+				key={`GenericItemArrayEntry-button-${id}-${index}`}
+				color='medium'
+				fill='clear'
 				onClick={() => {
                     if (index === -1) {
                         setLocalData(newItem());
@@ -75,6 +77,7 @@ const GenericItemArrayEntry: React.FC<ContainerProps> = ({ data, attributes, ind
 				/>
 			</IonButton>
 			<Modal
+				key={`GenericItemArrayEntry-modal-${id}-${index}`}
 				id={id}
 				title={title}
 				showModal={showModal}
@@ -83,8 +86,8 @@ const GenericItemArrayEntry: React.FC<ContainerProps> = ({ data, attributes, ind
 				saveFunction={saveHandler}
                 deleteFunction={(index > -1 ? deleteHandler: undefined)}
 				setShowModal={setShowModal}>
-				<IonList>
-					<IonItem lines='none'>
+				<IonList key={`GenericItemArrayEntry-list-${id}-${index}`}>
+					<IonItem key={`GenericItemArrayEntry-select-${id}-${index}`} lines='none'>
 						<IonLabel slot='start' class='itemLabel'>
 							{t('Type')}
 						</IonLabel>
@@ -97,7 +100,7 @@ const GenericItemArrayEntry: React.FC<ContainerProps> = ({ data, attributes, ind
 						/>
 					</IonItem>
 					{attributes.map((attr, index) => (
-						<IonItem lines='none'>
+						<IonItem lines='none' key={`GenericItemArrayEntry-input-${id}-${attr}-${index}`}>
 						<IonLabel slot='start' class='itemLabel'>
 							{t(attr.name)}
 						</IonLabel>

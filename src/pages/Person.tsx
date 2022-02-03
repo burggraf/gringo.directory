@@ -1,7 +1,6 @@
-import { IonBackButton, IonButton, IonButtons, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonInput, IonItem, IonLabel, IonList, IonListHeader, IonLoading, IonPage, IonRow, IonTextarea, IonTitle, IonToolbar } from '@ionic/react';
+import { IonBackButton, IonButton, IonButtons, IonContent, IonGrid, IonHeader, IonIcon, IonInput, IonItem, IonLabel, IonList, IonListHeader, IonLoading, IonPage, IonTextarea, IonTitle, IonToolbar } from '@ionic/react';
 import { User } from '@supabase/supabase-js'
-import { analytics, checkmarkOutline, personOutline, personSharp } from 'ionicons/icons';
-import { stringify } from 'querystring';
+import { checkmarkOutline, personOutline, personSharp } from 'ionicons/icons';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router';
@@ -189,19 +188,19 @@ const Person: React.FC = () => {
       <IonContent className='ion-padding'>
 
           <IonLoading isOpen={showLoading} message={t('Loading')} />
-
-            <IonGrid>
+            <table className="tbl">
+                <tbody>
                 {/* <IonListHeader>
                     <IonLabel>
                         <IonIcon size="large" ios={personOutline} md={personSharp}></IonIcon>
                         &nbsp;&nbsp;{t('Person Details')}
                     </IonLabel>
                 </IonListHeader> */}
-                <IonRow>
-                    <IonCol class="labelColumn">
+                <tr>
+                    <td className="labelColumn">
                     <IonLabel class="itemLabel">{t('First Name')}</IonLabel>
-                    </IonCol>
-                    <IonCol>
+                    </td>
+                    <td>
                     <IonInput
 							type='text'
 							placeholder={'First Name'}
@@ -210,13 +209,13 @@ const Person: React.FC = () => {
 							value={person?.firstname!}
 							class='inputBox'>
                     </IonInput>
-                    </IonCol>
-                </IonRow>
-                <IonRow>
-                    <IonCol class="labelColumn">
+                    </td>
+                </tr>
+                <tr>
+                    <td className="labelColumn">
                     <IonLabel class="itemLabel">{t('Middle Name')}</IonLabel>
-                    </IonCol>
-                    <IonCol>
+                    </td>
+                    <td>
                     <IonInput
 							type='text'
 							placeholder={'Middle Name'}
@@ -225,13 +224,13 @@ const Person: React.FC = () => {
 							value={person?.middlename!}
 							class='inputBox'>
                     </IonInput>
-                    </IonCol>
-                </IonRow>
-                <IonRow>
-                    <IonCol class="labelColumn">
+                    </td>
+                </tr>
+                <tr>
+                    <td className="labelColumn">
                     <IonLabel class="itemLabel">{t('Last Name')}</IonLabel>
-                    </IonCol>
-                    <IonCol>
+                    </td>
+                    <td>
                     <IonInput
 							type='text'
 							placeholder={'Last Name'}
@@ -240,13 +239,13 @@ const Person: React.FC = () => {
 							value={person?.lastname!}
 							class='inputBox'>
                     </IonInput>
-                    </IonCol>
-                </IonRow>
-                <IonRow>
-                    <IonCol class="labelColumn">
+                    </td>
+                </tr>
+                <tr>
+                    <td className="labelColumn">
                     <IonLabel class="itemLabel">{t('Nickname')}</IonLabel>
-                    </IonCol>
-                    <IonCol>
+                    </td>
+                    <td>
                     <IonInput
 							type='text'
 							placeholder={'Nickname'}
@@ -255,13 +254,13 @@ const Person: React.FC = () => {
 							value={person?.nickname!}
 							class='inputBox'>
                     </IonInput>
-                    </IonCol>
-                </IonRow>
-                <IonRow>
-                    <IonCol class="labelColumn">
+                    </td>
+                </tr>
+                <tr>
+                    <td className="labelColumn">
                     <IonLabel class="itemLabel">{t('Company')}</IonLabel>
-                    </IonCol>
-                    <IonCol>
+                    </td>
+                    <td>
                     <IonInput
 							type='text'
 							placeholder={'Company'}
@@ -270,50 +269,50 @@ const Person: React.FC = () => {
 							value={person?.company!}
 							class='inputBox'>
                     </IonInput>
-                    </IonCol>
-                </IonRow>
+                    </td>
+                </tr>
 
-                <IonRow>
-                    <IonCol class="labelColumn">
+                <tr>
+                    <td className="labelColumn">
                     <IonLabel class="itemLabel">{t('Birthdate')}</IonLabel>
-                    </IonCol>
-                    <IonCol>
+                    </td>
+                    <td>
                     <IonInput 
                             type='date' 
                             itemID='dob'
                             onIonChange={changeHandler}
-                            value={person?.dob!} 
+                            value={person?.dob!}                             
                             class='inputBox' />
-                    </IonCol>
-                </IonRow>
+                    </td>
+                </tr>
 
-                <IonRow>
-                    <IonCol class="labelColumn">
+                <tr>
+                    <td className="labelColumn">
                     <IonLabel class="itemLabel">{t('Anniversary')}</IonLabel>
-                    </IonCol>
-                    <IonCol>
+                    </td>
+                    <td>
                     <IonInput 
                             type='date' 
                             itemID='anniversary'
                             onIonChange={changeHandler}
                             value={person?.anniversary!} 
                             class='inputBox' />
-                    </IonCol>
-                </IonRow>
+                    </td>
+                </tr>
 
 
-                <IonRow>
-                    <IonCol class="labelColumn">
+                <tr>
+                    <td className="labelColumn">
                     <IonLabel class="itemLabel">
                         {t('Address')}<br/><Address data={{ownerid: id}} index={-1} saveFunction={saveItem}/>
                     </IonLabel>
-                    </IonCol>
-                    <IonCol>
-                    <IonGrid class="multiBox">
+                    </td>
+                    <td>
+                    <table className="multiBox"><tbody>
                         {person?.address?.map((address: AddressObject, index: number) => {
                             return (
-                                <IonRow class="multiBoxEntry" key={`address_${index}`}>
-                                    <IonCol size="10">
+                                <tr className="multiBoxEntry" key={`address_${index}`}>
+                                    <td>
                                     <IonLabel>
                                     { address.type && <div>Type: {address.type}</div>}
                                     { address.name && <div>Location: {address.name}</div>}
@@ -326,8 +325,8 @@ const Person: React.FC = () => {
                                     { address.pluscode && <div>PlusCode: {address.pluscode}</div>}
                                     { address.latitude && <div>Lat/Lng: {address.latitude},{address.longitude}</div>}
                                     </IonLabel>
-                                    </IonCol>
-                                    <IonCol size="2" className="ion-text-right">
+                                    </td>
+                                    <td className="ion-text-right">
                                     <IonLabel>
                                         <Address 
                                             data={address} 
@@ -336,16 +335,16 @@ const Person: React.FC = () => {
                                             deleteFunction={deleteItem}
                                         />
                                     </IonLabel>
-                                    </IonCol>
-                                </IonRow>
+                                    </td>
+                                </tr>
                             )
                         })}
-                    </IonGrid>
-                    </IonCol>
-                </IonRow>
+                    </tbody></table>
+                    </td>
+                </tr>
 
-                <IonRow>
-                    <IonCol class="labelColumn">
+                <tr>
+                    <td className="labelColumn">
                     <IonLabel class="itemLabel">
                         {t('Email')}<br/>
                         <GenericItemArrayEntry 
@@ -355,19 +354,19 @@ const Person: React.FC = () => {
                             types={[{value: 'home'},{value: 'work'},{value: 'school'},{value: 'iCloud'},{value: 'other'}]}
                             data={null} index={-1} saveFunction={saveItem}/>
                     </IonLabel>
-                    </IonCol>
-                    <IonCol>
-                    <IonGrid class="multiBox">
+                    </td>
+                    <td>
+                    <table className="multiBox"><tbody>
                         {person?.email?.map((email: any, index: number) => {
                             return (
-                                <IonRow class="multiBoxEntry" key={`email_${index}`}>
-                                    <IonCol size="10">
+                                <tr className="multiBoxEntry" key={`email_${index}`}>
+                                    <td>
                                     <IonLabel>
                                         Type: {email.type}<br/>
                                         Email: {email.email}
                                     </IonLabel>
-                                    </IonCol>
-                                    <IonCol size="2" className="ion-text-right">
+                                    </td>
+                                    <td className="ion-text-right">
                                     <IonLabel>
                                     <GenericItemArrayEntry 
                                         title={t('Email')}
@@ -378,16 +377,16 @@ const Person: React.FC = () => {
                                         deleteFunction={deleteItem}
                                         saveFunction={saveItem}/>
                                     </IonLabel>
-                                    </IonCol>
-                                </IonRow>
+                                    </td>
+                                </tr>
                             )
                         })}
-                    </IonGrid>
-                    </IonCol>
-                </IonRow>
+                    </tbody></table>
+                    </td>
+                </tr>
 
-                <IonRow>
-                    <IonCol class="labelColumn">
+                <tr>
+                    <td className="labelColumn">
                     <IonLabel class="itemLabel">
                         {t('URL')}<br/>
                         <GenericItemArrayEntry 
@@ -397,19 +396,19 @@ const Person: React.FC = () => {
                             types={[{value: 'homepage'},{value: 'home'},{value: 'work'},{value: 'school'},{value: 'other'}]}
                             data={null} index={-1} saveFunction={saveItem}/>
                     </IonLabel>
-                    </IonCol>
-                    <IonCol>
-                    <IonGrid class="multiBox">
+                    </td>
+                    <td>
+                    <table className="multiBox"><tbody>
                         {person?.url?.map((item: any, index: number) => {
                             return (
-                                <IonRow class="multiBoxEntry" key={`url${index}`}>
-                                    <IonCol size="10">
+                                <tr className="multiBoxEntry" key={`url${index}`}>
+                                    <td>
                                     <IonLabel>
                                         Type: {item.type}<br/>
                                         Email: {item.email}
                                     </IonLabel>
-                                    </IonCol>
-                                    <IonCol size="2" className="ion-text-right">
+                                    </td>
+                                    <td className="ion-text-right">
                                     <IonLabel>
                                     <GenericItemArrayEntry 
                                         title={t('URL')}
@@ -420,16 +419,16 @@ const Person: React.FC = () => {
                                         deleteFunction={deleteItem}
                                         saveFunction={saveItem}/>
                                     </IonLabel>
-                                    </IonCol>
-                                </IonRow>
+                                    </td>
+                                </tr>
                             )
                         })}
-                    </IonGrid>
-                    </IonCol>
-                </IonRow>
+                    </tbody></table>
+                    </td>
+                </tr>
 
-                <IonRow>
-                    <IonCol class="labelColumn">
+                <tr>
+                    <td className="labelColumn">
                     <IonLabel class="itemLabel">
                         {t('Social Profile')}<br/>
                         <GenericItemArrayEntry 
@@ -439,19 +438,19 @@ const Person: React.FC = () => {
                             types={socialProfileTypes}
                             data={null} index={-1} saveFunction={saveItem}/>
                     </IonLabel>
-                    </IonCol>
-                    <IonCol>
-                    <IonGrid class="multiBox">
+                    </td>
+                    <td>
+                    <table className="multiBox"><tbody>
                         {person?.socialprofile?.map((item: any, index: number) => {
                             return (
-                                <IonRow class="multiBoxEntry" key={`socialprofile_${index}`}>
-                                    <IonCol size="10">
+                                <tr className="multiBoxEntry" key={`socialprofile_${index}`}>
+                                    <td>
                                     <IonLabel>
                                         Type: {item.type}<br/>
                                         URL: {item.url}
                                     </IonLabel>
-                                    </IonCol>
-                                    <IonCol size="2" className="ion-text-right">
+                                    </td>
+                                    <td className="ion-text-right">
                                     <IonLabel>
                                     <GenericItemArrayEntry 
                                         title={t('Social Profile')}
@@ -463,16 +462,16 @@ const Person: React.FC = () => {
                                         deleteFunction={deleteItem}
                                         saveFunction={saveItem}/>
                                     </IonLabel>
-                                    </IonCol>
-                                </IonRow>
+                                    </td>
+                                </tr>
                             )
                         })}
-                    </IonGrid>
-                    </IonCol>
-                </IonRow>
+                    </tbody></table>
+                    </td>
+                </tr>
 
-                <IonRow>
-                    <IonCol class="labelColumn">
+                <tr>
+                    <td className="labelColumn">
                     <IonLabel class="itemLabel">
                         {t('Instant Message')}<br/>
                         <GenericItemArrayEntry 
@@ -482,19 +481,19 @@ const Person: React.FC = () => {
                             types={instantMessageTypes}
                             data={null} index={-1} saveFunction={saveItem}/>
                     </IonLabel>
-                    </IonCol>
-                    <IonCol>
-                    <IonGrid class="multiBox">
+                    </td>
+                    <td>
+                    <table className="multiBox"><tbody>
                         {person?.instantmessage?.map((item: any, index: number) => {
                             return (
-                                <IonRow class="multiBoxEntry" key={`instantmessage${index}`}>
-                                    <IonCol size="10">
+                                <tr className="multiBoxEntry" key={`instantmessage${index}`}>
+                                    <td>
                                     <IonLabel>
                                         Type: {item.type}<br/>
                                         Handle: {item.handle}
                                     </IonLabel>
-                                    </IonCol>
-                                    <IonCol size="2" className="ion-text-right">
+                                    </td>
+                                    <td className="ion-text-right">
                                     <IonLabel>
                                     <GenericItemArrayEntry 
                                         title={t('Instant Message')}
@@ -506,20 +505,20 @@ const Person: React.FC = () => {
                                         deleteFunction={deleteItem}
                                         saveFunction={saveItem}/>
                                     </IonLabel>
-                                    </IonCol>
-                                </IonRow>
+                                    </td>
+                                </tr>
                             )
                         })}
-                    </IonGrid>
-                    </IonCol>
-                </IonRow>
+                    </tbody></table>
+                    </td>
+                </tr>
 
 
-                <IonRow>
-                    <IonCol class="labelColumn">
+                <tr>
+                    <td className="labelColumn">
                     <IonLabel class="itemLabel">{t('Notes')}</IonLabel>
-                    </IonCol>
-                    <IonCol>
+                    </td>
+                    <td>
                     <IonTextarea
 							placeholder={'Notes'}
                             itemID='notes'
@@ -530,9 +529,10 @@ const Person: React.FC = () => {
                             rows={3}
 							class='inputBox'>
                     </IonTextarea>
-                    </IonCol>
-                </IonRow>
-            </IonGrid>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
             { !isNew &&
                 <div className="ion-padding">
                     <IonButton fill="clear" expand="block" strong color="danger"
