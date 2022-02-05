@@ -13,6 +13,8 @@ import SupabaseAuthService from '../Login/supabase.auth.service'
 import SupabaseDataService from '../services/supabase.data.service'
 import UtilityFunctionsService from '../services/utility.functions.service';
 
+import CommentsList from '../components/CommentsList';
+
 import "../translations/i18n";
 import './Person.css';
 
@@ -549,6 +551,7 @@ const Person: React.FC = () => {
                     </IonButton>
                 </div>
             }
+            <CommentsList topic={`person/${id}`}/>
             {/* <pre>
                 {JSON.stringify(person, null, 2)}
             </pre> */}
