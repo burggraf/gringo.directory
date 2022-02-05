@@ -151,7 +151,7 @@ const Org: React.FC = () => {
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="start">
-            <IonBackButton defaultHref="/people" />
+            <IonBackButton defaultHref="/orgs" />
           </IonButtons>
             <IonTitle>
                 <IonIcon size="large" ios={businessOutline} md={businessSharp}></IonIcon>

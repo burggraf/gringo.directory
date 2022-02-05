@@ -28,6 +28,7 @@ const Select: React.FC<ContainerProps> = ({ title, options, value, handler, item
     <IonSelect slot={slot || "start"} className="ionSelect" color={color || "dark"}
         value={value} itemID={itemID} okText={okText || t('OK')} cancelText={cancelText || t('Cancel')}
         placeholder={title}
+        key={`selectComponent-${itemID}`}
         interface="popover"
         interfaceOptions={{
             header: title,
@@ -35,7 +36,7 @@ const Select: React.FC<ContainerProps> = ({ title, options, value, handler, item
         onIonChange={handler}
     >
         {options.map((option, index) => (
-            <IonSelectOption value={option.value}>{typeof option.text === "undefined" ? option.value : option.text}</IonSelectOption>
+            <IonSelectOption key={`selectComponent-${itemID}-${option.value}`} value={option.value}>{typeof option.text === "undefined" ? option.value : option.text}</IonSelectOption>
         ))}
     </IonSelect>
   );

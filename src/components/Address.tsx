@@ -85,6 +85,7 @@ const Address: React.FC<ContainerProps> = ({ data, index, saveFunction, deleteFu
 							{t('Type')}
 						</IonLabel>
 						<Select 
+							key={'addressType'}
 							title={t('Address Type')}
 							itemID='type'
 							options={[

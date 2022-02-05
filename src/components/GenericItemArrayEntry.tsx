@@ -87,11 +87,12 @@ const GenericItemArrayEntry: React.FC<ContainerProps> = ({ data, attributes, ind
                 deleteFunction={(index > -1 ? deleteHandler: undefined)}
 				setShowModal={setShowModal}>
 				<IonList key={`GenericItemArrayEntry-list-${id}-${index}`}>
-					<IonItem key={`GenericItemArrayEntry-select-${id}-${index}`} lines='none'>
+					<IonItem key={`GenericItemArrayEntry-select-item-${id}-${index}`} lines='none'>
 						<IonLabel slot='start' class='itemLabel'>
 							{t('Type')}
 						</IonLabel>
 						<Select 
+							key={`GenericItemArrayEntry-select-${id}-${index}`}
 							title={t(title)}
 							itemID='type'
 							options={types}
