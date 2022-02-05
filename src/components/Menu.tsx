@@ -1,6 +1,6 @@
 import { IonButton, IonCol, IonContent, IonFooter, IonGrid, IonIcon, IonItem, IonLabel, IonList, IonListHeader, IonMenu, IonMenuToggle, IonNote, IonRow, IonSearchbar, IonText } from '@ionic/react'
 import { User } from '@supabase/supabase-js'
-import { airplaneOutline, airplaneSharp, archiveOutline, archiveSharp, bedOutline, bedSharp, bookmarkOutline, fastFood, fastFoodOutline, fastFoodSharp, heartOutline, heartSharp, homeOutline, homeSharp, informationCircleOutline, informationCircleSharp, languageOutline, languageSharp, logInOutline, logInSharp, logOutOutline, logOutSharp, mailOutline, mailSharp, paperPlaneOutline, paperPlaneSharp, peopleOutline, peopleSharp, personOutline, personSharp, trashOutline, trashSharp, warningOutline, warningSharp } from 'ionicons/icons'
+import { airplaneOutline, airplaneSharp, archiveOutline, archiveSharp, bedOutline, bedSharp, bookmarkOutline, businessOutline, businessSharp, fastFood, fastFoodOutline, fastFoodSharp, heartOutline, heartSharp, homeOutline, homeSharp, informationCircleOutline, informationCircleSharp, languageOutline, languageSharp, logInOutline, logInSharp, logOutOutline, logOutSharp, mailOutline, mailSharp, paperPlaneOutline, paperPlaneSharp, peopleOutline, peopleSharp, personOutline, personSharp, trashOutline, trashSharp, warningOutline, warningSharp } from 'ionicons/icons'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLocation } from 'react-router-dom'
@@ -64,16 +64,16 @@ const Menu: React.FC = () => {
 			mdIcon: homeSharp,
 		},
 		{
+			title: t('Orgs'),
+			url: '/orgs',
+			iosIcon: businessOutline,
+			mdIcon: businessSharp,
+		},
+		{
 			title: t('People'),
 			url: '/people',
 			iosIcon: peopleOutline,
 			mdIcon: peopleSharp,
-		},
-		{
-			title: t('Person'),
-			url: '/person/new',
-			iosIcon: personOutline,
-			mdIcon: personSharp,
 		},
 		{
 			title: t('About Us'),

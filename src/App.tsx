@@ -19,6 +19,7 @@ import Welcome from './pages/Welcome'
 import About from './pages/About'
 import Person from './pages/Person'
 import People from './pages/People'
+import Orgs from './pages/Orgs'
 import StartupService from './services/startup.service';
 
 /* Theme variables */
@@ -66,6 +67,7 @@ const App: React.FC = () => {
             <Route path="/about" component={About} />
             <Route path="/person/:id" component={Person} />
             <Route path="/people" component={People} />
+            <Route path="/orgs" component={Orgs} />
             <Route path="/delete" component={DeleteAccount} />
             <Route path="/resetpassword/:token" component={ResetPassword} />
             <Route path='/privacy' component={Privacy} />

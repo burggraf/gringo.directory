@@ -6,18 +6,19 @@ export interface Org {
     photourl?: string;
     logourl?: string;
     notes?: string;
+    email?: Email[];
+    phone?: Phone[];
+    url?: Url[];
+    address?: Address[];
+    socialprofile?: SocialProfile[];
+    instantmessage?: InstantMessage[];
     created_at?: string;
     updated_at?: string;
     created_by?: string;
     metadata?: object;
     xtra?: object;
-    address?: Address[];
-    email?: Email[];
-    phone?: Phone[];
-    url?: Url[];
-    socialprofile?: SocialProfile[];
-    instantmessage?: InstantMessage[];
 }
+
 // export interface OrgPermissionBlock {
 //     orgid: string;
 //     permissions: PermissionsBlock[];

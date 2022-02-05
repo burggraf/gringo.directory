@@ -17,7 +17,7 @@ export default class SupabaseDataService {
 
   // constructor() {}
   
-
+  
   public async getProfile(id: string) {
     if (id) {
       const { data, error } = 
@@ -43,6 +43,12 @@ export default class SupabaseDataService {
   public async getPeople() {
     const { data, error } = 
     await supabase.from('persons')
+    .select('*');
+    return { data, error };
+  }
+  public async getOrgs() {
+    const { data, error } = 
+    await supabase.from('orgs')
     .select('*');
     return { data, error };
   }
