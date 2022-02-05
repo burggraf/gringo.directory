@@ -2,6 +2,7 @@
 http://ionicframework.com/docs/theming/ */
 .inputBox {
   background-color: var(--ion-color-light);
+  min-height: 45px;
 }
 
 /** Ionic CSS Variables **/
