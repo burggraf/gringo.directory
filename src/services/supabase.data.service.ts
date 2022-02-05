@@ -63,15 +63,38 @@ export default class SupabaseDataService {
     return { data, error };
   }
 
+  public async getOrg(id: string) {
+    const { data, error } = 
+    await supabase.from('orgs')
+    .select('*')
+    .eq('id', id)
+    .limit(1)
+    .single();
+    return { data, error };
+  }
+
   public async savePerson(person: any) {
     const { data, error } = 
     await supabase.from('persons')
     .upsert(person);
     return { data, error };
   }
+  public async saveOrg(org: any) {
+    const { data, error } = 
+    await supabase.from('orgs')
+    .upsert(org);
+    return { data, error };
+  }
   public async deletePerson(id: string) {
     const { data, error } = 
     await supabase.from('persons')
+    .delete({ returning: 'minimal'})
+    .eq('id', id);
+    return { data, error };
+  }
+  public async deleteOrg(id: string) {
+    const { data, error } = 
+    await supabase.from('orgs')
     .delete({ returning: 'minimal'})
     .eq('id', id);
     return { data, error };

@@ -1,0 +1,43 @@
+.native-input.sc-ion-input-ios {
+    margin-left: 10px;
+}
+/* .native-input.sc-ion-input-md {
+    margin-left: 10px;
+} */
+.itemLabel {
+    /* width: 130px;
+    min-width: 130px; */
+    /* padding-right: 10px; */
+}
+.labelColumn {
+    /* width: 130px;
+    min-width: 130px;
+    max-width: 130px; */
+    /* margin-top: 10px; */
+    /* padding-right: 10px; */
+    vertical-align: top;
+    padding-top: 10px;
+    padding-right: 10px;
+    white-space: nowrap;
+    text-align: right;
+}
+.tbl {
+    width: 100%;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.multiBox {
+    width: 100%;
+    border-width: 1px;
+    border-style: solid;
+    border-color: var(--ion-color-medium);
+    min-height: 80px;
+}
+.multiBoxEntry {
+    padding-bottom: 10px;
+    padding-top: 10px;
+    padding-left: 10px;
+    /* border-bottom: 1px solid var(--ion-color-light); */
+    width: 100%;
+}
