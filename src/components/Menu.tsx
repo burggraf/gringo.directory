@@ -3,7 +3,7 @@ import { User } from '@supabase/supabase-js'
 import { airplaneOutline, airplaneSharp, archiveOutline, archiveSharp, bedOutline, bedSharp, bookmarkOutline, businessOutline, businessSharp, fastFood, fastFoodOutline, fastFoodSharp, heartOutline, heartSharp, homeOutline, homeSharp, informationCircleOutline, informationCircleSharp, languageOutline, languageSharp, logInOutline, logInSharp, logOutOutline, logOutSharp, mailOutline, mailSharp, paperPlaneOutline, paperPlaneSharp, peopleOutline, peopleSharp, personOutline, personSharp, trashOutline, trashSharp, warningOutline, warningSharp } from 'ionicons/icons'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useLocation } from 'react-router-dom'
+import { useHistory, useLocation } from 'react-router-dom'
 
 import SupabaseAuthService from '../Login/supabase.auth.service'
 import { selectLanguage } from '../translations/i18n'
@@ -28,6 +28,8 @@ const languageOptions = [
 ]
 
 const Menu: React.FC = () => {
+	const history = useHistory();
+
 	const [searchText, setSearchText] = useState('')
 	const [currentLanguage, setCurrentLanguage] = useState<string>(
 		localStorage.getItem('language') || 'en'
@@ -120,7 +122,13 @@ const Menu: React.FC = () => {
 				<IonList id='inbox-list'>
 					<IonGrid style={{backgroundColor: 'transparent', marginBottom: '-10px'}}>
 						<IonRow style={{width: '100%'}}>
-							<IonCol size="2"><IonIcon src='/assets/logo.svg' size='large'></IonIcon></IonCol>
+							<IonCol size="2">
+
+							<IonMenuToggle key={'logoClick'} autoHide={false}>
+								<IonIcon onClick={() => {history.replace('/about');}} src='/assets/logo.svg' size='large'></IonIcon>
+							</IonMenuToggle>
+
+							</IonCol>
 							<IonCol size="8" class="ion-text-center">
 								<IonLabel style={{color:'#D35C23', fontSize: '16pt', fontWeight: 'bold'}}>Gringo Directory</IonLabel>
 							</IonCol>
