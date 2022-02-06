@@ -15,8 +15,6 @@ const validateEmail = (email: string) => {
     return re.test(String(email).toLowerCase());
 }
 const Login: React.FC = () => {
-    const { returnurl } = useParams<{ returnurl: string; }>();
-    console.log('returnurl', returnurl);
     const history = useHistory();
     const [signUpMode, setSignUpMode] = useState(false);
     const [present, dismiss] = useIonToast();
@@ -38,14 +36,7 @@ const Login: React.FC = () => {
         await supabaseAuthService.signInWithEmail(email, password);
         if (error) { toast(error.message) }
         else { 
-            // console.log('signInWithEmail: user, session, error', user, session, error);
-            console.log('return to: ', decodeURIComponent(returnurl), typeof decodeURIComponent(returnurl));
-            if (!decodeURIComponent(returnurl) || decodeURIComponent(returnurl) === 'undefined') {
-                window.location.href = '/';
-            } else {
-                window.location.href = decodeURIComponent(returnurl);
-            }
-            // history.replace('/');
+            window.location.href = '/';
          }
     }
     const signUp = async () => {
@@ -62,7 +53,7 @@ const Login: React.FC = () => {
         }
     const sendMagicLink = async () => {
         const {user, session, error} = 
-            await supabaseAuthService.sendMagicLink(email, returnurl);
+            await supabaseAuthService.sendMagicLink(email);
             if (error) { toast(error.message) }
             else { toast('Please check your email for a sign in link', 'success') }
         }
@@ -182,19 +173,19 @@ const Login: React.FC = () => {
                 <IonCol>
 
 
-            <ProviderSignInButton name="google" color="rgb(227,44,41)" returnurl={returnurl} />
-            <ProviderSignInButton name="facebook" color="rgb(59,89,152)" returnurl={returnurl} />
-            <ProviderSignInButton name="spotify" color="rgb(36,203,75)" returnurl={returnurl} />
-            <ProviderSignInButton name="twitter" color="rgb(30,135,235)" returnurl={returnurl} />
-            {/* <ProviderSignInButton name="apple" color="gray" returnurl={returnurl} />
-            <ProviderSignInButton name="spotify" color="rgb(36,203,75)" returnurl={returnurl} />
-            <ProviderSignInButton name="slack" color="rgb(221,157,35)" returnurl={returnurl} />
-            <ProviderSignInButton name="twitch" color="rgb(120,34,244)" returnurl={returnurl} />            
-            <ProviderSignInButton name="discord" color="rgb(116,131,244)" returnurl={returnurl} />
-            <ProviderSignInButton name="github" color="rgb(0,0,0)" returnurl={returnurl} />
-            <ProviderSignInButton name="bitbucket" color="rgb(56,98,169)" returnurl={returnurl} />
-            <ProviderSignInButton name="gitlab" color="rgb(209,44,30)" returnurl={returnurl} />
-            <ProviderSignInButton name="azure" color="rgb(228,54,26)" returnurl={returnurl} /> */}
+            <ProviderSignInButton name="google" color="rgb(227,44,41)" />
+            <ProviderSignInButton name="facebook" color="rgb(59,89,152)" />
+            <ProviderSignInButton name="spotify" color="rgb(36,203,75)" />
+            <ProviderSignInButton name="twitter" color="rgb(30,135,235)" />
+            {/* <ProviderSignInButton name="apple" color="gray" />
+            <ProviderSignInButton name="spotify" color="rgb(36,203,75)" />
+            <ProviderSignInButton name="slack" color="rgb(221,157,35)" />
+            <ProviderSignInButton name="twitch" color="rgb(120,34,244)" />            
+            <ProviderSignInButton name="discord" color="rgb(116,131,244)" />
+            <ProviderSignInButton name="github" color="rgb(0,0,0)" />
+            <ProviderSignInButton name="bitbucket" color="rgb(56,98,169)" />
+            <ProviderSignInButton name="gitlab" color="rgb(209,44,30)" />
+            <ProviderSignInButton name="azure" color="rgb(228,54,26)" /> */}
             </IonCol>
             </IonRow>
         </IonGrid>

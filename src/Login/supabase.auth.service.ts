@@ -91,28 +91,28 @@ export default class SupabaseAuthService {
     return { user, session, error };
   }
 
-  public signInWithProvider = async (provider: Provider, returnurl?: string) => {
+  public signInWithProvider = async (provider: Provider) => {
     const { user, session, error } = await supabase.auth.signIn({
       provider: provider
     }, {
-      redirectTo: returnurl || window.location.origin
+      redirectTo: window.location.origin
     });
     return { user, session, error };
   }
 
-  public resetPassword = async (email: string, returnurl?: string) => {
+  public resetPassword = async (email: string) => {
     const { data, error } = await supabase.auth.api.resetPasswordForEmail(email,
       {
-        redirectTo: returnurl || window.location.origin
+        redirectTo: window.location.origin
       });
     return { data, error };
   }
 
-  public sendMagicLink = async (email: string, returnurl?: string) => {
+  public sendMagicLink = async (email: string) => {
     const { user, session, error } = await supabase.auth.signIn({
       email: email
     }, {
-      redirectTo: returnurl || window.location.origin
+      redirectTo: window.location.origin
     });
     return { user, session, error };
   }

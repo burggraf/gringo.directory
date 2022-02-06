@@ -22,7 +22,6 @@ import { useHistory } from 'react-router'
 interface ContainerProps {
 	name: string,
 	color?: string,
-	returnurl?: string,
 }
 
 const supabaseAuthService = SupabaseAuthService.getInstance()
@@ -43,12 +42,12 @@ addIcons({
 	azure: logoMicrosoft,
 })
 
-const ProviderSignInButton: React.FC<ContainerProps> = ({ name, color, returnurl }) => {
+const ProviderSignInButton: React.FC<ContainerProps> = ({ name, color }) => {
 	const nameProperCase = name.charAt(0).toUpperCase() + name.slice(1)
 	const history = useHistory()
-	const signInWithProvider = async (provider: Provider, returnurl?: string) => {
+	const signInWithProvider = async (provider: Provider) => {
 		console.log('signInWithProvider', provider)
-		const { user, session, error } = await supabaseAuthService.signInWithProvider(provider, returnurl)
+		const { user, session, error } = await supabaseAuthService.signInWithProvider(provider)
 		console.log('user', user)
 		console.log('session', session)
 		console.log('error', error)
@@ -80,7 +79,7 @@ const ProviderSignInButton: React.FC<ContainerProps> = ({ name, color, returnurl
 			className='round-button'
 			style={{ margin: '8px', color: color || 'primary' }}
 			onClick={() => {
-				signInWithProvider(name as Provider, returnurl)
+				signInWithProvider(name as Provider)
 			}}>
 			{/* <b style={{textTransform: "uppercase"}}>{name}</b> */}
 			<IonIcon icon={name} size='large' slot="icon-only" />	
