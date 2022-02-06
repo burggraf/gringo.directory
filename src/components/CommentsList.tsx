@@ -22,17 +22,22 @@ const CommentsList: React.FC<ContainerProps> = ({ topic }) => {
   const { t } = useTranslation();
   const [modalVisible, setModalVisible] = useState(false);
   return (
+    <div style={{maxWidth: '600px', marginLeft: 'auto', marginRight: 'auto'}}>
     <CommentsProvider
+      key={`CommentsProvider-${topic}`}
       supabaseClient={supabase}
-      onAuthRequested={() => setModalVisible(true)}
+      // onAuthRequested={() => setModalVisible(true)}
+      onAuthRequested={() => {
+        window.location.href = '/login/' + encodeURIComponent(window.location.href);
+      }}
     >
-      <AuthModal
+      {/* <AuthModal
         visible={modalVisible}
         onAuthenticate={() => setModalVisible(false)}
         onClose={() => setModalVisible(false)}
-      />
-      <Comments topic={topic} />
-    </CommentsProvider>  );
+      /> */}
+      <Comments key={`Comments-${topic}`} topic={topic} />
+    </CommentsProvider></div>  );
 };
 
 export default CommentsList;

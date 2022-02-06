@@ -58,6 +58,7 @@ const App: React.FC = () => {
             <Route path="/page/:name" exact={true}>
               <Page />
             </Route>
+            <Route path="/login/:returnurl" component={Login} />
             <Route path="/login" component={Login} />
             <Route path="/profile" component={Profile} />
             <Route path="/come" component={Come} />
