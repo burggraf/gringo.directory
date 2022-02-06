@@ -1,4 +1,4 @@
-import { IonBackButton, IonButton, IonButtons, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonInput, IonLabel, IonMenuButton, IonPage, IonRow, IonTitle, IonToolbar, useIonToast } from '@ionic/react';
+import { IonBackButton, IonButton, IonButtons, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonInput, IonLabel, IonLoading, IonMenuButton, IonPage, IonRow, IonTitle, IonToolbar, useIonToast } from '@ionic/react';
 import { link, logIn, personAdd, refreshCircle } from 'ionicons/icons';
 import { useState } from 'react';
 
@@ -15,6 +15,8 @@ const validateEmail = (email: string) => {
     return re.test(String(email).toLowerCase());
 }
 const Login: React.FC = () => {
+    const [showLoading, setShowLoading] = useState(false);
+
     const history = useHistory();
     const [signUpMode, setSignUpMode] = useState(false);
     const [present, dismiss] = useIonToast();
@@ -32,30 +34,38 @@ const Login: React.FC = () => {
           })
     }
     const signInWithEmail = async () => {
+        setShowLoading(true);
+
         const {user, session, error} = 
         await supabaseAuthService.signInWithEmail(email, password);
-        if (error) { toast(error.message) }
+        if (error) { setShowLoading(false); toast(error.message); }
+
         else { 
             window.location.href = '/';
+            setShowLoading(false);
          }
     }
     const signUp = async () => {
+        setShowLoading(true);
+
         const {user, session, error} = 
             await supabaseAuthService.signUpWithEmail(email, password);
-            if (error) { console.error(error); toast(error.message) }
-            else { toast('Please check your email for a confirmation link', 'success') }
+            if (error) { console.error(error); setShowLoading(false);toast(error.message) }
+            else { setShowLoading(false);toast('Please check your email for a confirmation link', 'success') }
         }
     const resetPassword = async () => {
+        setShowLoading(true);
         const {data, error} = 
             await supabaseAuthService.resetPassword(email);
-            if (error) { toast(error.message) }
-            else { toast('Please check your email for a password reset link', 'success') }
+            if (error) { setShowLoading(false);toast(error.message) }
+            else { setShowLoading(false);toast('Please check your email for a password reset link', 'success') }
         }
     const sendMagicLink = async () => {
+        setShowLoading(true);
         const {user, session, error} = 
             await supabaseAuthService.sendMagicLink(email);
-            if (error) { toast(error.message) }
-            else { toast('Please check your email for a sign in link', 'success') }
+            if (error) { setShowLoading(false);toast(error.message) }
+            else { setShowLoading(false);toast('Please check your email for a sign in link', 'success') }
         }
     const toggleSignUpMode = async () => {
         setSignUpMode(!signUpMode);
@@ -72,6 +82,8 @@ const Login: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent>
+          <IonLoading isOpen={showLoading} message={'Loading'} />
+
         <IonGrid class="ion-padding" style={{maxWidth: '375px'}}>
             <IonRow>
                 <IonCol>

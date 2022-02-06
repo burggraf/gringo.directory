@@ -1,4 +1,4 @@
-import { IonButton, IonCol, IonGrid, IonIcon, IonRow, useIonToast } from '@ionic/react'
+import { IonButton, IonCol, IonGrid, IonIcon, IonLoading, IonRow, useIonToast } from '@ionic/react'
 import {
 	logoApple,
 	logoBitbucket,
@@ -18,6 +18,7 @@ import './ProviderSignInButton.css'
 import SupabaseAuthService from './supabase.auth.service'
 import { Provider } from '@supabase/supabase-js'
 import { useHistory } from 'react-router'
+import { useState } from 'react'
 
 interface ContainerProps {
 	name: string,
@@ -43,19 +44,22 @@ addIcons({
 })
 
 const ProviderSignInButton: React.FC<ContainerProps> = ({ name, color }) => {
+	const [showLoading, setShowLoading] = useState(false);
+
 	const nameProperCase = name.charAt(0).toUpperCase() + name.slice(1)
 	const history = useHistory()
 	const signInWithProvider = async (provider: Provider) => {
-		console.log('signInWithProvider', provider)
-		const { user, session, error } = await supabaseAuthService.signInWithProvider(provider)
+		setShowLoading(true);
+		const { user, session, error } = await supabaseAuthService.signInWithProvider(provider);
 		console.log('user', user)
 		console.log('session', session)
 		console.log('error', error)
 		if (error) {
-			toast(error.message)
+			toast(error.message);
+			setShowLoading(false);
 		} else {
 			//window.location.href = '/';
-			history.replace('/')
+			// history.replace('/')
 		}
 	}
 	const [present, dismiss] = useIonToast()
@@ -72,6 +76,8 @@ const ProviderSignInButton: React.FC<ContainerProps> = ({ name, color }) => {
 		})
 	}
 	return (
+		<>
+		<IonLoading isOpen={showLoading} message={'Loading'} />
 		<IonButton
 			// expand='block'
 			// color='primary'
@@ -84,6 +90,7 @@ const ProviderSignInButton: React.FC<ContainerProps> = ({ name, color }) => {
 			{/* <b style={{textTransform: "uppercase"}}>{name}</b> */}
 			<IonIcon icon={name} size='large' slot="icon-only" />	
 		</IonButton>	
+		</>
 	)
 }
 
