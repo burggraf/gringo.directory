@@ -18,6 +18,7 @@
     vertical-align: top;
     padding-top: 10px;
     padding-right: 10px;
+    width: 0px;
     white-space: nowrap;
     text-align: right;
 }
