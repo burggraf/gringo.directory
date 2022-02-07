@@ -1,5 +1,5 @@
-import { IonBackButton, IonButton, IonButtons, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonInput, IonLabel, IonLoading, IonMenuButton, IonPage, IonRow, IonTitle, IonToolbar, useIonToast } from '@ionic/react';
-import { link, logIn, personAdd, refreshCircle } from 'ionicons/icons';
+import { IonBackButton, IonButton, IonButtons, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonInput, IonItem, IonLabel, IonLoading, IonMenuButton, IonPage, IonRow, IonTitle, IonToolbar, useIonToast } from '@ionic/react';
+import { arrowForwardOutline, link, lockClosedOutline, lockOpenOutline, logIn, mailOutline, personAdd, refreshCircle } from 'ionicons/icons';
 import { useState } from 'react';
 
 import ProviderSignInButton from './ProviderSignInButton';
@@ -84,18 +84,25 @@ const Login: React.FC = () => {
       <IonContent>
           <IonLoading isOpen={showLoading} message={'Loading'} />
 
+
         <IonGrid class="ion-padding" style={{maxWidth: '375px'}}>
             <IonRow>
                 <IonCol>
-                    <IonLabel><b>Email</b></IonLabel>
+                    <IonLabel>Email Address</IonLabel>
                 </IonCol>
             </IonRow>
             <IonRow>
                 <IonCol>
-                    <IonInput type="email" 
-                    placeholder="Enter your email" 
-                    onIonChange={e => setEmail(e.detail.value!)}
-                    value={email} className="inputBox" />
+
+                    <IonItem className="loginItem" lines="none">
+                        <IonInput type="email"
+                        placeholder="Email" 
+                        onIonChange={e => setEmail(e.detail.value!)}
+                        value={email} className="loginInputBoxWithIcon">
+                        <IonIcon className="inputIcon" icon={mailOutline} slot="start" size="large" color="medium"></IonIcon>
+                        </IonInput>
+                    </IonItem>
+
                 </IonCol>
             </IonRow>
             {!validateEmail(email) && email.length > 0 && 
@@ -107,17 +114,23 @@ const Login: React.FC = () => {
             }
             <IonRow>
                 <IonCol>
-                    <IonLabel><b>Password</b></IonLabel>
+                    <IonLabel>Password</IonLabel>
                 </IonCol>
             </IonRow>
             <IonRow>
                 <IonCol>
-                    <IonInput type="password" 
-                    placeholder="Enter your password" 
-                    onIonChange={e => setPassword(e.detail.value!)}
-                    value={password} className="inputBox" />
+                    <IonItem className="loginItem" lines="none">
+                        <IonInput type="password" 
+                        placeholder="Password" 
+                        onIonChange={e => setPassword(e.detail.value!)}
+                        value={password} className="loginInputBoxWithIcon">
+                        <IonIcon className="inputIcon" 
+                        icon={password.length ? lockOpenOutline: lockClosedOutline} 
+                        slot="start" size="large" color="medium"></IonIcon>
+                        </IonInput> 
+                    </IonItem>
                     <div onClick={resetPassword} className="ion-text-right" style={{paddingTop:'10px'}}>
-                        <IonLabel>Forgot password?</IonLabel>
+                        <IonLabel><b>Forgot password?</b></IonLabel>
                     </div>
                 </IonCol>
             </IonRow>
@@ -134,7 +147,7 @@ const Login: React.FC = () => {
                         <IonButton expand="block" 
                         disabled={!validateEmail(email) || password.length < 6}
                         onClick={signInWithEmail}>
-                            <IonIcon icon={logIn} size="large" />&nbsp;&nbsp;
+                            <IonIcon icon={arrowForwardOutline} size="large" />&nbsp;&nbsp;
                             <b>Sign in with email</b>
                         </IonButton>
                         <div onClick={toggleSignUpMode} className="ion-text-center" style={{paddingTop:'10px'}}>
@@ -178,7 +191,7 @@ const Login: React.FC = () => {
             </IonRow>
         </IonGrid>
         <div className="ion-text-center">
-        <IonLabel><b>or, sign in with:</b></IonLabel>
+        <IonLabel>or, sign in with:</IonLabel>
         </div>
         <IonGrid class="ion-padding" style={{maxWidth: '375px'}}>
             <IonRow>
@@ -210,6 +223,7 @@ const Login: React.FC = () => {
             className="ion-text-center" style={{marginBottom: '60px'}}>
             <IonLabel>View our terms of service</IonLabel>
         </div>
+        
 
       </IonContent>
     </IonPage>
