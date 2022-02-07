@@ -144,7 +144,7 @@ const Login: React.FC = () => {
             { !signUpMode &&
                 <IonRow>
                     <IonCol>
-                        <IonButton expand="block" 
+                        <IonButton expand="block" color="primary"
                         disabled={!validateEmail(email) || password.length < 6}
                         onClick={signInWithEmail}>
                             <IonIcon icon={arrowForwardOutline} size="large" />&nbsp;&nbsp;

@@ -170,12 +170,20 @@ http://ionicframework.com/docs/theming/ */
     --ion-color-FORCECLEAR: #000000;
     --ion-color-FORCEDARK: #ffffff;
 
-    --ion-color-primary: #428cff;
+    --ion-color-primary: #fd651b;
+    --ion-color-primary-rgb: 253,101,27;
+    --ion-color-primary-contrast: #000000;
+    --ion-color-primary-contrast-rgb: 0,0,0;
+    --ion-color-primary-shade: #df5918;
+    --ion-color-primary-tint: #fd7432;
+  
+
+    /* --ion-color-primary: #428cff;
     --ion-color-primary-rgb: 66,140,255;
     --ion-color-primary-contrast: #ffffff;
     --ion-color-primary-contrast-rgb: 255,255,255;
     --ion-color-primary-shade: #3a7be0;
-    --ion-color-primary-tint: #5598ff;
+    --ion-color-primary-tint: #5598ff; */
 
     --ion-color-secondary: #50c8ff;
     --ion-color-secondary-rgb: 80,200,255;
