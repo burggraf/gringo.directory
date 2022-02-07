@@ -1,14 +1,14 @@
 input:-webkit-autofill {
     height: 0px;
     -webkit-box-shadow:0 0 0 10px var(--ion-color-FORCECLEAR) inset;
-    -webkit-text-fill-color: var(--ion-font-color);
+    -webkit-text-fill-color: var(--ion-color-FORCEDARK);
     font-weight: 500px;
 }
 
 input:-webkit-autofill:focus {
     height: 0px;
     -webkit-box-shadow: 0 0 0 10px var(--ion-color-FORCECLEAR) inset;
-    -webkit-text-fill-color: var(--ion-font-color);
+    -webkit-text-fill-color: var(--ion-color-FORCEDARK);
     font-weight: 500px;
 } 
 
