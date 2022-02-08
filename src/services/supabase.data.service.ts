@@ -46,12 +46,24 @@ export default class SupabaseDataService {
     .select('*');
     return { data, error };
   }
-  public async getOrgs(selectedCategories: string[]) {
-    const { data, error } = 
-    await supabase.from('orgs')
-    .select('*')
-    .containedBy('categories', selectedCategories);
-    return { data, error };
+  public async getOrgs(selectedCategories: string[], searchMode: string = 'ALL') {
+    if (selectedCategories.length === 0) { 
+      return { data: [], error: null };
+    }
+    //console.log('#### getOrgs: selectedCategories: ', selectedCategories, ' searchMode: ', searchMode);
+    if (searchMode === 'ALL') {
+      const { data, error } = 
+      await supabase.from('orgs')
+      .select('*')
+      .contains('categories', selectedCategories);
+      return { data, error };  
+    } else { // searchMode === 'ANY'
+      const { data, error } = 
+      await supabase.from('orgs')
+      .select('*')
+      .overlaps('categories', selectedCategories);
+      return { data, error };  
+    }
   }
 
   public async getPerson(id: string) {

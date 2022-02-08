@@ -1,4 +1,4 @@
-import { IonButton, IonButtons, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonInput, IonItem, IonLabel, IonList, IonListHeader, IonLoading, IonMenuButton, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
+import { IonButton, IonButtons, IonChip, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonInput, IonItem, IonLabel, IonList, IonListHeader, IonLoading, IonMenuButton, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
 import { User } from '@supabase/supabase-js'
 import { addOutline, addSharp, airplaneOutline, airplaneSharp, businessOutline, businessSharp, checkmarkOutline, informationCircleOutline, informationCircleSharp, informationOutline, informationSharp, people, peopleOutline, peopleSharp, personOutline, personSharp, save } from 'ionicons/icons';
 import { useEffect, useState } from 'react';
@@ -28,14 +28,14 @@ const Orgs: React.FC = () => {
     const [showLoading, setShowLoading] = useState(false);
     const [ orgs, setOrgs ] = useState<any[]>([]);
     const [ selectedCategories, setSelectedCategories ] = useState<string[]>([]);
-
+    const [ searchMode, setSearchMode ] = useState<string>('ALL');
     const loadOrgs = async () => {
         setShowLoading(true);
-        const { data, error } = await supabaseDataService.getOrgs(selectedCategories);
+        const { data, error } = await supabaseDataService.getOrgs(selectedCategories, searchMode);
         if (error) { 
             console.error('loadOrgs: error', error)
         } else {
-            console.log('orgs', data);
+            console.log('got orgs', data);
             const newOrgs: any[] = [];
             data.forEach((org: OrgObject) => {
                 newOrgs.push({
@@ -63,7 +63,7 @@ const Orgs: React.FC = () => {
     
     useEffect(() => {
         loadOrgs();
-    }, [selectedCategories]);
+    }, [selectedCategories, searchMode]);
     return (
     <IonPage>
       <IonHeader>
@@ -86,7 +86,9 @@ const Orgs: React.FC = () => {
       <IonContent class="ion-padding">
 
       <IonLoading isOpen={showLoading} message={t('Loading')} />
-
+        <IonChip onClick={()=>{
+            setSearchMode(searchMode === 'ALL' ? 'ANY' : 'ALL')
+        }}>{searchMode}</IonChip>
         <IonLabel>Categories:</IonLabel>
         <Chiplist 
                             title={t('Categories')}
