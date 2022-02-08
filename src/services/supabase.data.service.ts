@@ -46,10 +46,11 @@ export default class SupabaseDataService {
     .select('*');
     return { data, error };
   }
-  public async getOrgs() {
+  public async getOrgs(selectedCategories: string[]) {
     const { data, error } = 
     await supabase.from('orgs')
-    .select('*');
+    .select('*')
+    .containedBy('categories', selectedCategories);
     return { data, error };
   }
 

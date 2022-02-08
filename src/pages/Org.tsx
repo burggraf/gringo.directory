@@ -18,60 +18,9 @@ import CommentsList from '../components/CommentsList';
 
 import "../translations/i18n";
 import './Org.css';
-const categories: string[] = ['Transportation', 'Tours & Excursions', 'Food', 
-        'Cleaning Service', 'Visas / Legal Services', 'Other'];
-const instantMessageTypes: any = [
-    { value: 'WhatsApp' },
-    { value: 'Business Suite' },
-    { value: 'Zoom' },
-    { value: 'Amazon Alexa' },
-    { value: 'Messenger' },
-    { value: 'Skype' },
-    { value: 'Slack' },
-    { value: 'Discord' },
-    { value: 'GitHub' },
-    { value: 'Instagram' },
-    { value: 'Twitter' },
-    { value: 'Facebook' },
-    { value: 'AnyDesk' },
-    { value: 'Voice' },
-    { value: 'Gmail' },
-    { value: 'Spark' },
-    { value: 'MSN' },
-    { value: 'Google Talk' },
-    { value: 'Facebook' },
-    { value: 'AIM' },
-    { value: 'Yahoo' },
-    { value: 'ICQ' },
-    { value: 'Jabber' },
-    { value: 'QQ' },
-    { value: 'Gadu-Gadu' },
-    { value: 'Other' }
-]
-const socialProfileTypes: any = [
-    { value: 'WhatsApp' },
-    { value: 'Business Suite' },
-    { value: 'Zoom' },
-    { value: 'Amazon Alexa' },
-    { value: 'Messenger' },
-    { value: 'Skype' },
-    { value: 'Slack' },
-    { value: 'Discord' },
-    { value: 'GitHub' },
-    { value: 'Instagram' },
-    { value: 'Twitter' },
-    { value: 'Facebook' },
-    { value: 'AnyDesk' },
-    { value: 'Voice' },
-    { value: 'Gmail' },
-    { value: 'Spark' },
-    { value: 'Flickr' },
-    { value: 'LinkedIn' },
-    { value: 'YouTube' },
-    { value: 'Website' },
-    { value: 'Sina Weibo' },
-    { value: 'Other' }
-];
+import { categories } from '../data/categories';
+import { instantMessageTypes } from '../data/instantMessageTypes';
+import { socialProfileTypes } from '../data/socialProfileTypes';
 
 const supabaseDataService = SupabaseDataService.getInstance()
 const supabaseAuthService = SupabaseAuthService.getInstance()

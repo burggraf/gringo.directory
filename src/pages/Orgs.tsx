@@ -8,12 +8,14 @@ import { TableGrid } from 'ionic-react-tablegrid';
 import { Org as OrgObject } from '../../models/Org'
 import SupabaseAuthService from '../Login/supabase.auth.service'
 import SupabaseDataService from '../services/supabase.data.service'
+import { categories } from '../data/categories';
 
 // import description from '../../package.json';
 // import version from '../../package.json';
 
 import "../translations/i18n";
 import './Orgs.css';
+import Chiplist from '../components/Chiplist';
 
 const supabaseDataService = SupabaseDataService.getInstance()
 const supabaseAuthService = SupabaseAuthService.getInstance()
@@ -23,11 +25,13 @@ let _user: User | null = null
 const Orgs: React.FC = () => {
     const { t } = useTranslation();
     const history = useHistory();
-    const [showLoading, setShowLoading] = useState(true);
+    const [showLoading, setShowLoading] = useState(false);
     const [ orgs, setOrgs ] = useState<any[]>([]);
+    const [ selectedCategories, setSelectedCategories ] = useState<string[]>([]);
 
     const loadOrgs = async () => {
-        const { data, error } = await supabaseDataService.getOrgs();
+        setShowLoading(true);
+        const { data, error } = await supabaseDataService.getOrgs(selectedCategories);
         if (error) { 
             console.error('loadOrgs: error', error)
         } else {
@@ -37,8 +41,10 @@ const Orgs: React.FC = () => {
                 newOrgs.push({
                     "name^": org.name,
                     "$id": org.id,
-                    "added^": org.created_at?.substring(0,10),
-                    "updated^": org.updated_at?.substring(0,10),
+                    "added^": (new Date(org.created_at+'Z')).toLocaleString(),
+                    "updated^": (new Date(org.updated_at+'Z')).toLocaleString(),
+                    
+                    //org.updated_at?.substring(0,16).replace('T', ' '),
                 });
             });
             setOrgs(newOrgs);
@@ -52,9 +58,12 @@ const Orgs: React.FC = () => {
             _user = user
             console.log('Come: subscribed: _user', _user)
         });
-        loadOrgs();
+        //loadOrgs();
     }, []) // <-- empty dependency array
     
+    useEffect(() => {
+        loadOrgs();
+    }, [selectedCategories]);
     return (
     <IonPage>
       <IonHeader>
@@ -77,6 +86,19 @@ const Orgs: React.FC = () => {
       <IonContent class="ion-padding">
 
       <IonLoading isOpen={showLoading} message={t('Loading')} />
+
+        <IonLabel>Categories:</IonLabel>
+        <Chiplist 
+                            title={t('Categories')}
+                            id={'categories'}                            
+                            options={categories}
+                            index={-1}
+                            //data={org?.categories! || []} 
+                            data={selectedCategories} 
+                            saveFunction={(newData: string[])=>{
+                                setSelectedCategories(newData);
+                            }}/>
+
 
         <TableGrid rowStyle={{cursor: 'pointer'}}
             rows={orgs} 

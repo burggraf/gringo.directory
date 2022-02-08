@@ -4,7 +4,7 @@ create table if not exists public.orgs (
   photourl      TEXT NULL,
   logourl       TEXT NULL,
   notes         TEXT NULL,
-  categories    JSONB NULL,
+  categories    TEXT[] NULL,
   address       JSONB NULL,
   email         JSONB NULL,
   instantmessage JSONB NULL,
