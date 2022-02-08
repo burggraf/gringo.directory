@@ -74,12 +74,14 @@ export default class SupabaseDataService {
   }
 
   public async savePerson(person: any) {
+    person.updated_at = 'NOW()';
     const { data, error } = 
     await supabase.from('persons')
     .upsert(person);
     return { data, error };
   }
   public async saveOrg(org: any) {
+    org.updated_at = 'NOW()';
     const { data, error } = 
     await supabase.from('orgs')
     .upsert(org);
