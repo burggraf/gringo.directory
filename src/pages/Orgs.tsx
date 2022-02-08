@@ -4,7 +4,7 @@ import { addOutline, addSharp, airplaneOutline, airplaneSharp, businessOutline, 
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router';
-
+import { TableGrid } from 'ionic-react-tablegrid';
 import { Org as OrgObject } from '../../models/Org'
 import SupabaseAuthService from '../Login/supabase.auth.service'
 import SupabaseDataService from '../services/supabase.data.service'
@@ -24,14 +24,24 @@ const Orgs: React.FC = () => {
     const { t } = useTranslation();
     const history = useHistory();
     const [showLoading, setShowLoading] = useState(true);
-    const [ orgs, setOrgs ] = useState<OrgObject[]>([]);
+    const [ orgs, setOrgs ] = useState<any[]>([]);
 
     const loadOrgs = async () => {
         const { data, error } = await supabaseDataService.getOrgs();
         if (error) { 
             console.error('loadOrgs: error', error)
         } else {
-            setOrgs(data);
+            console.log('orgs', data);
+            const newOrgs: any[] = [];
+            data.forEach((org: OrgObject) => {
+                newOrgs.push({
+                    "name^": org.name,
+                    "$id": org.id,
+                    "added^": org.created_at?.substring(0,10),
+                    "updated^": org.updated_at?.substring(0,10),
+                });
+            });
+            setOrgs(newOrgs);
         }
         setShowLoading(false);
 
@@ -68,7 +78,13 @@ const Orgs: React.FC = () => {
 
       <IonLoading isOpen={showLoading} message={t('Loading')} />
 
-        <IonGrid key={'peopleList'}>
+        <TableGrid rowStyle={{cursor: 'pointer'}}
+            rows={orgs} 
+            setRows={setOrgs}
+            rowClick={(row: any, index: number)=>{history.push(`/org/${row.$id}`)}}
+        />
+
+        <IonGrid key={'orgsList'}>
             {orgs.map((org: OrgObject) => {
                 return (
                     <IonRow key={org.id} onClick={()=>{history.push(`/org/${org.id}`)}}>

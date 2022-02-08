@@ -9,6 +9,7 @@ import { Address as AddressObject } from '../../models/Models';
 import { Org as OrgObject } from '../../models/Org';
 import Address from '../components/Address';
 import GenericItemArrayEntry from '../components/GenericItemArrayEntry';
+import Chiplist from '../components/Chiplist';
 import SupabaseAuthService from '../Login/supabase.auth.service'
 import SupabaseDataService from '../services/supabase.data.service'
 import UtilityFunctionsService from '../services/utility.functions.service';
@@ -17,7 +18,8 @@ import CommentsList from '../components/CommentsList';
 
 import "../translations/i18n";
 import './Org.css';
-
+const categories: string[] = ['Transportation', 'Tours & Excursions', 'Food', 
+        'Cleaning Service', 'Visas / Legal Services', 'Other'];
 const instantMessageTypes: any = [
     { value: 'WhatsApp' },
     { value: 'Business Suite' },
@@ -183,6 +185,28 @@ const Org: React.FC = () => {
 							value={org?.name!}
 							class='inputBox'>
                     </IonInput>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td className="labelColumn">
+                    <IonLabel class="itemLabel">
+                        {t('Categories')}
+                    </IonLabel>
+                    </td>
+                    <td>
+                        <Chiplist 
+                            title={t('Categories')}
+                            id={'categories'}                            
+                            options={categories}
+                            index={-1}
+                            //data={org?.categories! || []} 
+                            data={org.categories || []} 
+                            saveFunction={(newData: string[])=>{
+                                const newOrg: any = {...org};
+                                newOrg.categories = newData;
+                                setOrg(newOrg);
+                            }}/>
                     </td>
                 </tr>
 
@@ -427,14 +451,16 @@ const Org: React.FC = () => {
                                 console.error('deleteOrg error', error);
                                 return;
                             } else {
-                                history.replace('/org');
+                                history.replace('/orgs');
                             }
                         }}>
                         {t('delete')}
                     </IonButton>
                 </div>
             }
-            <CommentsList topic={`org/${id}`}/>
+            { !isNew &&
+                <CommentsList topic={`org/${id}`}/>
+            }
             {/* <pre>
                 {JSON.stringify(org, null, 2)}
             </pre> */}

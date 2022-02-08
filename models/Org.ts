@@ -6,6 +6,7 @@ export interface Org {
     photourl?: string;
     logourl?: string;
     notes?: string;
+    categories?: string[];
     email?: Email[];
     phone?: Phone[];
     url?: Url[];
