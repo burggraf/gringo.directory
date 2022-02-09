@@ -17,4 +17,4 @@ create table if not exists public.orgs (
   metadata      JSONB NULL,
   xtra          JSONB NULL
 );
-
+CREATE INDEX idx_orgs_categories on public.orgs USING GIN (categories);

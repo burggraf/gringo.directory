@@ -27,8 +27,8 @@ const Orgs: React.FC = () => {
     const history = useHistory();
     const [showLoading, setShowLoading] = useState(false);
     const [ orgs, setOrgs ] = useState<any[]>([]);
-    const [ selectedCategories, setSelectedCategories ] = useState<string[]>([]);
-    const [ searchMode, setSearchMode ] = useState<string>('ALL');
+    const [ selectedCategories, setSelectedCategories ] = useState<string[]>(JSON.parse(localStorage.getItem('orgs:selectedCategories') || '[]'));
+    const [ searchMode, setSearchMode ] = useState<string>(localStorage.getItem('orgs:searchMode') || 'ALL');
     const loadOrgs = async () => {
         setShowLoading(true);
         const { data, error } = await supabaseDataService.getOrgs(selectedCategories, searchMode);
@@ -87,7 +87,9 @@ const Orgs: React.FC = () => {
 
       <IonLoading isOpen={showLoading} message={t('Loading')} />
         <IonChip onClick={()=>{
-            setSearchMode(searchMode === 'ALL' ? 'ANY' : 'ALL')
+            const newSearchMode = (searchMode === 'ALL' ? 'ANY' : 'ALL');
+            setSearchMode(newSearchMode)
+            localStorage.setItem('orgs:searchMode', newSearchMode)
         }}>{searchMode}</IonChip>
         <IonLabel>Categories:</IonLabel>
         <Chiplist 
@@ -99,6 +101,7 @@ const Orgs: React.FC = () => {
                             data={selectedCategories} 
                             saveFunction={(newData: string[])=>{
                                 setSelectedCategories(newData);
+                                localStorage.setItem('orgs:selectedCategories', JSON.stringify(newData));
                             }}/>
 
 
