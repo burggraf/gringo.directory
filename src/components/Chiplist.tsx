@@ -73,14 +73,15 @@ const Chiplist: React.FC<ContainerProps> = ({ data, index, id, title, saveFuncti
 				})}
 			</Modal>
 			{localData?.length === 0 &&
-				<IonChip color="dark" outline={false} onClick={()=>{setShowModal({currentModal: id})}}>
-					<IonLabel>{t('Select Category')}</IonLabel>
+				<IonChip key={`chiplist-title-${title}`} color="dark" outline={false} onClick={()=>{setShowModal({currentModal: id})}}>
+					<IonLabel>{t(title)}</IonLabel>
 				</IonChip>
 			}
 			{localData?.length > 0 &&
 				localData?.map((option, index) => {
 					return (
 						<IonChip 
+								key={`chiplist-chip-id-${option}`}
 								color="dark" 
 								id={option}
 								outline={false} 

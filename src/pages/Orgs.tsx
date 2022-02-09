@@ -86,13 +86,15 @@ const Orgs: React.FC = () => {
       <IonContent class="ion-padding">
 
       <IonLoading isOpen={showLoading} message={t('Loading')} />
-        <IonChip onClick={()=>{
+        <IonChip key={'searchMode'}
+          onClick={()=>{
             const newSearchMode = (searchMode === 'ALL' ? 'ANY' : 'ALL');
             setSearchMode(newSearchMode)
             localStorage.setItem('orgs:searchMode', newSearchMode)
         }}>{searchMode}</IonChip>
         <IonLabel>Categories:</IonLabel>
         <Chiplist 
+                            key={'orgs:selectedCategoriesChiplist'}
                             title={t('Categories')}
                             id={'categories'}                            
                             options={categories}
@@ -111,10 +113,10 @@ const Orgs: React.FC = () => {
             rowClick={(row: any, index: number)=>{history.push(`/org/${row.$id}`)}}
         />
 
-        <IonGrid key={'orgsList'}>
+        {/* <IonGrid key={'orgs:List'}>
             {orgs.map((org: OrgObject) => {
                 return (
-                    <IonRow key={org.id} onClick={()=>{history.push(`/org/${org.id}`)}}>
+                    <IonRow key={`orgs:org.row.id.${org.id}`} onClick={()=>{history.push(`/org/${org.id}`)}}>
                         <IonCol>
                             <IonLabel>
                                 {`${org.name || ''}`}
@@ -123,7 +125,7 @@ const Orgs: React.FC = () => {
                     </IonRow>
                 )
             })}
-        </IonGrid>
+        </IonGrid> */}
       </IonContent>
     </IonPage>
   );
