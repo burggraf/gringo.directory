@@ -66,6 +66,12 @@ const Menu: React.FC = () => {
 			mdIcon: homeSharp,
 		},
 		{
+			title: t('Places'),
+			url: '/places',
+			iosIcon: businessOutline,
+			mdIcon: businessSharp,
+		},
+		{
 			title: t('Orgs'),
 			url: '/orgs',
 			iosIcon: businessOutline,

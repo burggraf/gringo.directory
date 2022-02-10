@@ -19,6 +19,8 @@ import Welcome from './pages/Welcome'
 import About from './pages/About'
 import Person from './pages/Person'
 import People from './pages/People'
+import Places from './pages/Places'
+import Place from './pages/Place'
 import Orgs from './pages/Orgs'
 import Org from './pages/Org'
 import StartupService from './services/startup.service';
@@ -68,6 +70,8 @@ const App: React.FC = () => {
             <Route path="/about" component={About} />
             <Route path="/person/:id" component={Person} />
             <Route path="/people" component={People} />
+            <Route path="/places" component={Places} />
+            <Route path="/place/:id" component={Place} />
             <Route path="/orgs" component={Orgs} />
             <Route path="/org/:id" component={Org} />
             <Route path="/delete" component={DeleteAccount} />

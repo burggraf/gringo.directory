@@ -46,6 +46,24 @@ export default class SupabaseDataService {
     .select('*');
     return { data, error };
   }
+  public async getPlaces() {
+    const { data, error } = 
+    await supabase.from('places')
+    .select('*');
+    return { data, error };
+  }
+  public async getPlace(id: string) {
+    const startTime = +new Date();
+    const { data, error } = 
+    await supabase.from('places')
+    .select('*')
+    .eq('place_id', id)
+    .limit(1)
+    .single();
+    console.log('#### getPlace: ', +new Date() - startTime);
+    return { data, error };
+  }
+
   public async getOrgs(selectedCategories: string[], searchMode: string = 'ALL') {
     if (selectedCategories.length === 0) { 
       return { data: [], error: null };
@@ -100,6 +118,14 @@ export default class SupabaseDataService {
     .upsert(org);
     return { data, error };
   }
+  public async savePlace(place: any) {
+    //place.updated_at = 'NOW()';
+    const { data, error } = 
+    await supabase.from('places')
+    .upsert(place);
+    return { data, error };
+  }
+
   public async deletePerson(id: string) {
     const { data, error } = 
     await supabase.from('persons')
