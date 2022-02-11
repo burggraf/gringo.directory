@@ -5,9 +5,12 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
 
+//import { description, version } from '../../package.json';
+import description from '../../package.json'
+import version from '../../package.json'
 import SupabaseAuthService from '../Login/supabase.auth.service'
 import SupabaseDataService from '../services/supabase.data.service'
-import { description, version } from '../../package.json';
+
 // import description from '../../package.json';
 // import version from '../../package.json';
 
