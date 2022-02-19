@@ -1,10 +1,8 @@
-import { IonButton, IonCheckbox, IonChip, IonIcon, IonInput, IonItem, IonLabel, IonList } from '@ionic/react'
-import { addOutline, addSharp, createOutline, createSharp } from 'ionicons/icons'
+import { IonChip, IonLabel } from '@ionic/react'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Modal from './Modal'
-import Select from './Select'
 import UtilityFunctionsService from '../services/utility.functions.service';
 
 import '../translations/i18n'
