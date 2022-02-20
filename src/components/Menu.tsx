@@ -198,7 +198,8 @@ const Menu: React.FC = () => {
 
 			</IonContent>
 			<IonFooter>
-				{email && (
+				
+				{/* {email && (
 					<IonMenuToggle key={'profile'} autoHide={false}>
 					<IonItem routerDirection='root' routerLink='/profile' lines='none' detail={false}>
 						<IonIcon slot='start' ios={personOutline} md={personSharp}></IonIcon>
@@ -236,7 +237,8 @@ const Menu: React.FC = () => {
 								</IonMenuToggle>
 							</IonCol>
 						</IonRow>
-					)}
+					)} */}
+				<IonGrid>
 					<IonRow>
 						<IonCol size='auto'>
 							<IonIcon size='large' ios={languageOutline} md={languageSharp}></IonIcon>
