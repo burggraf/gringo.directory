@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useHistory, useLocation } from 'react-router-dom'
 
+import Login from '../Login/Login'
 import SupabaseAuthService from '../Login/supabase.auth.service'
 import { selectLanguage } from '../translations/i18n'
 import ItemPicker from './ItemPicker'
@@ -29,7 +30,7 @@ const languageOptions = [
 
 const Menu: React.FC = () => {
 	const history = useHistory();
-
+	const [showLogin, setShowLogin] = useState(false);
 	const [searchText, setSearchText] = useState('')
 	const [currentLanguage, setCurrentLanguage] = useState<string>(
 		localStorage.getItem('language') || 'en'
@@ -122,6 +123,10 @@ const Menu: React.FC = () => {
 	// const selectLanguage = (lang: string) => {
 	//   console.log('select', lang);
 	// }
+	const goToProfile = async () => {
+		history.replace('/profile');
+	}
+	
 	return (
 		<IonMenu contentId='main' type='overlay'>
 			<IonContent>
@@ -184,6 +189,13 @@ const Menu: React.FC = () => {
 						)
 					})}
 				</IonList>
+				<Login 
+				setShowModal={setShowLogin}
+				showModal={showLogin}
+				providers={['google', 'facebook', 'twitter']}
+				profileFunction={goToProfile}
+				/>
+
 			</IonContent>
 			<IonFooter>
 				{email && (

@@ -3,26 +3,26 @@ import { IonReactRouter } from '@ionic/react-router';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
 import Menu from './components/Menu';
-import Login from './Login/Login';
+// import Login from './Login/Login';
 import ResetPassword from './Login/ResetPassword';
+import About from './pages/About'
 import Come from './pages/Come';
 import DeleteAccount from './pages/DeleteAccount';
 import Enjoy from './pages/Enjoy';
 import Live from './pages/Live';
 import NotFound from './pages/NotFound'
+import Org from './pages/Org'
+import Orgs from './pages/Orgs'
 import Page from './pages/Page';
+import People from './pages/People'
+import Person from './pages/Person'
+import Place from './pages/Place'
+import Places from './pages/Places'
 import Privacy from './pages/Privacy'
 import Profile from './pages/Profile';
 import Stay from './pages/Stay';
 import Terms from './pages/Terms'
 import Welcome from './pages/Welcome'
-import About from './pages/About'
-import Person from './pages/Person'
-import People from './pages/People'
-import Places from './pages/Places'
-import Place from './pages/Place'
-import Orgs from './pages/Orgs'
-import Org from './pages/Org'
 import StartupService from './services/startup.service';
 
 /* Theme variables */
@@ -60,7 +60,7 @@ const App: React.FC = () => {
             <Route path="/page/:name" exact={true}>
               <Page />
             </Route>
-            <Route path="/login" component={Login} />
+            {/* <Route path="/login" component={Login} /> */}
             <Route path="/profile" component={Profile} />
             <Route path="/come" component={Come} />
             <Route path="/stay" component={Stay} />

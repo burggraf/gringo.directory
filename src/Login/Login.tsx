@@ -1,26 +1,53 @@
-import { IonBackButton, IonButton, IonButtons, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonInput, IonItem, IonLabel, IonLoading, IonMenuButton, IonPage, IonRow, IonTitle, IonToolbar, useIonToast } from '@ionic/react';
-import { arrowForwardOutline, link, lockClosedOutline, lockOpenOutline, logIn, mailOutline, personAdd, refreshCircle } from 'ionicons/icons';
-import { useState } from 'react';
+import { IonBackButton, IonButton, IonButtons, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonInput, IonItem, IonLabel, IonLoading, IonMenuButton, IonModal, IonPage, IonRow, IonTitle, IonToolbar, useIonToast } from '@ionic/react';
+import { User } from '@supabase/supabase-js'
+import { arrowForwardOutline, closeOutline, helpCircleOutline, helpCircleSharp, link, lockClosedOutline, lockOpenOutline, logIn, logInOutline, logInSharp, logOutOutline, logOutSharp, mailOutline, personAdd, personOutline, personSharp, refreshCircle } from 'ionicons/icons';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useHistory, useParams } from 'react-router';
 
 import ProviderSignInButton from './ProviderSignInButton';
 import SupabaseAuthService from './supabase.auth.service';
 
+import '../translations/i18n'
 import './Login.css';
-import { useHistory, useParams } from 'react-router';
 
 const supabaseAuthService = SupabaseAuthService.getInstance();
+interface ContainerProps {
+    showModal: boolean;
+    setShowModal: Function;
+    backdropDismiss?: boolean;
+    profileFunction?: Function;
+    providers?: string[];
+	// data: string[];
+    // index: number;
+	// id: string;
+	// title: string;
+    // saveFunction: Function;
+	// options: string[];
+}
 
 const validateEmail = (email: string) => {
     const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(String(email).toLowerCase());
 }
-const Login: React.FC = () => {
+const Login: React.FC<ContainerProps> = ({
+    showModal, setShowModal, backdropDismiss = false, profileFunction, providers
+}) => {
+    const { t } = useTranslation()
+    const loadProfile = async () => {
+        if (profileFunction) {
+            profileFunction();   
+        }
+    }
+    
     const [showLoading, setShowLoading] = useState(false);
 
+    const [user, setUser] = useState<User | null>(null)
     const history = useHistory();
     const [signUpMode, setSignUpMode] = useState(false);
     const [present, dismiss] = useIonToast();
     const [email, setEmail] = useState('');
+	const [avatar, setAvatar] = useState('./assets/img/profile160x160.png');
     const [password, setPassword] = useState('');
     const toast = (message: string, color: string = 'danger') => {
         present({
@@ -70,16 +97,37 @@ const Login: React.FC = () => {
     const toggleSignUpMode = async () => {
         setSignUpMode(!signUpMode);
     }
+	useEffect(() => {
+		// Only run this one time!  No multiple subscriptions!
+		supabaseAuthService.user.subscribe((user: User | null) => {
+            setUser(user);
+			console.log('subscribed: user', user)
+		})
+	}, []) // <-- empty dependency array
+	const signOut = async () => {
+		const { error } = await supabaseAuthService.signOut()
+		if (error) {
+			console.error('Error signing out', error)
+		}
+	}
     
   return (
-    <IonPage>
+      <>
+    <IonModal 
+    isOpen={showModal} 
+    backdropDismiss={backdropDismiss}
+    className='my-custom-class'>
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="start">
-            <IonBackButton defaultHref="/" />
+            <IonButton color='primary' onClick={() => setShowModal(false)}>
+                    <IonIcon size='large' icon={closeOutline}></IonIcon>
+            </IonButton>
           </IonButtons>
           <IonTitle>Sign In</IonTitle>
         </IonToolbar>
+        <IonButtons slot="start">
+        </IonButtons>
       </IonHeader>
       <IonContent>
           <IonLoading isOpen={showLoading} message={'Loading'} />
@@ -193,24 +241,22 @@ const Login: React.FC = () => {
         <div className="ion-text-center">
         <IonLabel>or, sign in with:</IonLabel>
         </div>
-        <IonGrid class="ion-padding" style={{maxWidth: '375px'}}>
+        <IonGrid class="ion-padding ion-text-center" style={{maxWidth: '375px'}}>
             <IonRow>
                 <IonCol>
-
-
-            <ProviderSignInButton name="google" color="rgb(227,44,41)" />
-            <ProviderSignInButton name="facebook" color="rgb(59,89,152)" />
-            <ProviderSignInButton name="spotify" color="rgb(36,203,75)" />
-            <ProviderSignInButton name="twitter" color="rgb(30,135,235)" />
-            {/* <ProviderSignInButton name="apple" color="gray" />
-            <ProviderSignInButton name="spotify" color="rgb(36,203,75)" />
-            <ProviderSignInButton name="slack" color="rgb(221,157,35)" />
-            <ProviderSignInButton name="twitch" color="rgb(120,34,244)" />            
-            <ProviderSignInButton name="discord" color="rgb(116,131,244)" />
-            <ProviderSignInButton name="github" color="rgb(0,0,0)" />
-            <ProviderSignInButton name="bitbucket" color="rgb(56,98,169)" />
-            <ProviderSignInButton name="gitlab" color="rgb(209,44,30)" />
-            <ProviderSignInButton name="azure" color="rgb(228,54,26)" /> */}
+            {providers && providers.indexOf('google') > -1 &&  <ProviderSignInButton name="google" color="rgb(227,44,41)" />}
+            {providers && providers.indexOf('facebook') > -1 &&  <ProviderSignInButton name="facebook" color="rgb(59,89,152)" />}
+            {providers && providers.indexOf('spotify') > -1 &&  <ProviderSignInButton name="spotify" color="rgb(36,203,75)" />}
+            {providers && providers.indexOf('twitter') > -1 &&  <ProviderSignInButton name="twitter" color="rgb(30,135,235)" />}
+            {providers && providers.indexOf('apple') > -1 &&  <ProviderSignInButton name="apple" color="gray" />}
+            {providers && providers.indexOf('spotify') > -1 &&  <ProviderSignInButton name="spotify" color="rgb(36,203,75)" />}
+            {providers && providers.indexOf('slack') > -1 &&  <ProviderSignInButton name="slack" color="rgb(221,157,35)" />}
+            {providers && providers.indexOf('twitch') > -1 &&  <ProviderSignInButton name="twitch" color="rgb(120,34,244)" />}            
+            {providers && providers.indexOf('discord') > -1 &&  <ProviderSignInButton name="discord" color="rgb(116,131,244)" />}
+            {providers && providers.indexOf('github') > -1 &&  <ProviderSignInButton name="github" color="rgb(0,0,0)" />}
+            {providers && providers.indexOf('bitbucket') > -1 &&  <ProviderSignInButton name="bitbucket" color="rgb(56,98,169)" />}
+            {providers && providers.indexOf('gitlab') > -1 &&  <ProviderSignInButton name="gitlab" color="rgb(209,44,30)" />}
+            {providers && providers.indexOf('azure') > -1 &&  <ProviderSignInButton name="azure" color="rgb(228,54,26)" />}
             </IonCol>
             </IonRow>
         </IonGrid>
@@ -226,7 +272,41 @@ const Login: React.FC = () => {
         
 
       </IonContent>
-    </IonPage>
+    </IonModal>
+    {!user && (
+        <IonItem lines='none' detail={false} onClick={() => setShowModal(true)}>
+            <IonIcon slot='start' ios={logInOutline} md={logInSharp}></IonIcon>
+            <div style={{width: '100%'}}>
+                <IonButton fill='outline' color='dark'
+                    size='small' expand='block' strong>
+                    {t('Sign In')}
+                </IonButton>
+            </div>
+        </IonItem>
+    )}
+    {user && (
+        <>
+        <IonItem lines='none' detail={false} 
+            style={{cursor: profileFunction ? 'pointer' : 'default'}}
+            onClick={loadProfile}
+        >
+            <IonIcon slot='start' ios={personOutline} md={personSharp}></IonIcon>
+            <IonLabel className='ion-text-center ion-text-wrap'>
+                <strong>{user?.email}</strong>
+            </IonLabel>
+        </IonItem>
+        <IonItem lines='none' detail={false} onClick={signOut}>
+            <IonIcon slot='start' ios={logOutOutline} md={logOutSharp}></IonIcon>
+            <div style={{width: '100%'}}>
+                <IonButton fill='outline' color='dark'
+                    size='small' expand='block' strong>
+                    {t('Sign Out')}
+                </IonButton>
+            </div>
+        </IonItem>
+        </>
+    )}
+    </>
   );
 };
 

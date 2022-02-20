@@ -2,8 +2,8 @@ import { IonChip, IonLabel } from '@ionic/react'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import Modal from './Modal'
 import UtilityFunctionsService from '../services/utility.functions.service';
+import Modal from './Modal'
 
 import '../translations/i18n'
 import './Chiplist.css'
