@@ -273,7 +273,7 @@ const Login: React.FC<ContainerProps> = ({
                 <IonCol>
                     {providers?.map(provider => {
                         return (
-                        <ProviderSignInButton name={provider} color={logoColors[provider] || 'black'} />
+                        <ProviderSignInButton key={`provider-${provider}`} name={provider} color={logoColors[provider] || 'black'} />
                         )
                     })} 
             </IonCol>
