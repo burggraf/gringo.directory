@@ -23,7 +23,6 @@ import { useState } from 'react'
 interface ContainerProps {
 	name: string;
 	color?: string;
-	onSignIn?: Function;
 }
 
 const supabaseAuthService = SupabaseAuthService.getInstance()
@@ -44,13 +43,12 @@ addIcons({
 	azure: logoMicrosoft,
 })
 
-const ProviderSignInButton: React.FC<ContainerProps> = ({ name, color, onSignIn }) => {
+const ProviderSignInButton: React.FC<ContainerProps> = ({ name, color }) => {
 	const [showLoading, setShowLoading] = useState(false);
 
 	const nameProperCase = name.charAt(0).toUpperCase() + name.slice(1)
 	const history = useHistory()
 	const signInWithProvider = async (provider: Provider) => {
-		setShowLoading(true);
 		const { user, session, error } = await supabaseAuthService.signInWithProvider(provider);
 		console.log('user', user)
 		console.log('session', session)
@@ -59,9 +57,11 @@ const ProviderSignInButton: React.FC<ContainerProps> = ({ name, color, onSignIn 
 			toast(error.message);
 			setShowLoading(false);
 		} else {
-			if (onSignIn) {
-				onSignIn(user, session);
-			}
+			// *** we can't get here becuase of the third-party redirect...
+			// if (onSignIn) {
+			// 	onSignIn(user, session);
+			// }
+
 			//window.location.href = '/';
 			// history.replace('/')
 		}

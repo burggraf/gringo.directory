@@ -99,7 +99,7 @@ export default class SupabaseAuthService {
     const { user, session, error } = await supabase.auth.signIn({
       provider: provider
     }, {
-      redirectTo: window.location.origin
+      redirectTo: window.location.href // .origin
     });
     return { user, session, error };
   }
