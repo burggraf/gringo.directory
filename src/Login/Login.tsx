@@ -28,6 +28,22 @@ interface ContainerProps {
 	// options: string[];
 }
 
+const logoColors: any = {
+"google": "rgb(227,44,41)",
+"facebook": "rgb(59,89,152)",
+"spotify": "rgb(36,203,75)",
+"twitter": "rgb(30,135,235)",
+"apple": "gray",
+"slack": "rgb(221,157,35)",
+"twitch": "rgb(120,34,244)",            
+"discord": "rgb(116,131,244)",
+"github": "rgb(0,0,0)",
+"bitbucket": "rgb(56,98,169)",
+"gitlab": "rgb(209,44,30)",
+"azure": "rgb(228,54,26)",
+}
+
+
 const validateEmail = (email: string) => {
     const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(String(email).toLowerCase());
@@ -255,19 +271,11 @@ const Login: React.FC<ContainerProps> = ({
         <IonGrid class="ion-padding ion-text-center" style={{maxWidth: '375px'}}>
             <IonRow>
                 <IonCol>
-            {providers && providers.indexOf('google') > -1 &&  <ProviderSignInButton name="google" color="rgb(227,44,41)" />}
-            {providers && providers.indexOf('facebook') > -1 &&  <ProviderSignInButton name="facebook" color="rgb(59,89,152)" />}
-            {providers && providers.indexOf('spotify') > -1 &&  <ProviderSignInButton name="spotify" color="rgb(36,203,75)" />}
-            {providers && providers.indexOf('twitter') > -1 &&  <ProviderSignInButton name="twitter" color="rgb(30,135,235)" />}
-            {providers && providers.indexOf('apple') > -1 &&  <ProviderSignInButton name="apple" color="gray" />}
-            {providers && providers.indexOf('spotify') > -1 &&  <ProviderSignInButton name="spotify" color="rgb(36,203,75)" />}
-            {providers && providers.indexOf('slack') > -1 &&  <ProviderSignInButton name="slack" color="rgb(221,157,35)" />}
-            {providers && providers.indexOf('twitch') > -1 &&  <ProviderSignInButton name="twitch" color="rgb(120,34,244)" />}            
-            {providers && providers.indexOf('discord') > -1 &&  <ProviderSignInButton name="discord" color="rgb(116,131,244)" />}
-            {providers && providers.indexOf('github') > -1 &&  <ProviderSignInButton name="github" color="rgb(0,0,0)" />}
-            {providers && providers.indexOf('bitbucket') > -1 &&  <ProviderSignInButton name="bitbucket" color="rgb(56,98,169)" />}
-            {providers && providers.indexOf('gitlab') > -1 &&  <ProviderSignInButton name="gitlab" color="rgb(209,44,30)" />}
-            {providers && providers.indexOf('azure') > -1 &&  <ProviderSignInButton name="azure" color="rgb(228,54,26)" />}
+                    {providers?.map(provider => {
+                        return (
+                        <ProviderSignInButton name={provider} color={logoColors[provider] || 'black'} />
+                        )
+                    })} 
             </IonCol>
             </IonRow>
         </IonGrid>
