@@ -7,19 +7,18 @@ import { useHistory, useParams } from 'react-router';
 
 import { Address as AddressObject } from '../../models/Models';
 import Address from '../components/Address';
-import GenericItemArrayEntry from '../components/GenericItemArrayEntry';
 import Chiplist from '../components/Chiplist';
+import CommentsList from '../components/CommentsList';
+import GenericItemArrayEntry from '../components/GenericItemArrayEntry';
+import { categories } from '../data/categories';
+import { instantMessageTypes } from '../data/instantMessageTypes';
+import { socialProfileTypes } from '../data/socialProfileTypes';
 import SupabaseAuthService from '../Login/supabase.auth.service'
 import SupabaseDataService from '../services/supabase.data.service'
 import UtilityFunctionsService from '../services/utility.functions.service';
 
-import CommentsList from '../components/CommentsList';
-
 import "../translations/i18n";
 import './Place.css';
-import { categories } from '../data/categories';
-import { instantMessageTypes } from '../data/instantMessageTypes';
-import { socialProfileTypes } from '../data/socialProfileTypes';
 
 const supabaseDataService = SupabaseDataService.getInstance()
 const supabaseAuthService = SupabaseAuthService.getInstance()
@@ -59,7 +58,7 @@ const Place: React.FC = () => {
         // Only run this one time!  No multiple subscriptions!
         supabaseAuthService.user.subscribe((user: User | null) => {
             _user = user
-            console.log('Enjoy: subscribed: _user', _user)
+            console.log('** Place: subscribed: _user', _user)
         });
         console.log('useEffect: id', id);
         if (id === 'new') {
@@ -390,6 +389,7 @@ const Place: React.FC = () => {
             { !isNew &&
                 <CommentsList topic={`place/${id}`}/>
             }
+            {/* supabaseAuthService.setShowLogin(true) */}
             {/* <pre>
                 {JSON.stringify(org, null, 2)}
             </pre> */}

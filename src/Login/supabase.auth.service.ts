@@ -16,6 +16,10 @@ export default class SupabaseAuthService {
     return this.myInstance;
   }
 
+
+  public showLogin: any;
+  public setShowLogin: any;
+
   public user = new BehaviorSubject<User | null>(null);
   public profile = new BehaviorSubject<any>(null);
   private _user: User | null = null;

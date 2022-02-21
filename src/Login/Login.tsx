@@ -18,6 +18,8 @@ interface ContainerProps {
     backdropDismiss?: boolean;
     profileFunction?: Function;
     providers?: string[];
+    onSignIn?: Function;
+    onSignOut?: Function;
 	// data: string[];
     // index: number;
 	// id: string;
@@ -31,7 +33,8 @@ const validateEmail = (email: string) => {
     return re.test(String(email).toLowerCase());
 }
 const Login: React.FC<ContainerProps> = ({
-    showModal, setShowModal, backdropDismiss = false, profileFunction, providers
+    showModal, setShowModal, backdropDismiss = false, 
+    profileFunction, providers, onSignIn, onSignOut
 }) => {
     const { t } = useTranslation()
     const loadProfile = async () => {
@@ -68,8 +71,12 @@ const Login: React.FC<ContainerProps> = ({
         if (error) { setShowLoading(false); toast(error.message); }
 
         else { 
-            window.location.href = '/';
+            // window.location.href = '/';
             setShowLoading(false);
+            setShowModal(false);
+            if (onSignIn) {
+                onSignIn(user, session);
+            }
          }
     }
     const signUp = async () => {
@@ -108,7 +115,11 @@ const Login: React.FC<ContainerProps> = ({
 		const { error } = await supabaseAuthService.signOut()
 		if (error) {
 			console.error('Error signing out', error)
-		}
+		} else {
+            if (onSignOut) {
+                onSignOut();
+            }
+        }
 	}
     
   return (
@@ -244,19 +255,19 @@ const Login: React.FC<ContainerProps> = ({
         <IonGrid class="ion-padding ion-text-center" style={{maxWidth: '375px'}}>
             <IonRow>
                 <IonCol>
-            {providers && providers.indexOf('google') > -1 &&  <ProviderSignInButton name="google" color="rgb(227,44,41)" />}
-            {providers && providers.indexOf('facebook') > -1 &&  <ProviderSignInButton name="facebook" color="rgb(59,89,152)" />}
-            {providers && providers.indexOf('spotify') > -1 &&  <ProviderSignInButton name="spotify" color="rgb(36,203,75)" />}
-            {providers && providers.indexOf('twitter') > -1 &&  <ProviderSignInButton name="twitter" color="rgb(30,135,235)" />}
-            {providers && providers.indexOf('apple') > -1 &&  <ProviderSignInButton name="apple" color="gray" />}
-            {providers && providers.indexOf('spotify') > -1 &&  <ProviderSignInButton name="spotify" color="rgb(36,203,75)" />}
-            {providers && providers.indexOf('slack') > -1 &&  <ProviderSignInButton name="slack" color="rgb(221,157,35)" />}
-            {providers && providers.indexOf('twitch') > -1 &&  <ProviderSignInButton name="twitch" color="rgb(120,34,244)" />}            
-            {providers && providers.indexOf('discord') > -1 &&  <ProviderSignInButton name="discord" color="rgb(116,131,244)" />}
-            {providers && providers.indexOf('github') > -1 &&  <ProviderSignInButton name="github" color="rgb(0,0,0)" />}
-            {providers && providers.indexOf('bitbucket') > -1 &&  <ProviderSignInButton name="bitbucket" color="rgb(56,98,169)" />}
-            {providers && providers.indexOf('gitlab') > -1 &&  <ProviderSignInButton name="gitlab" color="rgb(209,44,30)" />}
-            {providers && providers.indexOf('azure') > -1 &&  <ProviderSignInButton name="azure" color="rgb(228,54,26)" />}
+            {providers && providers.indexOf('google') > -1 &&  <ProviderSignInButton name="google" color="rgb(227,44,41)" onSignIn={onSignIn} />}
+            {providers && providers.indexOf('facebook') > -1 &&  <ProviderSignInButton name="facebook" color="rgb(59,89,152)" onSignIn={onSignIn} />}
+            {providers && providers.indexOf('spotify') > -1 &&  <ProviderSignInButton name="spotify" color="rgb(36,203,75)" onSignIn={onSignIn} />}
+            {providers && providers.indexOf('twitter') > -1 &&  <ProviderSignInButton name="twitter" color="rgb(30,135,235)" onSignIn={onSignIn} />}
+            {providers && providers.indexOf('apple') > -1 &&  <ProviderSignInButton name="apple" color="gray" onSignIn={onSignIn} />}
+            {providers && providers.indexOf('spotify') > -1 &&  <ProviderSignInButton name="spotify" color="rgb(36,203,75)" onSignIn={onSignIn} />}
+            {providers && providers.indexOf('slack') > -1 &&  <ProviderSignInButton name="slack" color="rgb(221,157,35)" onSignIn={onSignIn} />}
+            {providers && providers.indexOf('twitch') > -1 &&  <ProviderSignInButton name="twitch" color="rgb(120,34,244)" onSignIn={onSignIn} />}            
+            {providers && providers.indexOf('discord') > -1 &&  <ProviderSignInButton name="discord" color="rgb(116,131,244)" onSignIn={onSignIn} />}
+            {providers && providers.indexOf('github') > -1 &&  <ProviderSignInButton name="github" color="rgb(0,0,0)" onSignIn={onSignIn} />}
+            {providers && providers.indexOf('bitbucket') > -1 &&  <ProviderSignInButton name="bitbucket" color="rgb(56,98,169)" onSignIn={onSignIn} />}
+            {providers && providers.indexOf('gitlab') > -1 &&  <ProviderSignInButton name="gitlab" color="rgb(209,44,30)" onSignIn={onSignIn} />}
+            {providers && providers.indexOf('azure') > -1 &&  <ProviderSignInButton name="azure" color="rgb(228,54,26)" onSignIn={onSignIn} />}
             </IonCol>
             </IonRow>
         </IonGrid>

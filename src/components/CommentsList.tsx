@@ -1,43 +1,49 @@
-import { useTranslation } from "react-i18next";
+import { createClient, User } from '@supabase/supabase-js'
+import { useCallback, useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { AuthModal, Comments, CommentsProvider } from 'supabase-comments-extension'
 
-import "../translations/i18n";
-import './CommentsList.css';
-import { keys } from '../services/keys.service';
+import SupabaseAuthService from '../Login/supabase.auth.service'
+import { keys } from '../services/keys.service'
 
-import { useState } from 'react';
-import { createClient } from '@supabase/supabase-js';
-import {
-  Comments,
-  AuthModal,
-  CommentsProvider,
-} from 'supabase-comments-extension';
+import '../translations/i18n'
+import './CommentsList.css'
 
 interface ContainerProps {
-  topic: string;
+	topic: string
 }
-
-const supabase = createClient(keys.SUPABASE_URL, keys.SUPABASE_KEY);
-
+// supabaseAuthService.setShowLogin
+const supabase = createClient(keys.SUPABASE_URL, keys.SUPABASE_KEY)
+const supabaseAuthService = SupabaseAuthService.getInstance()
 const CommentsList: React.FC<ContainerProps> = ({ topic }) => {
-  const { t } = useTranslation();
-  const [modalVisible, setModalVisible] = useState(false);
-  return (
-    <div style={{maxWidth: '600px', marginLeft: 'auto', marginRight: 'auto'}}>
-    <CommentsProvider
-      key={`CommentsProvider-${topic}`}
-      supabaseClient={supabase}
-      // onAuthRequested={() => setModalVisible(true)}
-      onAuthRequested={() => {
-        window.location.href = '/login/' + encodeURIComponent(window.location.href);
-      }}
-    >
-      {/* <AuthModal
+	const { t } = useTranslation()
+	const [modalVisible, setModalVisible] = useState(false)
+
+	return (
+		<div
+			style={{
+				maxWidth: '600px',
+				marginLeft: 'auto',
+				marginRight: 'auto',
+			}}>
+			<CommentsProvider
+				key={`CommentsProvider-${topic}`}
+				supabaseClient={supabase}
+				mode={window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'}
+				// onAuthRequested={() => setModalVisible(true)}
+				onAuthRequested={() => {
+					supabaseAuthService.setShowLogin(true)
+					// window.location.href = '/login/' + encodeURIComponent(window.location.href);
+				}}>
+				{/* <AuthModal
         visible={modalVisible}
         onAuthenticate={() => setModalVisible(false)}
         onClose={() => setModalVisible(false)}
       /> */}
-      <Comments key={`Comments-${topic}`} topic={topic} />
-    </CommentsProvider></div>  );
-};
+				<Comments key={`Comments-${topic}`} topic={topic} />
+			</CommentsProvider>
+		</div>
+	)
+}
 
-export default CommentsList;
+export default CommentsList

@@ -21,8 +21,9 @@ import { useHistory } from 'react-router'
 import { useState } from 'react'
 
 interface ContainerProps {
-	name: string,
-	color?: string,
+	name: string;
+	color?: string;
+	onSignIn?: Function;
 }
 
 const supabaseAuthService = SupabaseAuthService.getInstance()
@@ -43,7 +44,7 @@ addIcons({
 	azure: logoMicrosoft,
 })
 
-const ProviderSignInButton: React.FC<ContainerProps> = ({ name, color }) => {
+const ProviderSignInButton: React.FC<ContainerProps> = ({ name, color, onSignIn }) => {
 	const [showLoading, setShowLoading] = useState(false);
 
 	const nameProperCase = name.charAt(0).toUpperCase() + name.slice(1)
@@ -58,6 +59,9 @@ const ProviderSignInButton: React.FC<ContainerProps> = ({ name, color }) => {
 			toast(error.message);
 			setShowLoading(false);
 		} else {
+			if (onSignIn) {
+				onSignIn(user, session);
+			}
 			//window.location.href = '/';
 			// history.replace('/')
 		}

@@ -31,6 +31,9 @@ const languageOptions = [
 const Menu: React.FC = () => {
 	const history = useHistory();
 	const [showLogin, setShowLogin] = useState(false);
+	supabaseAuthService.showLogin = setShowLogin;
+	supabaseAuthService.setShowLogin = setShowLogin;
+
 	const [searchText, setSearchText] = useState('')
 	const [currentLanguage, setCurrentLanguage] = useState<string>(
 		localStorage.getItem('language') || 'en'
@@ -114,17 +117,17 @@ const Menu: React.FC = () => {
 		console.log('searchText', searchText)
 	}, [searchText])
 
-	const signOut = async () => {
-		const { error } = await supabaseAuthService.signOut()
-		if (error) {
-			console.error('Error signing out', error)
-		}
-	}
 	// const selectLanguage = (lang: string) => {
 	//   console.log('select', lang);
 	// }
 	const goToProfile = async () => {
 		history.replace('/profile');
+	}
+	const onSignIn = (user: any, session: any) =>{
+		window.location.reload();
+	}
+	const onSignOut = () =>{
+		window.location.reload();
 	}
 	
 	return (
@@ -194,50 +197,13 @@ const Menu: React.FC = () => {
 				showModal={showLogin}
 				providers={['google', 'facebook', 'twitter']}
 				profileFunction={goToProfile}
+				onSignIn={onSignIn}
+				onSignOut={onSignOut}
 				/>
 
 			</IonContent>
 			<IonFooter>
 				
-				{/* {email && (
-					<IonMenuToggle key={'profile'} autoHide={false}>
-					<IonItem routerDirection='root' routerLink='/profile' lines='none' detail={false}>
-						<IonIcon slot='start' ios={personOutline} md={personSharp}></IonIcon>
-						<IonLabel className='ion-text-center'>
-							<strong>{email}</strong>
-						</IonLabel>
-					</IonItem>
-					</IonMenuToggle>
-				)}
-				<IonGrid>
-					{!email && (
-						<IonRow>
-							<IonCol size='auto'>
-								<IonIcon size='large' ios={logInOutline} md={logInSharp}></IonIcon>
-							</IonCol>
-							<IonCol>
-								<IonMenuToggle key={'signin'} autoHide={false}>
-									<IonButton size='small' expand='block' routerDirection='root' routerLink='/login' strong>
-										{t('Sign In')}
-									</IonButton>
-								</IonMenuToggle>
-							</IonCol>
-						</IonRow>
-					)}
-					{email && (
-						<IonRow>
-							<IonCol size='auto'>
-								<IonIcon size='large' ios={logOutOutline} md={logOutSharp}></IonIcon>
-							</IonCol>
-							<IonCol>
-								<IonMenuToggle key={'signout'} autoHide={false}>
-									<IonButton size='small' expand='block' href='' onClick={signOut} strong>
-										{t('Sign Out')}
-									</IonButton>
-								</IonMenuToggle>
-							</IonCol>
-						</IonRow>
-					)} */}
 				<IonGrid>
 					<IonRow>
 						<IonCol size='auto'>
