@@ -41,6 +41,10 @@ const logoColors: any = {
 "bitbucket": "rgb(56,98,169)",
 "gitlab": "rgb(209,44,30)",
 "azure": "rgb(228,54,26)",
+//"linkedin": "rgb(3,47,84)",
+"linkedin": "rgb(2,119,181)",
+"zoom": "rgb(45,140,255)",
+"notion": window.matchMedia('(prefers-color-scheme: dark)').matches ? 'gray' : 'black',
 }
 
 

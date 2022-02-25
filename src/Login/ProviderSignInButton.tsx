@@ -7,12 +7,15 @@ import {
 	logoGithub,
 	logoGitlab,
 	logoGoogle,
+	logoLinkedin,
 	logoMicrosoft,
 	logoSlack,
 	logoTwitch,
 	logoTwitter,
 } from 'ionicons/icons'
 import logoSpotify from '../Login/auth-provider-icons/spotify.svg'
+import logoNotion from '../Login/auth-provider-icons/notion.svg'
+import logoZoom from '../Login/auth-provider-icons/zoom.svg'
 import { addIcons } from 'ionicons'
 import './ProviderSignInButton.css'
 import SupabaseAuthService from './supabase.auth.service'
@@ -39,8 +42,11 @@ addIcons({
 	twitter: logoTwitter,
 	slack: logoSlack,
 	spotify: logoSpotify,
+	notion: logoNotion,
+	zoom: logoZoom,
 	microsoft: logoMicrosoft,
 	azure: logoMicrosoft,
+	linkedin: logoLinkedin
 })
 
 const ProviderSignInButton: React.FC<ContainerProps> = ({ name, color }) => {
