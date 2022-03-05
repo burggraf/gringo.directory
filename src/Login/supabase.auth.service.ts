@@ -1,16 +1,22 @@
 import { createClient, Provider, SupabaseClient, User } from '@supabase/supabase-js';
 import { BehaviorSubject } from 'rxjs';
 
-import { keys } from '../services/keys.service';
+// import { keys } from '../services/keys.service';
 
-const supabase: SupabaseClient = createClient(keys.SUPABASE_URL, keys.SUPABASE_KEY);
+// const supabase: SupabaseClient = createClient(keys.SUPABASE_URL, keys.SUPABASE_KEY);
 
 export default class SupabaseAuthService {
   static myInstance:any = null;
-
-  static getInstance() {
+  static supabase: SupabaseClient;
+  static getInstance(SUPABASE_URL?: string, SUPABASE_KEY?: string) {
     if (this.myInstance == null) {
-      this.myInstance = new this();
+      if (SUPABASE_URL && SUPABASE_KEY) {
+        this.supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+        this.myInstance = new this();
+      } else {
+        console.error('SupabaseAuthService: getInstance: missing SUPABASE_URL or SUPABASE_KEY');
+        this.myInstance = null;
+      }
     }
     return this.myInstance;
   }
@@ -27,7 +33,7 @@ export default class SupabaseAuthService {
   constructor() {
     // Try to recover our user session
     this.loadUser();
-    SupabaseAuthService.subscription = supabase.auth.onAuthStateChange(async (event, session) => {
+    SupabaseAuthService.subscription = SupabaseAuthService.supabase.auth.onAuthStateChange(async (event, session) => {
         if (event === 'SIGNED_IN' && session) {
           this._user = session.user;
           this.user.next(session.user);
@@ -42,7 +48,7 @@ export default class SupabaseAuthService {
   // ************** auth ****************
 
   private async loadUser() {
-    const user = supabase.auth.user();
+    const user = SupabaseAuthService.supabase.auth.user();
     if (user) {
       this._user = user;
       this.user.next(user);
@@ -54,7 +60,7 @@ export default class SupabaseAuthService {
   public async loadProfile() {
     if (this._user?.id!) {
       const { data, error } = 
-      await supabase.from('profile')
+      await SupabaseAuthService.supabase.from('profile')
       .select('*')
       .eq('id', this._user?.id!)
       .limit(1)
@@ -76,7 +82,7 @@ export default class SupabaseAuthService {
   }
 
   public signUpWithEmail = async (email: string, password: string) => {
-    const { user, session, error } = await supabase.auth.signUp({
+    const { user, session, error } = await SupabaseAuthService.supabase.auth.signUp({
       email: email,
       password: password,
     });
@@ -84,7 +90,7 @@ export default class SupabaseAuthService {
   }
 
   public signInWithEmail = async (email: string, password: string) => {
-    const { user, session, error } = await supabase.auth.signIn({
+    const { user, session, error } = await SupabaseAuthService.supabase.auth.signIn({
       email: email,
       password: password,
     });
@@ -92,7 +98,7 @@ export default class SupabaseAuthService {
   }
 
   public signInWithProvider = async (provider: Provider) => {
-    const { user, session, error } = await supabase.auth.signIn({
+    const { user, session, error } = await SupabaseAuthService.supabase.auth.signIn({
       provider: provider
     }, {
       redirectTo: window.location.href // .origin
@@ -101,7 +107,7 @@ export default class SupabaseAuthService {
   }
 
   public resetPassword = async (email: string) => {
-    const { data, error } = await supabase.auth.api.resetPasswordForEmail(email,
+    const { data, error } = await SupabaseAuthService.supabase.auth.api.resetPasswordForEmail(email,
       {
         redirectTo: window.location.origin
       });
@@ -109,7 +115,7 @@ export default class SupabaseAuthService {
   }
 
   public sendMagicLink = async (email: string) => {
-    const { user, session, error } = await supabase.auth.signIn({
+    const { user, session, error } = await SupabaseAuthService.supabase.auth.signIn({
       email: email
     }, {
       redirectTo: window.location.origin
@@ -118,13 +124,13 @@ export default class SupabaseAuthService {
   }
 
   public updatePassword = async (access_token: string, new_password: string) => {
-    const { error, data } = await supabase.auth.api
+    const { error, data } = await SupabaseAuthService.supabase.auth.api
       .updateUser(access_token, { password: new_password });
     return { error, data };
   }
 
   public signOut = async () => {
-    const { error } = await supabase.auth.signOut();
+    const { error } = await SupabaseAuthService.supabase.auth.signOut();
     if (!error) {
       this.user.next(null);
     }

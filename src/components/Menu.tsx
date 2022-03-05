@@ -12,8 +12,9 @@ import ItemPicker from './ItemPicker'
 
 import '../translations/i18n'
 import './Menu.css'
+import { keys } from '../services/keys.service';
 
-const supabaseAuthService = SupabaseAuthService.getInstance()
+const supabaseAuthService = SupabaseAuthService.getInstance(keys.SUPABASE_URL, keys.SUPABASE_KEY)
 
 interface AppPage {
 	url: string
@@ -197,6 +198,8 @@ const Menu: React.FC = () => {
 				profileFunction={goToProfile}
 				onSignIn={onSignIn}
 				onSignOut={onSignOut}
+				SUPABASE_URL={keys.SUPABASE_URL}
+				SUPABASE_KEY={keys.SUPABASE_KEY}
 				/>
 
 			</IonContent>

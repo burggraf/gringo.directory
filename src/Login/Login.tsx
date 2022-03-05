@@ -10,8 +10,8 @@ import SupabaseAuthService from './supabase.auth.service';
 
 // import '../translations/i18n'
 import './Login.css';
+let supabaseAuthService: SupabaseAuthService;
 
-const supabaseAuthService = SupabaseAuthService.getInstance();
 interface ContainerProps {
     showModal: boolean;
     setShowModal: Function;
@@ -20,6 +20,8 @@ interface ContainerProps {
     providers?: string[];
     onSignIn?: Function; // does not work for third party providers
     onSignOut?: Function;
+    SUPABASE_URL: string;
+    SUPABASE_KEY: string;
 	// data: string[];
     // index: number;
 	// id: string;
@@ -54,7 +56,7 @@ const validateEmail = (email: string) => {
 }
 const Login: React.FC<ContainerProps> = ({
     showModal, setShowModal, backdropDismiss = false, 
-    profileFunction, providers, onSignIn, onSignOut
+    profileFunction, providers, onSignIn, onSignOut, SUPABASE_URL, SUPABASE_KEY
 }) => {
     // const { t } = useTranslation()
     const loadProfile = async () => {
@@ -62,7 +64,10 @@ const Login: React.FC<ContainerProps> = ({
             profileFunction();   
         }
     }
-    
+    if (!supabaseAuthService) {
+        supabaseAuthService = SupabaseAuthService.getInstance(SUPABASE_URL, SUPABASE_KEY);
+    }
+
     supabaseAuthService.showLogin = showModal;
 	supabaseAuthService.setShowLogin = setShowModal;
 
