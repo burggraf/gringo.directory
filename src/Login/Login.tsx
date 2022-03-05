@@ -1,14 +1,14 @@
-import { IonBackButton, IonButton, IonButtons, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonInput, IonItem, IonLabel, IonLoading, IonMenuButton, IonModal, IonPage, IonRow, IonTitle, IonToolbar, useIonToast } from '@ionic/react';
+import { IonButton, IonButtons, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonInput, IonItem, IonLabel, IonLoading, IonModal, IonRow, IonTitle, IonToolbar, useIonToast } from '@ionic/react';
 import { User } from '@supabase/supabase-js'
-import { arrowForwardOutline, closeOutline, helpCircleOutline, helpCircleSharp, link, lockClosedOutline, lockOpenOutline, logIn, logInOutline, logInSharp, logOutOutline, logOutSharp, mailOutline, personAdd, personOutline, personSharp, refreshCircle } from 'ionicons/icons';
+import { arrowForwardOutline, closeOutline, link, lockClosedOutline, lockOpenOutline, logInOutline, logInSharp, logOutOutline, logOutSharp, mailOutline, personAdd, personOutline, personSharp } from 'ionicons/icons';
 import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { useHistory, useParams } from 'react-router';
+// import { useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router';
 
 import ProviderSignInButton from './ProviderSignInButton';
 import SupabaseAuthService from './supabase.auth.service';
 
-import '../translations/i18n'
+// import '../translations/i18n'
 import './Login.css';
 
 const supabaseAuthService = SupabaseAuthService.getInstance();
@@ -56,7 +56,7 @@ const Login: React.FC<ContainerProps> = ({
     showModal, setShowModal, backdropDismiss = false, 
     profileFunction, providers, onSignIn, onSignOut
 }) => {
-    const { t } = useTranslation()
+    // const { t } = useTranslation()
     const loadProfile = async () => {
         if (profileFunction) {
             profileFunction();   
@@ -247,13 +247,6 @@ const Login: React.FC<ContainerProps> = ({
                             <IonLabel>Already have an account? <b>Sign In</b></IonLabel>
                         </div>
                     </IonCol>
-                    {/* <IonCol>
-                        <IonButton expand="block" 
-                        disabled={!validateEmail(email) || password.length > 0}
-                        onClick={resetPassword}>
-                        <IonIcon icon={refreshCircle} size="large" />&nbsp;&nbsp;
-                        <b>Reset Password</b></IonButton>
-                    </IonCol> */}
                 </IonRow>
             }
             <IonRow>
@@ -302,7 +295,7 @@ const Login: React.FC<ContainerProps> = ({
             <div style={{width: '100%'}}>
                 <IonButton fill='outline' color='dark'
                     size='small' expand='block' strong>
-                    {t('Sign In')}
+                    Sign In
                 </IonButton>
             </div>
         </IonItem>
@@ -323,7 +316,7 @@ const Login: React.FC<ContainerProps> = ({
             <div style={{width: '100%'}}>
                 <IonButton fill='outline' color='dark'
                     size='small' expand='block' strong>
-                    {t('Sign Out')}
+                    Sign Out
                 </IonButton>
             </div>
         </IonItem>
