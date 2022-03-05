@@ -2,7 +2,6 @@ import { createClient, Provider, SupabaseClient, User } from '@supabase/supabase
 import { BehaviorSubject } from 'rxjs';
 
 import { keys } from '../services/keys.service';
-import SupabaseDataService from '../services/supabase.data.service';
 
 const supabase: SupabaseClient = createClient(keys.SUPABASE_URL, keys.SUPABASE_KEY);
 
@@ -16,7 +15,6 @@ export default class SupabaseAuthService {
     return this.myInstance;
   }
 
-
   public showLogin: any;
   public setShowLogin: any;
 
@@ -25,7 +23,6 @@ export default class SupabaseAuthService {
   private _user: User | null = null;
   private _profile: any = null;
   public static subscription: any = null;
-  
   
   constructor() {
     // Try to recover our user session
@@ -71,8 +68,7 @@ export default class SupabaseAuthService {
     } else {
       this._profile = null;
       this.profile.next(null);
-  }
-
+    }
   }
 
   public getCurrentUser() {
