@@ -63,6 +63,9 @@ const Login: React.FC<ContainerProps> = ({
         }
     }
     
+    supabaseAuthService.showLogin = showModal;
+	supabaseAuthService.setShowLogin = setShowModal;
+
     const [showLoading, setShowLoading] = useState(false);
 
     const [user, setUser] = useState<User | null>(null)
