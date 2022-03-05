@@ -31,8 +31,6 @@ const languageOptions = [
 const Menu: React.FC = () => {
 	const history = useHistory();
 	const [showLogin, setShowLogin] = useState(false);
-	// supabaseAuthService.showLogin = setShowLogin;
-	// supabaseAuthService.setShowLogin = setShowLogin;
 
 	const [searchText, setSearchText] = useState('')
 	const [currentLanguage, setCurrentLanguage] = useState<string>(
