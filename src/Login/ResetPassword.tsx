@@ -1,5 +1,5 @@
 import { IonBackButton, IonButton, IonButtons, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonInput, IonLabel, IonPage, IonRow, IonTitle, IonToolbar, useIonToast } from '@ionic/react';
-import { checkmark, link, logIn, personAdd, refreshCircle } from 'ionicons/icons';
+import { checkmark } from 'ionicons/icons';
 import { useState } from 'react';
 import { useParams } from 'react-router';
 import { useHistory } from "react-router-dom";
