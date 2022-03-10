@@ -19,27 +19,28 @@ import {
 //import ExploreContainer from '../components/ExploreContainer';
 import './Profile.css'
 import SupabaseDataService from '../services/supabase.data.service'
-import SupabaseAuthService from '../Login/supabase.auth.service'
+import { SupabaseAuthService } from 'ionic-react-supabase-login'
 import { useEffect, useState } from 'react'
 import { User } from '@supabase/supabase-js'
 import { checkmarkOutline } from 'ionicons/icons'
 const supabaseDataService = SupabaseDataService.getInstance()
-const supabaseAuthService = SupabaseAuthService.getInstance()
 
 const Profile: React.FC = () => {
-	const [profile, setProfile] = useState<any>(null)
 
-	useEffect(() => {
-		// Only run this one time!  No multiple subscriptions!
-		supabaseAuthService.profile.subscribe((profile: any | null) => {
-			setProfile(profile)
-		})
-	}, []) // <-- empty dependency array
+    const [ user, setUser ] = useState<any>(null);
+    const [ profile, setProfile ] = useState<any>(null);
+    useEffect(() => {
+      const userSubscription = SupabaseAuthService.subscribeUser(setUser);
+      const profileSubscription = SupabaseAuthService.subscribeProfile(setProfile);
+      return () => {
+          SupabaseAuthService.unsubscribeUser(userSubscription);
+          SupabaseAuthService.unsubscribeProfile(profileSubscription);
+      }
+    },[])
 
 	// const { name } = useParams<{ name: string; }>();
 	const save = async () => {
 		await supabaseDataService.saveProfile(profile)
-		await supabaseAuthService.loadProfile()
 	}
 
 	return (

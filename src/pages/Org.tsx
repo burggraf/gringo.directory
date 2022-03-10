@@ -10,7 +10,7 @@ import { Org as OrgObject } from '../../models/Org';
 import Address from '../components/Address';
 import GenericItemArrayEntry from '../components/GenericItemArrayEntry';
 import Chiplist from '../components/Chiplist';
-import SupabaseAuthService from '../Login/supabase.auth.service'
+import { SupabaseAuthService } from 'ionic-react-supabase-login';
 import SupabaseDataService from '../services/supabase.data.service'
 import UtilityFunctionsService from '../services/utility.functions.service';
 
@@ -23,9 +23,7 @@ import { instantMessageTypes } from '../data/instantMessageTypes';
 import { socialProfileTypes } from '../data/socialProfileTypes';
 
 const supabaseDataService = SupabaseDataService.getInstance()
-const supabaseAuthService = SupabaseAuthService.getInstance()
 const utils = UtilityFunctionsService.getInstance()
-let _user: User | null = null
 
 const Org: React.FC = () => {
     const { t } = useTranslation();
@@ -55,13 +53,14 @@ const Org: React.FC = () => {
     }
 
 
+    const [ user, setUser ] = useState<any>(null);
+    const [ profile, setProfile ] = useState<any>(null);
+    useEffect(() => {
+    },[])
+
 
     useEffect(() => {
         // Only run this one time!  No multiple subscriptions!
-        supabaseAuthService.user.subscribe((user: User | null) => {
-            _user = user
-            console.log('Enjoy: subscribed: _user', _user)
-        });
         console.log('useEffect: id', id);
         if (id === 'new') {
             id = utils.uuidv4();
@@ -71,6 +70,13 @@ const Org: React.FC = () => {
             loadOrg(id);
         }    
         console.log('useEffect: id', id);
+
+        const userSubscription = SupabaseAuthService.subscribeUser(setUser);
+        const profileSubscription = SupabaseAuthService.subscribeProfile(setProfile);
+        return () => {
+            SupabaseAuthService.unsubscribeUser(userSubscription);
+            SupabaseAuthService.unsubscribeProfile(profileSubscription);
+        }
     }, []) // <-- empty dependency array
     
     const changeHandler = (e: any) => {

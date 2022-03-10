@@ -3,8 +3,6 @@ import { IonReactRouter } from '@ionic/react-router';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
 import Menu from './components/Menu';
-// import Login from './Login/Login';
-import ResetPassword from './Login/ResetPassword';
 import About from './pages/About'
 import Come from './pages/Come';
 import DeleteAccount from './pages/DeleteAccount';
@@ -60,7 +58,6 @@ const App: React.FC = () => {
             <Route path="/page/:name" exact={true}>
               <Page />
             </Route>
-            {/* <Route path="/login" component={Login} /> */}
             <Route path="/profile" component={Profile} />
             <Route path="/come" component={Come} />
             <Route path="/stay" component={Stay} />
@@ -75,7 +72,6 @@ const App: React.FC = () => {
             <Route path="/orgs" component={Orgs} />
             <Route path="/org/:id" component={Org} />
             <Route path="/delete" component={DeleteAccount} />
-            <Route path="/resetpassword/:token" component={ResetPassword} />
             <Route path='/privacy' component={Privacy} />
 							<Route path='/terms' component={Terms} />
               <Route component={NotFound} />

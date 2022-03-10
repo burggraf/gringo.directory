@@ -1,25 +1,24 @@
 import { IonButton, IonButtons, IonChip, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonInput, IonItem, IonLabel, IonList, IonListHeader, IonLoading, IonMenuButton, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
 import { User } from '@supabase/supabase-js'
+import { SupabaseAuthService } from 'ionic-react-supabase-login';
+import { TableGrid } from 'ionic-react-tablegrid';
 import { addOutline, addSharp, airplaneOutline, airplaneSharp, businessOutline, businessSharp, checkmarkOutline, informationCircleOutline, informationCircleSharp, informationOutline, informationSharp, people, peopleOutline, peopleSharp, personOutline, personSharp, save } from 'ionicons/icons';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router';
-import { TableGrid } from 'ionic-react-tablegrid';
+
 import { Org as OrgObject } from '../../models/Org'
-import SupabaseAuthService from '../Login/supabase.auth.service'
-import SupabaseDataService from '../services/supabase.data.service'
+import Chiplist from '../components/Chiplist';
 import { categories } from '../data/categories';
+import SupabaseDataService from '../services/supabase.data.service'
 
 // import description from '../../package.json';
 // import version from '../../package.json';
 
 import "../translations/i18n";
 import './Orgs.css';
-import Chiplist from '../components/Chiplist';
 
 const supabaseDataService = SupabaseDataService.getInstance()
-const supabaseAuthService = SupabaseAuthService.getInstance()
-let _user: User | null = null
 
 
 const Orgs: React.FC = () => {
@@ -52,14 +51,16 @@ const Orgs: React.FC = () => {
         setShowLoading(false);
 
     }
+    const [ user, setUser ] = useState<any>(null);
+    const [ profile, setProfile ] = useState<any>(null);
     useEffect(() => {
-        // Only run this one time!  No multiple subscriptions!
-        supabaseAuthService.user.subscribe((user: User | null) => {
-            _user = user
-            console.log('Come: subscribed: _user', _user)
-        });
-        //loadOrgs();
-    }, []) // <-- empty dependency array
+      const userSubscription = SupabaseAuthService.subscribeUser(setUser);
+      const profileSubscription = SupabaseAuthService.subscribeProfile(setProfile);
+      return () => {
+          SupabaseAuthService.unsubscribeUser(userSubscription);
+          SupabaseAuthService.unsubscribeProfile(profileSubscription);
+      }
+    },[])
     
     useEffect(() => {
         loadOrgs();

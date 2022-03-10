@@ -1,9 +1,9 @@
 import { createClient, User } from '@supabase/supabase-js'
+import { SupabaseAuthService } from 'ionic-react-supabase-login'
 import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AuthModal, Comments, CommentsProvider } from 'supabase-comments-extension'
 
-import SupabaseAuthService from '../Login/supabase.auth.service'
 import { keys } from '../services/keys.service'
 
 import '../translations/i18n'
@@ -14,7 +14,6 @@ interface ContainerProps {
 }
 // supabaseAuthService.setShowLogin
 const supabase = createClient(keys.SUPABASE_URL, keys.SUPABASE_KEY)
-const supabaseAuthService = SupabaseAuthService.getInstance()
 const CommentsList: React.FC<ContainerProps> = ({ topic }) => {
 	const { t } = useTranslation()
 	const [modalVisible, setModalVisible] = useState(false)
@@ -32,8 +31,8 @@ const CommentsList: React.FC<ContainerProps> = ({ topic }) => {
 				mode={window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'}
 				// onAuthRequested={() => setModalVisible(true)}
 				onAuthRequested={() => {
-					supabaseAuthService.setShowLogin(true)
-					// window.location.href = '/login/' + encodeURIComponent(window.location.href);
+					// supabaseAuthService.setShowLogin(true)
+
 				}}>
 				{/* <AuthModal
         visible={modalVisible}

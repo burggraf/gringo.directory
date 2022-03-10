@@ -1,20 +1,17 @@
 import { IonButton, IonCol, IonContent, IonFooter, IonGrid, IonIcon, IonItem, IonLabel, IonList, IonListHeader, IonMenu, IonMenuToggle, IonNote, IonRow, IonSearchbar, IonText } from '@ionic/react'
 import { User } from '@supabase/supabase-js'
+import { Login, ResetPassword } from 'ionic-react-supabase-login'
 import { airplaneOutline, airplaneSharp, archiveOutline, archiveSharp, bedOutline, bedSharp, bookmarkOutline, businessOutline, businessSharp, fastFood, fastFoodOutline, fastFoodSharp, heartOutline, heartSharp, homeOutline, homeSharp, informationCircleOutline, informationCircleSharp, languageOutline, languageSharp, logInOutline, logInSharp, logOutOutline, logOutSharp, mailOutline, mailSharp, paperPlaneOutline, paperPlaneSharp, peopleOutline, peopleSharp, personOutline, personSharp, trashOutline, trashSharp, warningOutline, warningSharp } from 'ionicons/icons'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useHistory, useLocation } from 'react-router-dom'
 
-import Login from '../Login/Login'
-import SupabaseAuthService from '../Login/supabase.auth.service'
+import { keys } from '../services/keys.service';
 import { selectLanguage } from '../translations/i18n'
 import ItemPicker from './ItemPicker'
 
 import '../translations/i18n'
 import './Menu.css'
-import { keys } from '../services/keys.service';
-
-const supabaseAuthService = SupabaseAuthService.getInstance(keys.SUPABASE_URL, keys.SUPABASE_KEY)
 
 interface AppPage {
 	url: string
@@ -31,7 +28,7 @@ const languageOptions = [
 
 const Menu: React.FC = () => {
 	const history = useHistory();
-	const [showLogin, setShowLogin] = useState(false);
+	// const [showLogin, setShowLogin] = useState(false);
 
 	const [searchText, setSearchText] = useState('')
 	const [currentLanguage, setCurrentLanguage] = useState<string>(
@@ -39,9 +36,9 @@ const Menu: React.FC = () => {
 	)
 	const location = useLocation()
 	const { t } = useTranslation()
-	const [email, setEmail] = useState('')
 	const [avatar, setAvatar] = useState('./assets/img/profile160x160.png')
-	let _user: User | null = null
+	const [ user, setUser ] = useState<User | null>(null);
+	const [ profile, setProfile ] = useState<any>(null);
 
 	const appPages: AppPage[] = [
 		{
@@ -93,21 +90,7 @@ const Menu: React.FC = () => {
 			mdIcon: informationCircleSharp,
 		},
 	]
-
-	useEffect(() => {
-		// Only run this one time!  No multiple subscriptions!
-		supabaseAuthService.user.subscribe((user: User | null) => {
-			_user = user
-			console.log('subscribed: _user', _user)
-			if (_user?.email) {
-				setEmail(_user.email)
-				setAvatar(_user?.user_metadata?.avatar_url || './assets/img/profile160x160.png')
-			} else {
-				setEmail('')
-			}
-		})
-	}, []) // <-- empty dependency array
-
+  
 	useEffect(() => {
 		selectLanguage(currentLanguage)
 	}, [currentLanguage])
@@ -192,12 +175,18 @@ const Menu: React.FC = () => {
 					})}
 				</IonList>
 				<Login 
-				setShowModal={setShowLogin}
-				showModal={showLogin}
-				providers={['google', 'facebook', 'twitter']}
+				SUPABASE_URL={keys.SUPABASE_URL}
+				SUPABASE_KEY={keys.SUPABASE_KEY}
+				providers={['google', 'facebook', 'twitter', 'linkedin']}
+				backdropDismiss={false}
 				profileFunction={goToProfile}
 				onSignIn={onSignIn}
 				onSignOut={onSignOut}
+				profileTable={'profile'}
+				profileKey={'id'}
+				setUser={setUser}
+				/>
+				<ResetPassword 
 				SUPABASE_URL={keys.SUPABASE_URL}
 				SUPABASE_KEY={keys.SUPABASE_KEY}
 				/>

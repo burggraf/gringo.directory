@@ -1,5 +1,6 @@
 import { IonBackButton, IonButton, IonButtons, IonContent, IonGrid, IonHeader, IonIcon, IonInput, IonItem, IonLabel, IonList, IonListHeader, IonLoading, IonPage, IonTextarea, IonTitle, IonToolbar } from '@ionic/react';
 import { User } from '@supabase/supabase-js'
+import { SupabaseAuthService } from 'ionic-react-supabase-login';
 import { checkmarkOutline, personOutline, personSharp } from 'ionicons/icons';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -8,12 +9,10 @@ import { useHistory, useParams } from 'react-router';
 import { Address as AddressObject } from '../../models/Models';
 import { Person as PersonObject } from '../../models/Person';
 import Address from '../components/Address';
+import CommentsList from '../components/CommentsList';
 import GenericItemArrayEntry from '../components/GenericItemArrayEntry';
-import SupabaseAuthService from '../Login/supabase.auth.service'
 import SupabaseDataService from '../services/supabase.data.service'
 import UtilityFunctionsService from '../services/utility.functions.service';
-
-import CommentsList from '../components/CommentsList';
 
 import "../translations/i18n";
 import './Person.css';
@@ -72,9 +71,7 @@ const socialProfileTypes: any = [
 ];
 
 const supabaseDataService = SupabaseDataService.getInstance()
-const supabaseAuthService = SupabaseAuthService.getInstance()
 const utils = UtilityFunctionsService.getInstance()
-let _user: User | null = null
 
 const Person: React.FC = () => {
     const { t } = useTranslation();
@@ -127,22 +124,27 @@ const Person: React.FC = () => {
 
 	const [ person, setPerson ] = useState<PersonObject>(initPerson);
 
+    const [ user, setUser ] = useState<any>(null);
+    const [ profile, setProfile ] = useState<any>(null);
     useEffect(() => {
-        // Only run this one time!  No multiple subscriptions!
-        supabaseAuthService.user.subscribe((user: User | null) => {
-            _user = user
-            console.log('Enjoy: subscribed: _user', _user)
-        });
-        console.log('useEffect: id', id);
-        if (id === 'new') {
-            id = utils.uuidv4();
-            setPerson({...initPerson, id: id});
-            setShowLoading(false);
-        } else {
-            loadPerson(id);
-        }    
-        console.log('useEffect: id', id);
-    }, []) // <-- empty dependency array
+      const userSubscription = SupabaseAuthService.subscribeUser(setUser);
+      const profileSubscription = SupabaseAuthService.subscribeProfile(setProfile);
+      return () => {
+          SupabaseAuthService.unsubscribeUser(userSubscription);
+          SupabaseAuthService.unsubscribeProfile(profileSubscription);
+      }
+      console.log('useEffect: id', id);
+      if (id === 'new') {
+          id = utils.uuidv4();
+          setPerson({...initPerson, id: id});
+          setShowLoading(false);
+      } else {
+          loadPerson(id);
+      }    
+      console.log('useEffect: id', id);
+  },[])
+
+    
     
     const changeHandler = (e: any) => {
         const fld = e.srcElement.itemID;

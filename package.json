@@ -25,6 +25,7 @@
     "@types/react-router-dom": "^5.1.7",
     "i18next": "^21.4.0",
     "i18next-browser-languagedetector": "^6.1.2",
+    "ionic-react-supabase-login": "^1.0.42",
     "ionic-react-tablegrid": "^1.0.62",
     "ionicons": "^6.0.1",
     "moment": "^2.29.1",

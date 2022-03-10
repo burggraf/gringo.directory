@@ -13,7 +13,7 @@ import GenericItemArrayEntry from '../components/GenericItemArrayEntry';
 import { categories } from '../data/categories';
 import { instantMessageTypes } from '../data/instantMessageTypes';
 import { socialProfileTypes } from '../data/socialProfileTypes';
-import SupabaseAuthService from '../Login/supabase.auth.service'
+import { SupabaseAuthService } from 'ionic-react-supabase-login';
 import SupabaseDataService from '../services/supabase.data.service'
 import UtilityFunctionsService from '../services/utility.functions.service';
 
@@ -21,7 +21,6 @@ import "../translations/i18n";
 import './Place.css';
 
 const supabaseDataService = SupabaseDataService.getInstance()
-const supabaseAuthService = SupabaseAuthService.getInstance()
 const utils = UtilityFunctionsService.getInstance()
 let _user: User | null = null
 
@@ -52,24 +51,25 @@ const Place: React.FC = () => {
         setShowLoading(false);
     }
 
-
-
+    const [ user, setUser ] = useState<any>(null);
+    const [ profile, setProfile ] = useState<any>(null);
     useEffect(() => {
-        // Only run this one time!  No multiple subscriptions!
-        supabaseAuthService.user.subscribe((user: User | null) => {
-            _user = user
-            console.log('** Place: subscribed: _user', _user)
-        });
-        console.log('useEffect: id', id);
-        if (id === 'new') {
-            id = utils.uuidv4();
-            setPlace({...initPlace, id: id});
-            setShowLoading(false);
-        } else {
-            loadPlace(id);
-        }    
-        console.log('useEffect: id', id);
-    }, []) // <-- empty dependency array
+      const userSubscription = SupabaseAuthService.subscribeUser(setUser);
+      const profileSubscription = SupabaseAuthService.subscribeProfile(setProfile);
+      return () => {
+          SupabaseAuthService.unsubscribeUser(userSubscription);
+          SupabaseAuthService.unsubscribeProfile(profileSubscription);
+      }
+      console.log('useEffect: id', id);
+      if (id === 'new') {
+          id = utils.uuidv4();
+          setPlace({...initPlace, id: id});
+          setShowLoading(false);
+      } else {
+          loadPlace(id);
+      }    
+      console.log('useEffect: id', id);
+  },[])
     
     const changeHandler = (e: any) => {
         const fld = e.srcElement.itemID;
