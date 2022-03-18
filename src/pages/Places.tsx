@@ -1,6 +1,5 @@
 import { IonButton, IonButtons, IonChip, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonInput, IonItem, IonLabel, IonList, IonListHeader, IonLoading, IonMenuButton, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
-import { User } from '@supabase/supabase-js'
-import { SupabaseAuthService } from 'ionic-react-supabase-login';
+import { SupabaseAuthService, User } from 'ionic-react-supabase-login';
 import { TableGrid } from 'ionic-react-tablegrid';
 import { addOutline, addSharp, airplaneOutline, airplaneSharp, businessOutline, businessSharp, checkmarkOutline, informationCircleOutline, informationCircleSharp, informationOutline, informationSharp, people, peopleOutline, peopleSharp, personOutline, personSharp, save } from 'ionicons/icons';
 import { useEffect, useState } from 'react';
@@ -27,7 +26,7 @@ const Places: React.FC = () => {
     const [ places, setPlaces ] = useState<any[]>([]);
     const [ selectedCategories, setSelectedCategories ] = useState<string[]>(JSON.parse(localStorage.getItem('places:selectedCategories') || '[]'));
     const [ searchMode, setSearchMode ] = useState<string>(localStorage.getItem('places:searchMode') || 'ALL');
-    const [ user, setUser ] = useState<any>(null);
+    const [ user, setUser ] = useState<User | null>(null);
     const [ profile, setProfile ] = useState<any>(null);
     useEffect(() => {
       const userSubscription = SupabaseAuthService.subscribeUser(setUser);

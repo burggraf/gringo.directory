@@ -1,5 +1,5 @@
 import { IonBackButton, IonButton, IonButtons, IonContent, IonGrid, IonHeader, IonIcon, IonImg, IonInput, IonItem, IonLabel, IonList, IonListHeader, IonLoading, IonPage, IonTextarea, IonTitle, IonToolbar } from '@ionic/react';
-import { User } from '@supabase/supabase-js'
+import { SupabaseAuthService, User } from 'ionic-react-supabase-login';
 import { businessOutline, businessSharp, checkmarkOutline } from 'ionicons/icons';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -10,10 +10,10 @@ import Address from '../components/Address';
 import Chiplist from '../components/Chiplist';
 import CommentsList from '../components/CommentsList';
 import GenericItemArrayEntry from '../components/GenericItemArrayEntry';
+import ModalPhoto from '../components/ModalPhoto';
 import { categories } from '../data/categories';
 import { instantMessageTypes } from '../data/instantMessageTypes';
 import { socialProfileTypes } from '../data/socialProfileTypes';
-import { SupabaseAuthService } from 'ionic-react-supabase-login';
 import SupabaseDataService from '../services/supabase.data.service'
 import UtilityFunctionsService from '../services/utility.functions.service';
 
@@ -28,6 +28,7 @@ const Place: React.FC = () => {
     const { t } = useTranslation();
     const history = useHistory();
     const [showLoading, setShowLoading] = useState(true);
+    const [ openPhoto, setOpenPhoto ] = useState(false);
 
     let { id } = useParams<{ id: string; }>();
     const isNew = (id === 'new');
@@ -56,10 +57,6 @@ const Place: React.FC = () => {
     useEffect(() => {
       const userSubscription = SupabaseAuthService.subscribeUser(setUser);
       const profileSubscription = SupabaseAuthService.subscribeProfile(setProfile);
-      return () => {
-          SupabaseAuthService.unsubscribeUser(userSubscription);
-          SupabaseAuthService.unsubscribeProfile(profileSubscription);
-      }
       console.log('useEffect: id', id);
       if (id === 'new') {
           id = utils.uuidv4();
@@ -69,6 +66,10 @@ const Place: React.FC = () => {
           loadPlace(id);
       }    
       console.log('useEffect: id', id);
+      return () => {
+          SupabaseAuthService.unsubscribeUser(userSubscription);
+          SupabaseAuthService.unsubscribeProfile(profileSubscription);
+      }
   },[])
     
     const changeHandler = (e: any) => {
@@ -265,112 +266,17 @@ const Place: React.FC = () => {
 
                 <tr>
                     <td colSpan={2}>
-                        <IonImg src={place?.photo} class="photo" />
+                        <IonImg src={place?.photo} class="photo" onClick={() =>{
+                            setOpenPhoto(true);
+                        }} />
+                        <ModalPhoto url={place?.photo} title={place?.name!} showModal={openPhoto} setShowModal={setOpenPhoto} />
                     </td>
                 </tr> 
 
-                {/* <tr>
-                    <td className="labelColumn">
-                    <IonLabel class="itemLabel">{t('Xxxxx')}</IonLabel>
-                    </td>
-                    <td>
-                    <IonInput
-							type='text'
-							placeholder={'Xxxxxx'}
-                            itemID='nxxxx'
-							onIonChange={changeHandler}
-							value={place?.xxxx!}
-							class='inputBox'>
-                    </IonInput>
-                    </td>
-                </tr>  */}
-
-{/* 
-    site text, 
-    phone text, 
-    postal_code text, 
-    us_state text, 
-    country text, 
-    country_code text, 
-    latitude double precision, 
-    longitude double precision, 
-    time_zone text, 
-    plus_code text, 
-    rating double precision, 
-    reviews bigint, 
-    reviews_link text, 
-    reviews_per_score jsonb, 
-    reviews_per_score_1 text, 
-    reviews_per_score_2 text, 
-    reviews_per_score_3 text, 
-    reviews_per_score_4 text, 
-    reviews_per_score_5 bigint, 
-    photos_count bigint, 
-    photo text, 
-    street_view text, 
-    working_hours jsonb, 
-    working_hours_old_format text, 
-    popular_times text, 
-    business_status text, 
-    about jsonb, 
-    range text, 
-    posts text, 
-    verified boolean, 
-    owner_id text, 
-    owner_title text, 
-    owner_link text, 
-    reservation_links text, 
-    booking_appointment_link text, 
-    menu_link text, 
-    order_links text, 
-    location_link text, 
-    place_id text NOT NULL, 
-    google_id text, 
-    reviews_id bigint */}
-
-                {/* <tr>
-                    <td className="labelColumn">
-                    <IonLabel class="itemLabel">
-                        {t('Categories')}
-                    </IonLabel>
-                    </td>
-                    <td>
-                        <Chiplist 
-                            title={t('Categories')}
-                            id={'categories'}                            
-                            options={categories}
-                            index={-1}
-                            //data={place?.categories! || []} 
-                            data={place.categories || []} 
-                            saveFunction={(newData: string[])=>{
-                                const newPlace: any = {...place};
-                                newPlace.categories = newData;
-                                setPlace(newPlace);
-                            }}/>
-                    </td>
-                </tr> */}
-
-
-                {/* <tr>
-                    <td className="labelColumn">
-                    <IonLabel class="itemLabel">{t('Notes')}</IonLabel>
-                    </td>
-                    <td>
-                    <IonTextarea
-							placeholder={'Notes'}
-                            itemID='notes'
-                            autoGrow={true}
-                            inputMode='text'
-							onIonChange={changeHandler}
-							value={place?.notes!}
-                            rows={3}
-							class='inputBox'>
-                    </IonTextarea>
-                    </td>
-                </tr> */}
                 </tbody>
             </table>
             { !isNew &&
+                <>
                 <div className="ion-padding">
                     <IonButton fill="clear" expand="block" strong color="danger"
                         onClick={async ()=>{
@@ -385,14 +291,9 @@ const Place: React.FC = () => {
                         {t('delete')}
                     </IonButton>
                 </div>
-            }
-            { !isNew &&
                 <CommentsList topic={`place/${id}`}/>
+                </>
             }
-            {/* supabaseAuthService.setShowLogin(true) */}
-            {/* <pre>
-                {JSON.stringify(org, null, 2)}
-            </pre> */}
 
       </IonContent>
     </IonPage>

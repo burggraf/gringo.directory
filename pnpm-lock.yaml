@@ -24,7 +24,7 @@ specifiers:
   '@types/react-router-dom': ^5.1.7
   i18next: ^21.4.0
   i18next-browser-languagedetector: ^6.1.2
-  ionic-react-supabase-login: ^1.0.42
+  ionic-react-supabase-login: ^1.0.43
   ionic-react-tablegrid: ^1.0.62
   ionicons: ^6.0.1
   moment: ^2.29.1
@@ -75,7 +75,7 @@ dependencies:
   '@types/react-router-dom': 5.3.2
   i18next: 21.6.2
   i18next-browser-languagedetector: 6.1.2
-  ionic-react-supabase-login: 1.0.42_react-dom@17.0.2+react@17.0.2
+  ionic-react-supabase-login: 1.0.43_react-dom@17.0.2+react@17.0.2
   ionic-react-tablegrid: 1.0.62_react-dom@17.0.2+react@17.0.2
   ionicons: 6.0.1
   moment: 2.29.1
@@ -1668,7 +1668,7 @@ packages:
   /@ionic/core/6.0.11:
     resolution: {integrity: sha512-2gtyEoWN+CnfIHOUXctEYc9KHQiUapWJoo1AqCTxcsuXLrMnaPa4orrFpdkBXlT0gugVLM222TW+Stlt5Kq8yg==}
     dependencies:
-      '@stencil/core': 2.14.1
+      '@stencil/core': 2.14.2
       ionicons: 6.0.1
       tslib: 2.3.1
     dev: false
@@ -2121,8 +2121,8 @@ packages:
       webpack-dev-server: 4.7.4_webpack@5.68.0
     dev: false
 
-  /@popperjs/core/2.11.2:
-    resolution: {integrity: sha512-92FRmppjjqz29VMJ2dn+xdyXZBrMlE42AV6Kq6BwjWV7CNUW1hs2FtxSNLQE+gJhaZ6AAmYuO9y8dshhcBl7vA==}
+  /@popperjs/core/2.11.4:
+    resolution: {integrity: sha512-q/ytXxO5NKvyT37pmisQAItCFqA7FD/vNb8dgaJy3/630Fsc+Mz9/9f2SziBoIZ30TJooXyTwZmhi1zjXmObYg==}
     dev: false
 
   /@rollup/plugin-babel/5.3.0_@babel+core@7.17.2+rollup@2.67.2:
@@ -2207,8 +2207,8 @@ packages:
     hasBin: true
     dev: false
 
-  /@stencil/core/2.14.1:
-    resolution: {integrity: sha512-G58fJeDbi58+7uQnyaGInnehfub9tJikFZ4PkT/FuelMV9wGq2FKB0fxKctKQ3mhhHAiFDuGNzRD1isZZQvUCg==}
+  /@stencil/core/2.14.2:
+    resolution: {integrity: sha512-NMC5Xi8sPFJxaO4rz6CbMHuD6PteE/RJWtjrbkusmpjKRtMXkfZJPIgOrleZ4xO+vXcNyL535Ru7vUADqEsTiQ==}
     engines: {node: '>=12.10.0', npm: '>=6.0.0'}
     hasBin: true
     dev: false
@@ -2473,7 +2473,7 @@ packages:
       prosemirror-schema-list: 1.1.6
       prosemirror-state: 1.3.4
       prosemirror-transform: 1.3.4
-      prosemirror-view: 1.23.7
+      prosemirror-view: 1.23.9
     dev: false
 
   /@tiptap/extension-blockquote/2.0.0-beta.26_@tiptap+core@2.0.0-beta.174:
@@ -2498,7 +2498,7 @@ packages:
       '@tiptap/core': ^2.0.0-beta.1
     dependencies:
       prosemirror-state: 1.3.4
-      prosemirror-view: 1.23.7
+      prosemirror-view: 1.23.9
       tippy.js: 6.3.7
     dev: false
 
@@ -2520,7 +2520,7 @@ packages:
       lowlight: 1.20.0
       prosemirror-model: 1.16.1
       prosemirror-state: 1.3.4
-      prosemirror-view: 1.23.7
+      prosemirror-view: 1.23.9
     dev: false
 
   /@tiptap/extension-code-block/2.0.0-beta.37:
@@ -2572,7 +2572,7 @@ packages:
       '@tiptap/core': ^2.0.0-beta.1
     dependencies:
       prosemirror-state: 1.3.4
-      prosemirror-view: 1.23.7
+      prosemirror-view: 1.23.9
       tippy.js: 6.3.7
     dev: false
 
@@ -2680,7 +2680,7 @@ packages:
     dependencies:
       prosemirror-model: 1.16.1
       prosemirror-state: 1.3.4
-      prosemirror-view: 1.23.7
+      prosemirror-view: 1.23.9
     dev: false
 
   /@tiptap/extension-strike/2.0.0-beta.27_@tiptap+core@2.0.0-beta.174:
@@ -2704,7 +2704,7 @@ packages:
     dependencies:
       '@tiptap/core': 2.0.0-beta.174
       prosemirror-model: 1.16.1
-      zeed-dom: 0.9.23
+      zeed-dom: 0.9.24
     dev: false
 
   /@tiptap/react/2.0.0-beta.108_react-dom@17.0.2+react@17.0.2:
@@ -2716,7 +2716,7 @@ packages:
     dependencies:
       '@tiptap/extension-bubble-menu': 2.0.0-beta.55
       '@tiptap/extension-floating-menu': 2.0.0-beta.50
-      prosemirror-view: 1.23.7
+      prosemirror-view: 1.23.9
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
     dev: false
@@ -2752,7 +2752,7 @@ packages:
     dependencies:
       prosemirror-model: 1.16.1
       prosemirror-state: 1.3.4
-      prosemirror-view: 1.23.7
+      prosemirror-view: 1.23.9
     dev: false
 
   /@tootallnate/once/1.1.2:
@@ -6005,8 +6005,8 @@ packages:
     resolution: {integrity: sha512-tzcUFauisWKNHaRkN4Wjl/ZA07gENAjFl3J/c480dprkGTg5EQstgaNFqBfUqCq54kZRIEcreTsAgF/m2quD7A==}
     dev: false
 
-  /highlight.js/11.4.0:
-    resolution: {integrity: sha512-nawlpCBCSASs7EdvZOYOYVkJpGmAOKMYZgZtUqSRqodZE0GRVcFKwo1RcpeOemqh9hyttTdd5wDBwHkuSyUfnA==}
+  /highlight.js/11.5.0:
+    resolution: {integrity: sha512-SM6WDj5/C+VfIY8pZ6yW6Xa0Fm1tniYVYWYW1Q/DcMnISZFrC3aQAZZZFAAZtybKNrGId3p/DNbFTtcTXXgYBw==}
     engines: {node: '>=12.0.0'}
     dev: false
 
@@ -6307,8 +6307,8 @@ packages:
       side-channel: 1.0.4
     dev: false
 
-  /ionic-react-supabase-login/1.0.42_react-dom@17.0.2+react@17.0.2:
-    resolution: {integrity: sha512-KQkY4GBEIiGm1tJEkSbXX4rytdvDuYgRwZPWGhalL3+cLogjp01tRMnPi5+XSQvISOV5gs0k5aYx7EH7RfA8MA==}
+  /ionic-react-supabase-login/1.0.43_react-dom@17.0.2+react@17.0.2:
+    resolution: {integrity: sha512-voXsEmfndqgv9nPlKYg8WhNyj6/99eiPQMNjVEiibs7H8EApxCdznIdIzAgDdKp3YRFYMtHy+Jny5LEKdPincw==}
     peerDependencies:
       react: '>=17.0.2'
       react-dom: '>=17.0.2'
@@ -7426,12 +7426,12 @@ packages:
       highlight.js: 10.7.3
     dev: false
 
-  /lowlight/2.5.0:
-    resolution: {integrity: sha512-OXGUch9JZu4q5r4Ir6QlUp5pBXMxS7NHaclhRiUlxNRcOSK0gtXZcVrsGP4eM7bv0/KDHg/TXQagx/X35EULsA==}
+  /lowlight/2.6.0:
+    resolution: {integrity: sha512-Gas6VcSevLDRAtFP/kg3bj1Ozwncgd0jAgpIxIyNcO/Qm0csJnly9LLEdN75qc9t3l/g/JPFXCkFLe1LPxHozA==}
     dependencies:
       '@types/hast': 2.3.4
       fault: 2.0.1
-      highlight.js: 11.4.0
+      highlight.js: 11.5.0
     dev: false
 
   /lru-cache/6.0.0:
@@ -9042,7 +9042,7 @@ packages:
     dependencies:
       prosemirror-state: 1.3.4
       prosemirror-transform: 1.3.4
-      prosemirror-view: 1.23.7
+      prosemirror-view: 1.23.9
     dev: false
 
   /prosemirror-gapcursor/1.2.2:
@@ -9051,7 +9051,7 @@ packages:
       prosemirror-keymap: 1.1.5
       prosemirror-model: 1.16.1
       prosemirror-state: 1.3.4
-      prosemirror-view: 1.23.7
+      prosemirror-view: 1.23.9
     dev: false
 
   /prosemirror-history/1.2.0:
@@ -9095,8 +9095,8 @@ packages:
       prosemirror-model: 1.16.1
     dev: false
 
-  /prosemirror-view/1.23.7:
-    resolution: {integrity: sha512-ugY+g/4UI2Ree1zzdvbyQWF2KpbFa7kxKMLHaEJcxiPaErnZiD5wZFqIgFinc7fY2v/QM3DLnJ++2I45ULRdrg==}
+  /prosemirror-view/1.23.9:
+    resolution: {integrity: sha512-4ft8PuzYPLqQlYjkW7+jy3drquLrzB0cXu6bXyEgBEYnbv/uI/zBF1rGxmSZCDKwteKm1Wn24B+BSheSw/9sOA==}
     dependencies:
       prosemirror-model: 1.16.1
       prosemirror-state: 1.3.4
@@ -10253,7 +10253,7 @@ packages:
       color: 4.2.1
       commander: 8.3.0
       javascript-time-ago: 2.3.13
-      lowlight: 2.5.0
+      lowlight: 2.6.0
       md5: 2.3.0
       pg: 8.7.3
       react: 17.0.2
@@ -10548,7 +10548,7 @@ packages:
   /tippy.js/6.3.7:
     resolution: {integrity: sha512-E1d3oP2emgJ9dRQZdf3Kkn0qJgI6ZLpyS5z6ZkY1DF3kaQaBsGZsndEpHwx+eC+tYM41HaSNvNtLx8tU57FzTQ==}
     dependencies:
-      '@popperjs/core': 2.11.2
+      '@popperjs/core': 2.11.4
     dev: false
 
   /tmpl/1.0.5:
@@ -11498,10 +11498,9 @@ packages:
     engines: {node: '>=10'}
     dev: false
 
-  /zeed-dom/0.9.23:
-    resolution: {integrity: sha512-0n05W12DaMh38E28zcpQOYY2hTmz8nTRbrkYuKYlQ2d2lp4ovOSWVwJ1+ybYYEwJp+4VfSPTv3/wbT8jijMQ7A==}
+  /zeed-dom/0.9.24:
+    resolution: {integrity: sha512-hvJ9KBrZDnE7tcf4oe79fzQTbIS40pDOOUC7i1+kqqzNryj2RLwaCiIhpekCoI6/aJcYeEB5q0vhJPTnAo0aOQ==}
     engines: {node: '>=14.13.1'}
     dependencies:
       css-what: 6.0.1
-      he: 1.2.0
     dev: false
